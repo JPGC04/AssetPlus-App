@@ -5,6 +5,7 @@ public class AssetPlusFeatureSet2Controller {
   public static String addAssetType(String name, int expectedLifeSpanInDays) {
     // Remove this exception when you implement this method
     throw new UnsupportedOperationException("Not Implemented!");
+    // b
   }
 
   public static String updateAssetType(String oldName, String newName, int newExpectedLifeSpanInDays) {
