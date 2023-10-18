@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import ca.mcgill.ecse.assetplus.controller.*;
 import ca.mcgill.ecse.assetplus.model.Employee;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.model.Manager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -29,14 +31,14 @@ public class AddTicketImageStepDefinitions {
   @Given("the following manager exists in the system \\(p5)")
   public void the_following_manager_exists_in_the_system_p5(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> managerData = dataTable.asMaps(String.class, String.class);
+    AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
+    for (Map<String, String> data : managerData) {
+      
+      Manager manager = new Manager(data.get("email"), "Lebron", data.get("password"), "(555)555-5555", assetPlus);
+      assetPlus.setManager(manager);  
+    }
+    
   }
 
   @Given("the following asset types exist in the system \\(p5)")
