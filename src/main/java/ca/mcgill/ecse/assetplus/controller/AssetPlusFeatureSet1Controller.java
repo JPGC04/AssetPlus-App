@@ -14,8 +14,7 @@ public class AssetPlusFeatureSet1Controller {
 	  AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 	  Manager manager = assetPlus.getManager();
 	  manager.setPassword(password);
-    
-    throw new UnsupportedOperationException("Not Implemented!");
+	  return "";
   }
 
   public static String addEmployeeOrGuest(String email, String password, String name, String phoneNumber,
@@ -24,18 +23,20 @@ public class AssetPlusFeatureSet1Controller {
 			throw new IllegalArgumentException("Enter approporaite password");
 		}
 	  if(name == null){
-			throw new IllegalArgumentException("Enter approporaite password");
+			throw new IllegalArgumentException("Enter approporaite name");
 		}
 	  if(phoneNumber == null){
-			throw new IllegalArgumentException("Enter approporaite password");
+			throw new IllegalArgumentException("Enter approporaite phoneNumber");
 		}
 	  AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 	  if (isEmployee) {
 	  assetPlus.addEmployee(email, name, password, phoneNumber);
-	  }else {
-	  assetPlus.addGuest(email, name, password, phoneNumber);
+	  return "";
 	  }
-    throw new UnsupportedOperationException("Not Implemented!");
+	  else {
+	  assetPlus.addGuest(email, name, password, phoneNumber);
+	  return "";
+	  }
   }
 
   public static String updateEmployeeOrGuest(String email, String newPassword, String newName, String newPhoneNumber) {
@@ -44,10 +45,10 @@ public class AssetPlusFeatureSet1Controller {
 			throw new IllegalArgumentException("Enter approporaite password");
 		}
 	  if(newName == null){
-			throw new IllegalArgumentException("Enter approporaite password");
+			throw new IllegalArgumentException("Enter approporaite name");
 		}
 	  if(newPhoneNumber == null){
-			throw new IllegalArgumentException("Enter approporaite password");
+			throw new IllegalArgumentException("Enter approporaite phonenumber");
 		}
 	  if (getEmployeeByEmail(email) == null && getGuestByEmail(email) == null) {
 	      throw new IllegalArgumentException("Invalid email address");
@@ -63,7 +64,7 @@ public class AssetPlusFeatureSet1Controller {
 		  guest.setName(newName);
 		  guest.setPhoneNumber(newPhoneNumber);
 	  }
-    throw new UnsupportedOperationException("Not Implemented!");
+	  return "";
   }
   private static Employee getEmployeeByEmail(String email) {
 	    AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
