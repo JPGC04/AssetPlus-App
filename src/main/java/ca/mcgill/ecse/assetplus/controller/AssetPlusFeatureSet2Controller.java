@@ -9,7 +9,7 @@ public class AssetPlusFeatureSet2Controller {
     if (name == null) {
       throw new IllegalArgumentException("Enter approporaite name");
     }
-    if (expectedLifeSpanInDays <= null) {
+    if (expectedLifeSpanInDays == null) {
       throw new IllegalArgumentException("Enter approporaite Life Span");
     }
 
