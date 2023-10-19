@@ -15,8 +15,17 @@ import java.util.List;
 
 public class AssetPlusFeatureSet5Controller {
 
-  public static String addImageToMaintenanceTicket(String imageURL, int ticketID) {
+  /**
+   * Adds an image to a maintenance ticket given an imageURL and a ticketID
+   * Written by: Alan Brotherton
+   * 
+   * @param imageURL a string that contains the URL of an image
+   * @param ticketID an integer that cointains the ID number of a specific maintenance ticket
+   * @return an error message corresponding to where a problem was found if the image cannot be succesfullly added
+   * @return an empty string if the image was succesfully added to the maintenance ticket
+   */
 
+  public static String addImageToMaintenanceTicket(String imageURL, int ticketID) {
     if (imageURL == null || imageURL.isEmpty() ) {
       return "Image URL cannot be empty";
     }
@@ -28,8 +37,8 @@ public class AssetPlusFeatureSet5Controller {
     MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(ticketID);
 
     if (maintenanceTicket != null) {
-
       List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
+
       for (TicketImage image : ticketImages) {
         if (imageURL.equals(image.getImageURL())) {
           return "Image already exists for the ticket";
@@ -43,10 +52,20 @@ public class AssetPlusFeatureSet5Controller {
     else return "Ticket does not exist";
   }
 
+  /**
+   * Deletes an image from a maintenance ticket given an imageURL and a ticketID
+   * Written by: Alan Brotherton
+   * 
+   * @param imageURL a string that contains the URL of an image
+   * @param ticketID an integer that cointains the ID number of a specific maintenance ticket
+   */
+
   public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
     MaintenanceTicket maintenanceTicket = Utils.getMaintenanceTicketbyID(ticketID);
+
     if(maintenanceTicket != null){
       List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
+      
       for (TicketImage image : ticketImages) {
         if(imageURL.equals(image.getImageURL())){
           maintenanceTicket.removeTicketImage(image);

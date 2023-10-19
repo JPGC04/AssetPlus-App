@@ -172,7 +172,10 @@ private int errorCntr;
     callController(AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(string, Integer.parseInt(string2)));
   }
 
-  //REWORKED AND WORKING
+  /**
+   * Verifies the number of images in the system
+   * @param string The expected number of images in the system
+   */
   @Then("the number of images in the system shall be {string} \\(p5)")
   public void the_number_of_images_in_the_system_shall_be_p5(String string) {
 	  
@@ -197,30 +200,38 @@ private int errorCntr;
   private Supplier<String> parseInt(String string) {
     return null;
   }
-
+  /**
+   * Verifies what ticket images are in the system
+   * @param dataTable contains data, in table form, of the imageURL and ticketId
+   */
   @Then("the following ticket images shall exist in the system \\(p5)")
-public void the_following_ticket_images_shall_exist_in_the_system_p5(
+  public void the_following_ticket_images_shall_exist_in_the_system_p5(
         io.cucumber.datatable.DataTable dataTable) {
-  List<Map<String, String>> ticketimages = dataTable.asMaps();
+    List<Map<String, String>> ticketimages = dataTable.asMaps();
   
-  for (Map<String, String> data : ticketimages) {
-    boolean image_found=false;
-    String url=data.get("imageUrl");
-    String id=data.get("ticketId");
-    MaintenanceTicket ticket=MaintenanceTicket.getWithId(Integer.parseInt(id));
-    for (TicketImage image:ticket.getTicketImages()) {
-      if(url.equals(image.getImageURL())){
-        image_found=true;
+    for (Map<String, String> data : ticketimages) {
+      boolean image_found=false;
+      String url=data.get("imageUrl");
+      String id=data.get("ticketId");
+      MaintenanceTicket ticket=MaintenanceTicket.getWithId(Integer.parseInt(id));
+      for (TicketImage image:ticket.getTicketImages()) {
+        if(url.equals(image.getImageURL())){
+          image_found=true;
+        }
+      }
+      if(!image_found){
+      
       }
     }
-    if(!image_found){
-      
-    }
   }
-}
   
   
   //THIS NEEDS TO BE FIXED
+  /**
+   * Verfies the image url of a particular MaintenanceTicket
+   * @param string ticketID of particular MaintenanceTicket
+   * @param string2 The expected img url
+   */
   @Then("the ticket with id {string} shall have an image with url {string} \\(p5)")
   public void the_ticket_with_id_shall_have_an_image_with_url_p5(String string, String string2) {
     String url = string2;
@@ -232,14 +243,18 @@ public void the_following_ticket_images_shall_exist_in_the_system_p5(
     List<TicketImage> images = ticket.getTicketImages();
     for (TicketImage image : images) {
       if (!(image.getImageURL() == null)) {
-    	  if (image.getImageURL().equals(url)) {
-    		  return;
+      	  if (image.getImageURL().equals(url)) {
+      		  return;
+          }
       }
-    }
     }
     fail();
   }
-
+ /**
+  * Verifies the number of images contained inside a ticket
+  * @param string ticketID of MaintenanceTicket
+  * @param string2 The number of images that the particular ticket should have
+  */
   @Then("the number of images for ticket with id {string} in the system shall be {string} \\(p5)")
   public void the_number_of_images_for_ticket_with_id_in_the_system_shall_be_p5(String string,
                                                                                 String string2) {
@@ -247,7 +262,12 @@ public void the_following_ticket_images_shall_exist_in_the_system_p5(
     MaintenanceTicket t = getTicketById(maintenanceTickets, string);
     assertEquals(Integer.valueOf(string2), t.numberOfTicketImages());
   }
-
+  /**
+   * Finds the MaintenanceTicket that matches the ticketID
+   * @param maintenanceTickets An array containing MaintenanceTicket objects
+   * @param string The ticketID in string form
+   * @return MaintenanceTicket object, if there exists a ticket that matches the string id
+   */
   private MaintenanceTicket getTicketById(List<MaintenanceTicket> maintenanceTickets, String string) {
     for (MaintenanceTicket t : maintenanceTickets) {
       if (Integer.toString(t.getId()).equals(string) ) {
@@ -256,7 +276,10 @@ public void the_following_ticket_images_shall_exist_in_the_system_p5(
     }
     return null;
   }
-
+  /**
+   * Checks if the system outputs the appropriate error message
+   * @param string: The error message we are looking for
+   */
   @Then("the system shall raise the error {string} \\(p5)")
   public void the_system_shall_raise_the_error_p5(String string) {
     assertTrue(error.contains(string));
