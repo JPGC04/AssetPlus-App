@@ -7,6 +7,14 @@ import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
 
+/**
+ * AssetPlusFeatureSet5Controller is a set of methods that add and delete images to maintenance tickets
+ * 
+ * @author Alan Brotherton -- AlanBrotherton
+ * @version ECSE 223 - Group Project Iteration 2a
+ * @since ECSE 223 - Group Project Iteration 2a
+ */
+
 public class AssetPlusFeatureSet5Controller {
 	
 private static AssetPlus assetplus=AssetPlusApplication.getAssetPlus();
