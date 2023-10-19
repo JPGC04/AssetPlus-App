@@ -78,8 +78,7 @@ public class AddTicketImageStepDefinitions {
   }
 
   @When("hotel staff adds an image with url {string} to the ticket with id {string} \\(p5)")
-  public void hotel_staff_adds_an_image_with_url_to_the_ticket_with_id_p5(String string,
-                                                                          String string2) {
+  public void hotel_staff_adds_an_image_with_url_to_the_ticket_with_id_p5(String string, String string2) {
 		  AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(string2, Integer.parseInt(string2));
 	    }
 
