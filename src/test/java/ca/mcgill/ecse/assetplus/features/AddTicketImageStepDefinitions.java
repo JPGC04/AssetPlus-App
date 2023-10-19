@@ -133,7 +133,12 @@ private int errorCntr;
 
   @Then("the ticket with id {string} shall have an image with url {string} \\(p5)")
   public void the_ticket_with_id_shall_have_an_image_with_url_p5(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
+    List<MaintenanceTicket> maintenanceTickets = assetPlus.getMaintenanceTickets();
+    MaintenanceTicket maintenanceTicket = getTicketById(maintenanceTickets, string);
+    List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
+    for (TicketImage i : ticketImages) {
+      i.getImageURL().equals(string2);
+    }
     throw new io.cucumber.java.PendingException();
   }
 
