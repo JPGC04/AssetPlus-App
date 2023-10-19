@@ -131,10 +131,8 @@ private int errorCntr;
 	  int ticketId = Integer.parseInt(string2);
 	  String url = string;
 	  
-	  
-	  MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
 	  //new TicketImage(url, ticket);
-	  ticket.addTicketImage(url);
+	  AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(url, ticketId);
     //AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(url, ticketId);
   }
 
