@@ -18,8 +18,6 @@ import java.util.List;
 
 public class AssetPlusFeatureSet5Controller {
 
-  private static AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
-
   public static String addImageToMaintenanceTicket(String imageURL, int ticketID) {
 
     if (imageURL == null || imageURL.isEmpty() ) {
@@ -31,6 +29,7 @@ public class AssetPlusFeatureSet5Controller {
     }
 
     MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(ticketID);
+
     if (maintenanceTicket != null) {
 
       List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
