@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 public class AddTicketImageStepDefinitions {
-  private AssetPlus assetPlus;
+  private AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
   private String error;
   private int errorCntr;
   @Given("the following employees exist in the system \\(p5)")
@@ -54,13 +54,21 @@ public class AddTicketImageStepDefinitions {
     }
   }
 
+   //FIXED
   @Given("the following assets exist in the system \\(p5)")
   public void the_following_assets_exist_in_the_system_p5(
-          io.cucumber.datatable.DataTable dataTable) {
-    List<Map<String, String>> assets = dataTable.asMaps();
-    for (Map<String, String> data : assets) {
-      AssetPlusFeatureSet3Controller.addSpecificAsset(Integer.parseInt(data.get("assetNumber")),Integer.parseInt(data.get("floorNumeber")),Integer.parseInt(data.get("roomNumber")), Date.valueOf(data.get("purchaseDate")), data.get("type"));
-    }
+      io.cucumber.datatable.DataTable dataTable) {
+	  
+	  List<Map<String, String>> assetData = dataTable.asMaps();
+	  
+	  for (Map<String, String> data : assetData) {
+		  int assetNumber = Integer.parseInt(data.get("assetNumber"));
+	      AssetType assetType = AssetType.getWithName(data.get("type"));
+	      Date purchaseDate = Date.valueOf(data.get("purchaseDate"));
+	      int floorNumber = Integer.parseInt(data.get("floorNumber"));
+	      int roomNumber = Integer.parseInt(data.get("roomNumber"));
+	      assetPlus.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType);
+	  }
   }
 
   @Given("the following tickets exist in the system \\(p5)")
@@ -72,12 +80,16 @@ public class AddTicketImageStepDefinitions {
     }
   }
 
+ //FIXED 
   @Given("the following ticket images exist in the system \\(p5)")
   public void the_following_ticket_images_exist_in_the_system_p5(
-          io.cucumber.datatable.DataTable dataTable) {
+      io.cucumber.datatable.DataTable dataTable) {
+	  
     List<Map<String, String>> images = dataTable.asMaps();
     for (Map<String, String> data : images) {
-      AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(data.get("imageUrl"),Integer.parseInt(data.get("ticketId")));
+    	String imageUrl = data.get("imageURL");
+    	int ticketId = Integer.parseInt(data.get("ticketId"));
+    	AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(imageUrl, ticketId);
     }
   }
 
