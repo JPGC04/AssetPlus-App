@@ -116,9 +116,7 @@ private int errorCntr;
     for (MaintenanceTicket aTicket : maintenanceTickets) {
       List<TicketImage> ticketImage = aTicket.getTicketImages();
       int thisTicketImageSize = ticketImage.size();
-      if (thisTicketImageSize != 0) {
-        numOfImages += thisTicketImageSize;
-      }
+      numOfImages += thisTicketImageSize;
     }
     String strNumOfImages = Integer.toString(numOfImages);
     assertEquals(string, strNumOfImages);
