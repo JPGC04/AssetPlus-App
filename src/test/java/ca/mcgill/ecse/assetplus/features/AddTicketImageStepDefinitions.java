@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 public class AddTicketImageStepDefinitions {
-
+  AssetPlus assetPlus= AssetPlusApplication.getAssetPlus();
   @Given("the following employees exist in the system \\(p5)")
   public void the_following_employees_exist_in_the_system_p5(
-      io.cucumber.datatable.DataTable dataTable) {
+          io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> employeeDataList = dataTable.asMaps();
     for (Map<String, String> data : employeeDataList) {
       AssetPlusFeatureSet1Controller.addEmployeeOrGuest(data.get("email"),data.get("name"),data.get("password"),data.get("phoneNumber"),true);
@@ -31,20 +31,20 @@ public class AddTicketImageStepDefinitions {
 
   @Given("the following manager exists in the system \\(p5)")
   public void the_following_manager_exists_in_the_system_p5(
-      io.cucumber.datatable.DataTable dataTable) {
+          io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> managerData = dataTable.asMaps(String.class, String.class);
-    assetPlus = AssetPlusApplication.getAssetPlus();
+
     for (Map<String, String> data : managerData) {
-      
+
       Manager manager = new Manager(data.get("email"), "Lebron", data.get("password"), "(555)555-5555", assetPlus);
-      assetPlus.setManager(manager);  
+      assetPlus.setManager(manager);
     }
-    
+
   }
 
   @Given("the following asset types exist in the system \\(p5)")
   public void the_following_asset_types_exist_in_the_system_p5(
-      io.cucumber.datatable.DataTable dataTable) {
+          io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> assetTypes = dataTable.asMaps();
     for (Map<String, String> data : assetTypes) {
       AssetPlusFeatureSet2Controller.addAssetType(data.get("name"), Integer.parseInt(data.get("expectedLifeSpan")));
@@ -53,16 +53,16 @@ public class AddTicketImageStepDefinitions {
 
   @Given("the following assets exist in the system \\(p5)")
   public void the_following_assets_exist_in_the_system_p5(
-      io.cucumber.datatable.DataTable dataTable) {
-      List<Map<String, String>> assets = dataTable.asMaps();
-      for (Map<String, String> data : assets) {
-        AssetPlusFeatureSet3Controller.addSpecificAsset(Integer.parseInt(data.get("assetNumber")),Integer.parseInt(data.get("floorNumeber")),Integer.parseInt(data.get("roomNumber")), Date.valueOf(data.get("purchaseDate")), data.get("type"));
-      }
+          io.cucumber.datatable.DataTable dataTable) {
+    List<Map<String, String>> assets = dataTable.asMaps();
+    for (Map<String, String> data : assets) {
+      AssetPlusFeatureSet3Controller.addSpecificAsset(Integer.parseInt(data.get("assetNumber")),Integer.parseInt(data.get("floorNumeber")),Integer.parseInt(data.get("roomNumber")), Date.valueOf(data.get("purchaseDate")), data.get("type"));
+    }
   }
 
   @Given("the following tickets exist in the system \\(p5)")
   public void the_following_tickets_exist_in_the_system_p5(
-      io.cucumber.datatable.DataTable dataTable) {
+          io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> tickets = dataTable.asMaps();
     for (Map<String, String> data : tickets) {
       AssetPlusFeatureSet4Controller.addMaintenanceTicket(Integer.parseInt(data.get("id")), Date.valueOf(data.get("raisedOnDate")),data.get("description"),data.get("email"),Integer.parseInt(data.get("assetNumber")));
@@ -71,7 +71,7 @@ public class AddTicketImageStepDefinitions {
 
   @Given("the following ticket images exist in the system \\(p5)")
   public void the_following_ticket_images_exist_in_the_system_p5(
-      io.cucumber.datatable.DataTable dataTable) {
+          io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> images = dataTable.asMaps();
     for (Map<String, String> data : images) {
       AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(data.get("imageUrl"),Integer.parseInt(data.get("ticketId")));
@@ -80,8 +80,8 @@ public class AddTicketImageStepDefinitions {
 
   @When("hotel staff adds an image with url {string} to the ticket with id {string} \\(p5)")
   public void hotel_staff_adds_an_image_with_url_to_the_ticket_with_id_p5(String string, String string2) {
-		  AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(string2, Integer.parseInt(string2));
-	    }
+    AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(string2, Integer.parseInt(string2));
+  }
 
 
   @Then("the number of images in the system shall be {string} \\(p5)")
@@ -111,7 +111,7 @@ public class AddTicketImageStepDefinitions {
 
   @Then("the number of images for ticket with id {string} in the system shall be {string} \\(p5)")
   public void the_number_of_images_for_ticket_with_id_in_the_system_shall_be_p5(String string,
-      String string2) {
+                                                                                String string2) {
     List<MaintenanceTicket> maintenanceTickets = assetPlus.getMaintenanceTickets();
     MaintenanceTicket t = getTicketById(maintenanceTickets, string);
     assertEquals(Integer.valueOf(string2), t.numberOfTicketImages());
