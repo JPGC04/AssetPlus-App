@@ -95,23 +95,26 @@ public class AssetPlusFeatureSet1Controller {
 	  }
 	  if (phoneNumber == null) {
 		  return "PhoneNumber cannot be empty ";  
-	
+	   }
+	  if (getEmployeeByEmail(email)!= null) {
+			  return " Email already linked to an employee account ";	
+	  }
+	  if (getGuestByEmail(email)!= null) {
+		  return " Email already linked to an guest account ";	
+  }
 	  if (isEmployee) {
-		  if (getEmployeeByEmail(email)!= null) {
-			  return " Email already linked to an employee account ";			  
-		  }
 	  assetPlus.addEmployee(email, name, password, phoneNumber);
 	  return "";
 	  }
-	  
 	  else {
-		  if (getGuestByEmail(email)!= null) {
-			  return " Email already linked to an guest account ";	
-		  }
 	  assetPlus.addGuest(email, name, password, phoneNumber);
-	  return "";
-	  } 
+	  return "";}
   }
+
+ 
+	  
+ 
+	 
   
   /**
    * <p>update employee or guest information.
