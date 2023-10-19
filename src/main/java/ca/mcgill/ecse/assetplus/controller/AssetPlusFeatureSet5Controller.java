@@ -17,7 +17,7 @@ import ca.mcgill.ecse.assetplus.model.TicketImage;
 
 public class AssetPlusFeatureSet5Controller {
 	
-private static AssetPlus assetplus=AssetPlusApplication.getAssetPlus();
+private static AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
 
   public static String addImageToMaintenanceTicket(String imageURL, int ticketID) {
 	  
