@@ -8,8 +8,11 @@ import java.sql.Date;
 import java.util.List;
 
 /**
- *Add, update, and delete Asset
+ *AssetPlusFeatureSet3Controller is the main class we will use to Add, update, and delete Asset
+ *
  *@author Seungyeon Lee
+ * @version ECSE 223 - Group Project Iteration 2a
+ * @since ECSE 223 - Group Project Iteration 2a
  */
 public class AssetPlusFeatureSet3Controller {
   
