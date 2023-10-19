@@ -11,9 +11,21 @@ import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
 import java.sql.Date;
-
+/**
+   * AssetPlusFeatureSet6Controller is a set of controller methods that allow us to delete an employee or a guest given their email, and get all maintenancetickets
+   * @author Cleo Tang
+   * @version ECSE 223 - Group Project Iteration 2a
+   * @since ECSE 223 - Group Project Iteration 2a
+   */
 public class AssetPlusFeatureSet6Controller {
-
+  /**
+   * delete an employee or a guest given their email.
+   * Written by: Cleo Tang
+   * 
+   * @param email a string of the email of the user aimed to be deleted
+   * @return null, void method
+   * @throws IllegalArgumentException if the email provided is invalid or person with the email is not in the system.
+   */
   public static void deleteEmployeeOrGuest(String email) {
     
     if (getEmployeeByEmail(email) == null && getGuestByEmail(email) == null) {
@@ -30,7 +42,13 @@ public class AssetPlusFeatureSet6Controller {
     
       
   }
-  
+  /**
+   * get the particular employee with the specified email.
+   * Written by: Cleo Tang
+   * 
+   * @param email a string of the employee's email
+   * @return an Employee required
+   */
   private static Employee getEmployeeByEmail(String email) {
     AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
     List<Employee> employees = assetPlus.getEmployees();
@@ -41,6 +59,13 @@ public class AssetPlusFeatureSet6Controller {
     }
     return null;
   }
+  /**
+   * get the particular guest with the specified email.
+   * Written by: Cleo Tang
+   * 
+   * @param email a string of the guest's email
+   * @return a Guest matched
+   */
   private static Guest getGuestByEmail(String email) {
     AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
     List<Guest> guests = assetPlus.getGuests();
@@ -52,7 +77,12 @@ public class AssetPlusFeatureSet6Controller {
     return null;
   }
   
-  // returns all tickets
+  /**
+   * Gets all maintenancetickets
+   * Written by: Cleo Tang
+   * 
+   * @return a list of Transfer Obeject of MaintenanceTicket
+   */
   public static List<TOMaintenanceTicket> getTickets() {
     AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
     List<MaintenanceTicket> maintenanceTickets = assetplus.getMaintenanceTickets();
@@ -62,6 +92,13 @@ public class AssetPlusFeatureSet6Controller {
     }
     return TOMaintenanceTickets;
   }
+  /**
+   * Initialize a transfer obejct of MaintenanceTicket.
+   * Written by: Cleo Tang
+   * 
+   * @param t a MiantenanceTicket
+   * @return TOMaintenanceTicket that is a transfer object of MaintenanceTicket t
+   */
   private static TOMaintenanceTicket createTOMaintenanceTicket(MaintenanceTicket t) {
     try {  
       int aId = t.getId();
@@ -92,7 +129,13 @@ public class AssetPlusFeatureSet6Controller {
       return null;
     } 
   }
-
+  /**
+   * Initialize a transfer object of MaintenanceNote.
+   * Written by: Cleo Tang
+   * 
+   * @param maintenanceNote a MaintenanceNote
+   * @return TOMaintenanceNote that is a transfer object of MaintenanceNote
+   */
   private static TOMaintenanceNote createTOMaintenanceNote(MaintenanceNote maintenanceNote) {
     try {  
       Date aDate = maintenanceNote.getDate();
