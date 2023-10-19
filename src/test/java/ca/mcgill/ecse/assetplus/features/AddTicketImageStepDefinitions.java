@@ -137,9 +137,11 @@ private int errorCntr;
     MaintenanceTicket maintenanceTicket = getTicketById(maintenanceTickets, string);
     List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
     for (TicketImage i : ticketImages) {
-      i.getImageURL().equals(string2);
+      if (i.getImageURL().equals(string2)) {
+        return;
+      }
     }
-    throw new io.cucumber.java.PendingException();
+    fail();
   }
 
   @Then("the number of images for ticket with id {string} in the system shall be {string} \\(p5)")
