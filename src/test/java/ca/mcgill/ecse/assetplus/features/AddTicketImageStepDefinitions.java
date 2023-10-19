@@ -10,7 +10,9 @@ import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.Manager;
+import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
+import ca.mcgill.ecse.assetplus.model.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -36,7 +38,12 @@ private int errorCntr;
           io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> employeeDataList = dataTable.asMaps();
     for (Map<String, String> data : employeeDataList) {
-      AssetPlusFeatureSet1Controller.addEmployeeOrGuest(data.get("email"),data.get("name"),data.get("password"),data.get("phoneNumber"),true);
+    	String email = data.get("email");
+    	String name = data.get("name");
+    	String password = data.get("password");
+    	String phoneNumber = data.get("phoneNumber");
+    	assetPlus.addEmployee(email, name, password, phoneNumber);
+      //AssetPlusFeatureSet1Controller.addEmployeeOrGuest(data.get("email"),data.get("name"),data.get("password"),data.get("phoneNumber"),true);
     }
 
   }
@@ -44,13 +51,17 @@ private int errorCntr;
   @Given("the following manager exists in the system \\(p5)")
   public void the_following_manager_exists_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
-    List<Map<String, String>> managerData = dataTable.asMaps(String.class, String.class);
-    error="";
-    errorCntr=0;
+    List<Map<String, String>> managerData = dataTable.asMaps();
     for (Map<String, String> data : managerData) {
-      assetPlus= AssetPlusApplication.getAssetPlus();
-      Manager manager = new Manager(data.get("email"), "Lebron", data.get("password"), "(555)555-5555", assetPlus);
-      assetPlus.setManager(manager);
+    	String email = data.get("email");
+    	String password = data.get("password");
+    	if (assetPlus.hasManager()) {
+    		assetPlus.getManager().setPassword(password);
+    	}
+    	
+    	else {
+    		new Manager(email, "", password, "", assetPlus);
+    	}
     }
 
   }
@@ -81,12 +92,21 @@ private int errorCntr;
 	  }
   }
 
+  //FIXED SOMEONE FILLED IN CONTROLLER WITH THE WRONG PARAMETERS 
   @Given("the following tickets exist in the system \\(p5)")
   public void the_following_tickets_exist_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> tickets = dataTable.asMaps();
     for (Map<String, String> data : tickets) {
-      AssetPlusFeatureSet4Controller.addMaintenanceTicket(Integer.parseInt(data.get("id")), Date.valueOf(data.get("raisedOnDate")),data.get("description"),data.get("email"),Integer.parseInt(data.get("assetNumber")));
+    	
+    	 int id = Integer.parseInt (data.get("id")); 
+    	 String ticketRaiser = data.get("ticketRaiser");
+         Date raisedOnDate = Date.valueOf(data.get("raisedOnDate"));
+         String description = data.get("description"); 
+         int assetNumber = Integer.parseInt(data.get("assetNumber"));
+
+         AssetPlusFeatureSet4Controller.addMaintenanceTicket(id, raisedOnDate, description, ticketRaiser, assetNumber);
+         
     }
   }
 
@@ -99,29 +119,47 @@ private int errorCntr;
     for (Map<String, String> data : images) {
     	String imageUrl = data.get("imageURL");
     	int ticketId = Integer.parseInt(data.get("ticketId"));
-    	AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(imageUrl, ticketId);
+    	MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    	new TicketImage(imageUrl, ticket);
+    	//ticket.addTicketImage(imageUrl);
+    	//AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(imageUrl, ticketId); //There is a problem with the controller or linking urls
     }
   }
 
   @When("hotel staff adds an image with url {string} to the ticket with id {string} \\(p5)")
   public void hotel_staff_adds_an_image_with_url_to_the_ticket_with_id_p5(String string, String string2) {
-    AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(string2, Integer.parseInt(string2));
+	  int ticketId = Integer.parseInt(string2);
+	  String url = string;
+	  
+	  
+	  MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+	  //new TicketImage(url, ticket);
+	  ticket.addTicketImage(url);
+    //AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(url, ticketId);
   }
 
-
+  //REWORKED AND WORKING
   @Then("the number of images in the system shall be {string} \\(p5)")
   public void the_number_of_images_in_the_system_shall_be_p5(String string) {
-    int numOfImages = 0;
+	  
     List<MaintenanceTicket> maintenanceTickets = assetPlus.getMaintenanceTickets();
+    //System.out.println(maintenanceTickets.size());
+    
+    
+    int numOfImages = 0;
     for (MaintenanceTicket aTicket : maintenanceTickets) {
-      List<TicketImage> ticketImage = aTicket.getTicketImages();
-      int thisTicketImageSize = ticketImage.size();
-      numOfImages += thisTicketImageSize;
+    	//System.out.println(aTicket);
+    	//System.out.println("");
+    	//System.out.println(aTicket.getTicketImages());
+    	//System.out.println("");
+      numOfImages += aTicket.numberOfTicketImages();
     }
-    String strNumOfImages = Integer.toString(numOfImages);
-    assertEquals(string, strNumOfImages);
+    
+    assertEquals(Integer.parseInt(string), numOfImages);
   }
 
+  
+  
   @Then("the following ticket images shall exist in the system \\(p5)")
   public void the_following_ticket_images_shall_exist_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
@@ -129,9 +167,10 @@ private int errorCntr;
     for (Map<String, String> data : tickets) {
 
       String url=data.get("imageUrl");
-      String id=data.get("ticketId");
-      MaintenanceTicket ticket=getTicketById(assetPlus.getMaintenanceTickets(),id);
-      for (TicketImage image:ticket.getTicketImages()) {
+      int id= Integer.parseInt(data.get("ticketId"));
+      
+      MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+      for (TicketImage image: ticket.getTicketImages()) {
         if(url.equals(image.getImageURL())){
           return;
         }
@@ -139,15 +178,30 @@ private int errorCntr;
     }
     fail();
   }
-
+  
+  
+  //THIS NEEDS TO BE FIXED
   @Then("the ticket with id {string} shall have an image with url {string} \\(p5)")
   public void the_ticket_with_id_shall_have_an_image_with_url_p5(String string, String string2) {
-    List<MaintenanceTicket> maintenanceTickets = assetPlus.getMaintenanceTickets();
-    MaintenanceTicket maintenanceTicket = getTicketById(maintenanceTickets, string);
-    List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
-    for (TicketImage i : ticketImages) {
-      if (i.getImageURL().equals(string2)) {
-        return;
+    String url = string2;
+    int id = Integer.parseInt(string);
+    
+    MaintenanceTicket test = assetPlus.getMaintenanceTicket(id);
+    System.out.println("TEST");
+    System.out.println(test.getTicketImages());
+    System.out.println("TEST");
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+    System.out.println("TICKET");
+    System.out.println(ticket.getTicketImages());
+    System.out.println("TICKET");
+    
+    
+    List<TicketImage> images = ticket.getTicketImages();
+    System.out.println(images);
+    for (TicketImage image : images) {
+    	System.out.println(image.getImageURL());
+    	if (image.getImageURL().equals(url)) {
+    		return;
       }
     }
     fail();
