@@ -148,6 +148,6 @@ public class AddTicketImageStepDefinitions {
 
   @Then("the system shall raise the error {string} \\(p5)")
   public void the_system_shall_raise_the_error_p5(String string) {
-    throw new RuntimeException(string);
+    assertTrue(error.contains(string));
   }
 }
