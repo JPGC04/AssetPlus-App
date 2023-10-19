@@ -181,6 +181,11 @@ public void the_following_ticket_images_shall_exist_in_the_system_p5(
   
   
   //THIS NEEDS TO BE FIXED
+  /**
+   * Verfies the image url of a particular MaintenanceTicket
+   * @param string ticketID of particular MaintenanceTicket
+   * @param string2 The expected img url
+   */
   @Then("the ticket with id {string} shall have an image with url {string} \\(p5)")
   public void the_ticket_with_id_shall_have_an_image_with_url_p5(String string, String string2) {
     String url = string2;
@@ -199,7 +204,11 @@ public void the_following_ticket_images_shall_exist_in_the_system_p5(
     }
     fail();
   }
-
+ /**
+  * Verifies the number of images contained inside a ticket
+  * @param string ticketID of MaintenanceTicket
+  * @param string2 The number of images that the particular ticket should have
+  */
   @Then("the number of images for ticket with id {string} in the system shall be {string} \\(p5)")
   public void the_number_of_images_for_ticket_with_id_in_the_system_shall_be_p5(String string,
                                                                                 String string2) {
@@ -207,7 +216,12 @@ public void the_following_ticket_images_shall_exist_in_the_system_p5(
     MaintenanceTicket t = getTicketById(maintenanceTickets, string);
     assertEquals(Integer.valueOf(string2), t.numberOfTicketImages());
   }
-
+  /**
+   * Finds the MaintenanceTicket that matches the ticketID
+   * @param maintenanceTickets An array containing MaintenanceTicket objects
+   * @param string The ticketID in string form
+   * @return MaintenanceTicket object, if there exists a ticket that matches the string id
+   */
   private MaintenanceTicket getTicketById(List<MaintenanceTicket> maintenanceTickets, String string) {
     for (MaintenanceTicket t : maintenanceTickets) {
       if (Integer.toString(t.getId()).equals(string) ) {
@@ -216,7 +230,10 @@ public void the_following_ticket_images_shall_exist_in_the_system_p5(
     }
     return null;
   }
-
+  /**
+   * Checks if the system outputs the appropriate error message
+   * @param string: The error message we are looking for
+   */
   @Then("the system shall raise the error {string} \\(p5)")
   public void the_system_shall_raise_the_error_p5(String string) {
     assertTrue(error.contains(string));
