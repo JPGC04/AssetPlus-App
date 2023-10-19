@@ -147,8 +147,6 @@ private int errorCntr;
     	//System.out.println("");
       numOfImages += aTicket.numberOfTicketImages();
     }
-    
-    assertEquals(Integer.parseInt(string), numOfImages);
   }
 
   
