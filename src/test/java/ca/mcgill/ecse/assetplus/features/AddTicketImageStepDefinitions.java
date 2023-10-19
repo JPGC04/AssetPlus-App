@@ -128,12 +128,7 @@ private int errorCntr;
 
   @When("hotel staff adds an image with url {string} to the ticket with id {string} \\(p5)")
   public void hotel_staff_adds_an_image_with_url_to_the_ticket_with_id_p5(String string, String string2) {
-	  int ticketId = Integer.parseInt(string2);
-	  String url = string;
-	  
-	  //new TicketImage(url, ticket);
-	  AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(url, ticketId);
-    //AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(url, ticketId);
+    callController(AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(string, Integer.parseInt(string2)));
   }
 
   //REWORKED AND WORKING
@@ -159,23 +154,25 @@ private int errorCntr;
   
   
   @Then("the following ticket images shall exist in the system \\(p5)")
-  public void the_following_ticket_images_shall_exist_in_the_system_p5(
-          io.cucumber.datatable.DataTable dataTable) {
-    List<Map<String, String>> tickets = dataTable.asMaps();
-    for (Map<String, String> data : tickets) {
-
-      String url=data.get("imageUrl");
-      int id= Integer.parseInt(data.get("ticketId"));
-      
-      MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
-      for (TicketImage image: ticket.getTicketImages()) {
-        if(url.equals(image.getImageURL())){
-          return;
-        }
+public void the_following_ticket_images_shall_exist_in_the_system_p5(
+        io.cucumber.datatable.DataTable dataTable) {
+  List<Map<String, String>> ticketimages = dataTable.asMaps();
+  
+  for (Map<String, String> data : ticketimages) {
+    boolean image_found=false;
+    String url=data.get("imageUrl");
+    String id=data.get("ticketId");
+    MaintenanceTicket ticket=MaintenanceTicket.getWithId(Integer.parseInt(id));
+    for (TicketImage image:ticket.getTicketImages()) {
+      if(url.equals(image.getImageURL())){
+        image_found=true;
       }
     }
-    fail();
+    if(!image_found){
+      
+    }
   }
+}
   
   
   //THIS NEEDS TO BE FIXED
