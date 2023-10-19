@@ -53,7 +53,7 @@ public class AssetPlusFeatureSet2Controller {
    * Updates an old asset type with the given input name and expected lifespan in days.
    * Written by: John-Paul Chouery
    * 
-   * @param oldNname a string containing the name of the asset type to be updated
+   * @param oldName a string containing the name of the asset type to be updated
    * @param newName a string containing the new name of the asset type to be updated
    * @param newExpectedLifeSpanInDays a string containing the new expected life span of the asset type to be updated
    * @throws IllegalArgumentException if names are empty, expected lifespan less than 1, old asset type does not already exists, or new asset type already exists

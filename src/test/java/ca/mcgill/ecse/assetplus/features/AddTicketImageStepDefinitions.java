@@ -26,6 +26,8 @@ public class AddTicketImageStepDefinitions {
 private AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 private String error;
 private int errorCntr;
+
+
 /** Calls controller and sets error and counter. */
   private void callController(String result) {
     if (!result.isEmpty()) {
@@ -34,6 +36,12 @@ private int errorCntr;
     }
   }
 
+  /**
+   * Defines the intial employees found in the system
+   * 
+   * @author Group 5    
+   * @param dataTable tabular data containing email, password, name, and phone number of employees in system
+   */
   @Given("the following employees exist in the system \\(p5)")
   public void the_following_employees_exist_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
@@ -44,11 +52,16 @@ private int errorCntr;
     	String password = data.get("password");
     	String phoneNumber = data.get("phoneNumber");
     	assetPlus.addEmployee(email, name, password, phoneNumber);
-      //AssetPlusFeatureSet1Controller.addEmployeeOrGuest(data.get("email"),data.get("name"),data.get("password"),data.get("phoneNumber"),true);
     }
 
   }
 
+  /**
+   * Defines the intial managers found in the system
+   * 
+   * @author Group 5    
+   * @param dataTable tabular data containing email and password of managers in system
+   */
   @Given("the following manager exists in the system \\(p5)")
   public void the_following_manager_exists_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
@@ -67,6 +80,12 @@ private int errorCntr;
 
   }
 
+  /**
+   * Defines the intial asset types found in the system
+   * 
+   * @author Group 5    
+   * @param dataTable tabular data containing name and expected lifespan of asset types in system
+   */
   @Given("the following asset types exist in the system \\(p5)")
   public void the_following_asset_types_exist_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
@@ -76,7 +95,12 @@ private int errorCntr;
     }
   }
 
-   //FIXED
+  /**
+   * Defines the intial assets found in the system
+   * 
+   * @author Group 5    
+   * @param dataTable tabular data containing assetNumber, type, purchase date, floor number, and room number of assets in system
+   */
   @Given("the following assets exist in the system \\(p5)")
   public void the_following_assets_exist_in_the_system_p5(
       io.cucumber.datatable.DataTable dataTable) {
@@ -93,7 +117,12 @@ private int errorCntr;
 	  }
   }
 
-  //FIXED SOMEONE FILLED IN CONTROLLER WITH THE WRONG PARAMETERS 
+  /**
+   * Defines the intial tickets found in the system
+   * 
+   * @author Group 5    
+   * @param dataTable tabular data containing id, ticket raiser, raise date, raisedOnDate, description, and asset numberasset of tickets in system
+   */
   @Given("the following tickets exist in the system \\(p5)")
   public void the_following_tickets_exist_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
@@ -111,7 +140,12 @@ private int errorCntr;
     }
   }
 
- //FIXED 
+  /**
+   * Defines the intial ticket images found in the system
+   * 
+   * @author Group 5    
+   * @param dataTable tabular data containing image Url and ticket Id of ticket images in system
+   */
   @Given("the following ticket images exist in the system \\(p5)")
   public void the_following_ticket_images_exist_in_the_system_p5(
       io.cucumber.datatable.DataTable dataTable) {
@@ -127,6 +161,12 @@ private int errorCntr;
     }
   }
 
+  /**
+   * Defines the step at which a hotel staff adds an image to the system
+   * 
+   * @author Group 5    
+   * @param dataTable tabular data containing image url and ticket Id of ticket images being added
+   */
   @When("hotel staff adds an image with url {string} to the ticket with id {string} \\(p5)")
   public void hotel_staff_adds_an_image_with_url_to_the_ticket_with_id_p5(String string, String string2) {
     callController(AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(string, Integer.parseInt(string2)));
