@@ -132,7 +132,7 @@ private int errorCntr;
       String id=data.get("ticketId");
       MaintenanceTicket ticket=getTicketById(assetPlus.getMaintenanceTickets(),id);
       for (TicketImage image:ticket.getTicketImages()) {
-        if(Objects.equals(image.getImageURL(), url)){
+        if(url.equals(image.getImageURL()){
           return;
         }
       }
