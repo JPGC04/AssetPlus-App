@@ -26,14 +26,16 @@ public class AssetPlusFeatureSet7Controller {
   public static String addMaintenanceNote(Date date, String description, int ticketID,
       String email) {
     if (description==""||description==null){
-      String s = "Description empty.";
-      throw new IllegalArgumentException(s);
+      String s = "Ticket description cannot be empty";
+      return s;
     }
     MaintenanceTicket ticket=Utils.getMaintenanceTicketbyID(ticketID);
+    if(ticket==null){
+      return "Ticket does not exist";
+    }
     HotelStaff staff=Utils.getHotelStaffbyemail(email);
-    if(ticket==null||staff==null){
-      String s = "Ticket/HotelStaff not found.";
-      throw new IllegalArgumentException(s);
+    if(staff==null){
+      return "Hotel staff does not exist";
     }
     ticket.addTicketNote(new MaintenanceNote(date,description,ticket,staff));
     return "";
@@ -52,16 +54,25 @@ public class AssetPlusFeatureSet7Controller {
    */
   public static String updateMaintenanceNote(int ticketID, int index, Date newDate,
       String newDescription, String newEmail) {
-    MaintenanceNote maintenanceNote=Utils.getMaintenanceTicketbyID(ticketID).getTicketNotes().get(index);
+    MaintenanceTicket ticket=Utils.getMaintenanceTicketbyID(ticketID);
+    if(ticket==null){
+      return "Ticket does not exist";
+    }
+    HotelStaff staff=Utils.getHotelStaffbyemail(newEmail);
+    MaintenanceNote maintenanceNote=ticket.getTicketNotes().get(index);
     if (newDescription==""||newDescription==null){
-      String s = "Description empty.";
-      throw new IllegalArgumentException(s);
+      String s = "Ticket description cannot be empty";
+      return s;
     }
     if(maintenanceNote==null){
-      throw new IllegalArgumentException("Maintenance note not found.");
+      return "Maintenance note not found.";
     }
+    if(staff==null){
+      return "Hotel staff does not exist";
+    }
+
     maintenanceNote.setDate(newDate);
-    maintenanceNote.setNoteTaker(Utils.getHotelStaffbyemail(newEmail));
+    maintenanceNote.setNoteTaker(staff);
     maintenanceNote.setDescription(newDescription);
     return "";
   }
@@ -75,11 +86,11 @@ public class AssetPlusFeatureSet7Controller {
    * @return error message if there is any.
    */
   public static void deleteMaintenanceNote(int ticketID, int index) {
-    MaintenanceNote maintenanceNote=Utils.getMaintenanceTicketbyID(ticketID).getTicketNotes().get(index);
+    MaintenanceTicket ticket=Utils.getMaintenanceTicketbyID(ticketID);
+    MaintenanceNote maintenanceNote=ticket.getTicketNotes().get(index);
     if(maintenanceNote!=null){
       maintenanceNote.delete();
     }
-    throw new RuntimeException("Ticket/Note not found.");
   }
 
 }
