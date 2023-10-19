@@ -18,9 +18,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 public class AddTicketImageStepDefinitions {
-  private AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
-  private String error;
-  private int errorCntr;
+private AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
+private String error;
+private int errorCntr;
+/** Calls controller and sets error and counter. */
+  private void callController(String result) {
+    if (!result.isEmpty()) {
+      error += result;
+      errorCntr += 1;
+    }
+  }
+
   @Given("the following employees exist in the system \\(p5)")
   public void the_following_employees_exist_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
