@@ -65,7 +65,7 @@ public class AssetPlusFeatureSet7Controller {
       return s;
     }
     if(maintenanceNote==null){
-      return "Maintenance note not found.";
+      return "Note does not exist";
     }
     if(staff==null){
       return "Hotel staff does not exist";
