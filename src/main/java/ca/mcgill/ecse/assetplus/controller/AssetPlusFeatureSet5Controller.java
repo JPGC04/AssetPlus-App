@@ -10,9 +10,9 @@ public class AssetPlusFeatureSet5Controller {
     MaintenanceTicket maintenanceTicket = Utils.getMaintenanceTicketbyID(ticketID);
     if (maintenanceTicket != null) {
       maintenanceTicket.addTicketImage(imageURL);
-      return "The image was succesfully added";
+      return "";
     }
-    else throw new RuntimeException("Ticket not found");
+    else return "Ticket not found";
   }
 
   public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
