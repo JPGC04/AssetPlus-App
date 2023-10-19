@@ -19,22 +19,20 @@ public class AssetPlusFeatureSet2Controller {
    * 
    * @param name a string containing the name of the asset type
    * @param expectedLifeSpanInDays an int containing the expected life span of the asset type in days
-   * @return a string indicating that the asset type has been added
-   * @throws IllegalArgumentException if name is null or has a length of 0
-   * @throws IllegalArgumentException if expectedLifeSpanInDays is less than 0
+   * @return a string if an error was detected else return empty string
    */
   public static String addAssetType(String name, int expectedLifeSpanInDays) {
     if (name == null || name.length() == 0) {
-      throw new IllegalArgumentException("Enter appropriate name");
+      return "Error Asset type name is null or empty";
     }
     if (expectedLifeSpanInDays <= 0) {
-      throw new IllegalArgumentException("Enter appropriate lifespan");
+      return "Error Asset type expected lifespan is not valid";
     }
 
     AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
     assetPlus.addAssetType(name, expectedLifeSpanInDays);
 
-    return "Asset type added";
+    return "";
   }
 
   /**
@@ -44,31 +42,28 @@ public class AssetPlusFeatureSet2Controller {
    * @param oldNname a string containing the name of the asset type to be updated
    * @param newName a string containing the new name of the asset type to be updated
    * @param newExpectedLifeSpanInDays a string containing the new expected life span of the asset type to be updated
-   * @return a string indicating that the asset type has been updated
-   * @throws IllegalArgumentException if new or old name is null or has a length of 0
-   * @throws IllegalArgumentException if newExpectedLifeSpanInDays is less than 0
-   * @throws IllegalArgumentException if no asset type with old name exists
+   * @return a string if an error was detected else empty string
    */
   public static String updateAssetType(String oldName, String newName, int newExpectedLifeSpanInDays) {
     if (oldName == null || oldName.length() == 0) {
-      throw new IllegalArgumentException("Enter appropriate old name");
+      return "Error Asset type old name is null or empty";
     }
     if (newName == null || newName.length() == 0) {
-      throw new IllegalArgumentException("Enter appropriate new name");
+      return "Error Asset type new name is null or empty";
     }
     if (newExpectedLifeSpanInDays <= 0) {
-      throw new IllegalArgumentException("Enter appropriate expected lifespan");
+      return "Error Asset type new expected lifespan is not valid";
     }
 
     AssetType assetType = AssetType.getWithName(oldName);
     if (assetType == null) {
-      throw new IllegalArgumentException("Enter appropriate old name for asset type");
+      return "Error Asset type with old name does not exist";
     }
     
     assetType.setName(newName);
     assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
 
-    return "Asset type updated";
+    return "";
   }
 
   /**
