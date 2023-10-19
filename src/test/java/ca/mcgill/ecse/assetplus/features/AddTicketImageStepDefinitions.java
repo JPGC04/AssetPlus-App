@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 public class AddTicketImageStepDefinitions {
-  AssetPlus assetPlus= AssetPlusApplication.getAssetPlus();
+  private AssetPlus assetPlus;
+  private String error;
+  private int errorCntr;
   @Given("the following employees exist in the system \\(p5)")
   public void the_following_employees_exist_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
@@ -33,9 +35,10 @@ public class AddTicketImageStepDefinitions {
   public void the_following_manager_exists_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> managerData = dataTable.asMaps(String.class, String.class);
-
+    error="";
+    errorCntr=0;
     for (Map<String, String> data : managerData) {
-
+      assetPlus= AssetPlusApplication.getAssetPlus();
       Manager manager = new Manager(data.get("email"), "Lebron", data.get("password"), "(555)555-5555", assetPlus);
       assetPlus.setManager(manager);
     }
