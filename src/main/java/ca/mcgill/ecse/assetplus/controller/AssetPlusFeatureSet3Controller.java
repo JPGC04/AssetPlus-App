@@ -7,7 +7,10 @@ import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import java.sql.Date;
 import java.util.List;
 
-
+/**
+ *Add, update, and delete Asset
+ *@author Seungyeon Lee
+ */
 public class AssetPlusFeatureSet3Controller {
   
   private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
