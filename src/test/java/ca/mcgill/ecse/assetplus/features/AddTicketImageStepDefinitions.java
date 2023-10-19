@@ -132,7 +132,10 @@ private int errorCntr;
     callController(AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(string, Integer.parseInt(string2)));
   }
 
-  //REWORKED AND WORKING
+  /**
+   * Verifies the number of images in the system
+   * @param string The expected number of images in the system
+   */
   @Then("the number of images in the system shall be {string} \\(p5)")
   public void the_number_of_images_in_the_system_shall_be_p5(String string) {
 	  
@@ -157,27 +160,30 @@ private int errorCntr;
   private Supplier<String> parseInt(String string) {
     return null;
   }
-
+  /**
+   * Verifies what ticket images are in the system
+   * @param dataTable contains data, in table form, of the imageURL and ticketId
+   */
   @Then("the following ticket images shall exist in the system \\(p5)")
-public void the_following_ticket_images_shall_exist_in_the_system_p5(
+  public void the_following_ticket_images_shall_exist_in_the_system_p5(
         io.cucumber.datatable.DataTable dataTable) {
-  List<Map<String, String>> ticketimages = dataTable.asMaps();
+    List<Map<String, String>> ticketimages = dataTable.asMaps();
   
-  for (Map<String, String> data : ticketimages) {
-    boolean image_found=false;
-    String url=data.get("imageUrl");
-    String id=data.get("ticketId");
-    MaintenanceTicket ticket=MaintenanceTicket.getWithId(Integer.parseInt(id));
-    for (TicketImage image:ticket.getTicketImages()) {
-      if(url.equals(image.getImageURL())){
-        image_found=true;
+    for (Map<String, String> data : ticketimages) {
+      boolean image_found=false;
+      String url=data.get("imageUrl");
+      String id=data.get("ticketId");
+      MaintenanceTicket ticket=MaintenanceTicket.getWithId(Integer.parseInt(id));
+      for (TicketImage image:ticket.getTicketImages()) {
+        if(url.equals(image.getImageURL())){
+          image_found=true;
+        }
+      }
+      if(!image_found){
+      
       }
     }
-    if(!image_found){
-      
-    }
   }
-}
   
   
   //THIS NEEDS TO BE FIXED
@@ -197,10 +203,10 @@ public void the_following_ticket_images_shall_exist_in_the_system_p5(
     List<TicketImage> images = ticket.getTicketImages();
     for (TicketImage image : images) {
       if (!(image.getImageURL() == null)) {
-    	  if (image.getImageURL().equals(url)) {
-    		  return;
+      	  if (image.getImageURL().equals(url)) {
+      		  return;
+          }
       }
-    }
     }
     fail();
   }
