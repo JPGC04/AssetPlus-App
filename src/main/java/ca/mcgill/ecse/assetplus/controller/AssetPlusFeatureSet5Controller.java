@@ -58,7 +58,6 @@ public class AssetPlusFeatureSet5Controller {
    * 
    * @param imageURL a string that contains the URL of an image
    * @param ticketID an integer that cointains the ID number of a specific maintenance ticket
-   * @return nothing
    */
 
   public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
