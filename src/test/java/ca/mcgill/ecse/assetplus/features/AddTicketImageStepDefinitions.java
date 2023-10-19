@@ -21,6 +21,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 public class AddTicketImageStepDefinitions {
 private AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 private String error;
@@ -117,7 +118,7 @@ private int errorCntr;
 	  
     List<Map<String, String>> images = dataTable.asMaps();
     for (Map<String, String> data : images) {
-    	String imageUrl = data.get("imageURL");
+    	String imageUrl = data.get("imageUrl");
     	int ticketId = Integer.parseInt(data.get("ticketId"));
     	MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
     	new TicketImage(imageUrl, ticket);
@@ -151,6 +152,10 @@ private int errorCntr;
 
   
   
+  private Supplier<String> parseInt(String string) {
+    return null;
+  }
+
   @Then("the following ticket images shall exist in the system \\(p5)")
 public void the_following_ticket_images_shall_exist_in_the_system_p5(
         io.cucumber.datatable.DataTable dataTable) {
