@@ -8,7 +8,9 @@ import ca.mcgill.ecse.assetplus.model.Employee;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.Manager;
+import ca.mcgill.ecse.assetplus.model.TicketImage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -101,8 +103,17 @@ public class AddTicketImageStepDefinitions {
 
   @Then("the number of images in the system shall be {string} \\(p5)")
   public void the_number_of_images_in_the_system_shall_be_p5(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int numOfImages = 0;
+    List<MaintenanceTicket> maintenanceTickets = assetPlus.getMaintenanceTickets();
+    for (MaintenanceTicket aTicket : maintenanceTickets) {
+      List<TicketImage> ticketImage = aTicket.getTicketImages();
+      int thisTicketImageSize = ticketImage.size();
+      if (thisTicketImageSize != 0) {
+        numOfImages += thisTicketImageSize;
+      }
+    }
+    String strNumOfImages = Integer.toString(numOfImages);
+    assertEquals(string, strNumOfImages);
   }
 
   @Then("the following ticket images shall exist in the system \\(p5)")
