@@ -17,7 +17,7 @@ private static AssetPlus assetplus=AssetPlusApplication.getAssetPlus();
 		  return "Empty Image URL";
 	  }
 	  
-	  if (!imageURL.startsWith("http://") || !imageURL.startsWith("https://")) {
+	  if (!imageURL.startsWith("http://") && !imageURL.startsWith("https://")) {
 		  return "imageURL must starts with http or https";
 	  }
 	  
