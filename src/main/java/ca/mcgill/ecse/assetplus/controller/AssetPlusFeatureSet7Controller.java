@@ -7,7 +7,7 @@ import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 /**
- @NizarKheireddine
+ @author NizarKheireddine
  */
 public class AssetPlusFeatureSet7Controller {
   private static AssetPlus assetplus=AssetPlusApplication.getAssetPlus();
