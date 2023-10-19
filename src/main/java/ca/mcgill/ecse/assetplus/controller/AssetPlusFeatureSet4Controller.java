@@ -7,14 +7,31 @@ import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 
-//Yazid Asselah
-//Dramocrystal
+/**
+ * AssetPlusFeatureSet4Controller is the main entity that we'll be using to add, update, and delete MaintenanceTicket
+ * 
+ * @author Yazid Asselah -- Dramocrystal
+ * @version ECSE 223 - Group Project Iteration 2a
+ * @since ECSE 223 - Group Project Iteration 2a
+ */
 
 public class AssetPlusFeatureSet4Controller {
 
   private static AssetPlus assetplus=AssetPlusApplication.getAssetPlus();
 
   // assetNumber -1 means that no asset is specified
+
+    /**
+   * Adds an MainteanceTicket type with the given id, date, description, email, assetnumber.
+   * Written by: Yazid Asselah
+   * 
+   * @param id an int corresponding to the id of the ticket
+   * @param raisedOnDate a Date object corresponding to the date of when the ticket was created
+   * @param description a String that will contain the description of the ticket
+   * @param email a String that will enable us to retrace the raiser of the ticket
+   * @param assetNumber an int that will enable us to retrace the specific asset, if -1 it means no asset
+   * @return a string that indicates the error, if no error returns an empty string
+   */
 
   public static String addMaintenanceTicket(int id, Date raisedOnDate, String description,
       String email, int assetNumber) {
@@ -60,6 +77,18 @@ public class AssetPlusFeatureSet4Controller {
   }
 
   // newAssetNumber -1 means that no asset is specified
+   /**
+   * Updates a MainteanceTicket type with the given id, date, description, email, assetnumber.
+   * Written by: Yazid Asselah
+   * 
+   * @param id an int corresponding to the id of the ticket
+   * @param newrRaisedOnDate a Date object corresponding to the date of when the ticket was updated
+   * @param newDescription a String that will contain the new description of the ticket
+   * @param newEmail a String that will enable us to retrace the editor of the ticket
+   * @param assetNumber an int that will enable us to retrace the specific asset, if -1 it means no asset
+   * @return a string that indicates the error, if no error returns an empty string
+   */
+
   public static String updateMaintenanceTicket(int id, Date newRaisedOnDate, String newDescription,
       String newEmail, int newAssetNumber) {
 
@@ -102,6 +131,15 @@ public class AssetPlusFeatureSet4Controller {
 
         return "";
   }
+
+   /**
+   * Deletes a MainteanceTicket type with the given id
+   * Written by: Yazid Asselah
+   * 
+   * @param id an int corresponding to the id of the ticket
+   * @return nothing
+   */
+
 
   public static void deleteMaintenanceTicket(int id) {
     //Find ticket
