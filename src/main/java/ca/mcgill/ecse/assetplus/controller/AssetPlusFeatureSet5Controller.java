@@ -22,11 +22,11 @@ private static AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
   public static String addImageToMaintenanceTicket(String imageURL, int ticketID) {
 	  
 	  if (imageURL == null || imageURL.isEmpty() ) {
-		  return "Empty Image URL";
+		  return "Image URL cannot be empty";
 	  }
 	  
 	  if (!imageURL.startsWith("http://") && !imageURL.startsWith("https://")) {
-		  return "imageURL must starts with http or https";
+		  return "Image URL must start with http:// or https://";
 	  }
 	  
     MaintenanceTicket maintenanceTicket = Utils.getMaintenanceTicketbyID(ticketID);
@@ -35,7 +35,7 @@ private static AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
     	List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
     	for (TicketImage image : ticketImages) {
           if (imageURL.equals(image.getImageURL())) {
-               return "Cannot have duplicate image URL: ";
+               return "Image already exists for the ticket";
             }
         }
     	
@@ -43,7 +43,7 @@ private static AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
       
       return "";
     }
-    else return "Ticket not found";
+    else return "Ticket does not exist";
   }
 
   public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
