@@ -108,14 +108,19 @@ public class AddTicketImageStepDefinitions {
   @Then("the following ticket images shall exist in the system \\(p5)")
   public void the_following_ticket_images_shall_exist_in_the_system_p5(
           io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> tickets = dataTable.asMaps();
+    for (Map<String, String> data : tickets) {
+
+      String url=data.get("imageUrl");
+      String id=data.get("ticketId");
+      MaintenanceTicket ticket=getTicketById(assetPlus.getMaintenanceTickets(),id);
+      for (TicketImage image:ticket.getTicketImages()) {
+        if(Objects.equals(image.getImageURL(), url)){
+          return;
+        }
+      }
+    }
+    fail();
   }
 
   @Then("the ticket with id {string} shall have an image with url {string} \\(p5)")
