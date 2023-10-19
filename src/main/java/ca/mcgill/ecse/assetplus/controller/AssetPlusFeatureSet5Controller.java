@@ -23,9 +23,7 @@ public class AssetPlusFeatureSet5Controller {
         if(imageURL == image.getImageURL()){
           maintenanceTicket.removeTicketImage(image);
         }
-        else throw new RuntimeException("Image not found");
       }
-    }
-    else throw new RuntimeException("Ticket not found");
+    } 
   }
 }

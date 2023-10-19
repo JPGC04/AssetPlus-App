@@ -11,7 +11,12 @@ import java.util.List;
 public class AssetPlusFeatureSet3Controller {
   
   private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
-
+  /**
+   * <p>Input validation for the parameteres</p>
+   * @param assetNumber: # of asset
+   * @param floorNumber: floor number of asset
+   * @param roomNumber: room number of asset
+   */
   private static String isValidAsset(int assetNumber, int floorNumber, int roomNumber) {
     var error = "";
     if (assetNumber < 1) {
@@ -126,7 +131,12 @@ public class AssetPlusFeatureSet3Controller {
 
     return error;
   }
-
+  
+  /**
+   * <p>Deletes an asset given its asset number</p>
+   * @param assetNumber asset number of SpecificAsset
+   */
+  
   public static void deleteSpecificAsset(int assetNumber) {
         int index = getSpecificAsset(assetNumber);
     if (index != -1) {
