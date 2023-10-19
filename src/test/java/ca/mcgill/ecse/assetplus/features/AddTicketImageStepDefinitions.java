@@ -33,7 +33,7 @@ public class AddTicketImageStepDefinitions {
   public void the_following_manager_exists_in_the_system_p5(
       io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> managerData = dataTable.asMaps(String.class, String.class);
-    AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
+    assetPlus = AssetPlusApplication.getAssetPlus();
     for (Map<String, String> data : managerData) {
       
       Manager manager = new Manager(data.get("email"), "Lebron", data.get("password"), "(555)555-5555", assetPlus);
@@ -111,9 +111,19 @@ public class AddTicketImageStepDefinitions {
 
   @Then("the number of images for ticket with id {string} in the system shall be {string} \\(p5)")
   public void the_number_of_images_for_ticket_with_id_in_the_system_shall_be_p5(String string,
-                                                                                String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+      String string2) {
+    List<MaintenanceTicket> maintenanceTickets = assetPlus.getMaintenanceTickets();
+    MaintenanceTicket t = getTicketById(maintenanceTickets, string);
+    assertEquals(Integer.valueOf(string2), t.numberOfTicketImages());
+  }
+
+  private MaintenanceTicket getTicketById(List<MaintenanceTicket> maintenanceTickets, String string) {
+    for (MaintenanceTicket t : maintenanceTickets) {
+      if (Integer.toString(t.getId()).equals(string) ) {
+        return t;
+      }
+    }
+    return null;
   }
 
   @Then("the system shall raise the error {string} \\(p5)")
