@@ -1,51 +1,58 @@
 package ca.mcgill.ecse.assetplus.controller;
 
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 
 public class AssetPlusFeatureSet2Controller {
 
   public static String addAssetType(String name, int expectedLifeSpanInDays) {
-    if (name == null) {
-      throw new IllegalArgumentException("Enter approporaite name");
+    if (name == null || name.length() == 0) {
+      throw new IllegalArgumentException("Enter appropriate name");
     }
-    if (expectedLifeSpanInDays == null) {
-      throw new IllegalArgumentException("Enter approporaite Life Span");
+    if (expectedLifeSpanInDays <= 0) {
+      throw new IllegalArgumentException("Enter appropriate lifespan");
     }
 
     AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
-    assetPlus.assetType(name, expectedLifeSpanInDays, assetPlus);
-    
-    // Remove this exception when you implement this method
-    // throw new UnsupportedOperationException("Not Implemented!");
+    assetPlus.addAssetType(name, expectedLifeSpanInDays);
+
+    return "Asset type added";
   }
 
   public static String updateAssetType(String oldName, String newName, int newExpectedLifeSpanInDays) {
-    if (oldName == null) {
-      throw new IllegalArgumentException("Enter approporaite old name");
+    if (oldName == null || oldName.length() == 0) {
+      throw new IllegalArgumentException("Enter appropriate old name");
     }
-    if (oldName == null) {
-      throw new IllegalArgumentException("Enter approporaite new name");
+    if (newName == null || newName.length() == 0) {
+      throw new IllegalArgumentException("Enter appropriate new name");
     }
-    if (newExpectedLifeSpanInDays == null) {
-      throw new IllegalArgumentException("Enter approporaite expected lifespan");
+    if (newExpectedLifeSpanInDays <= 0) {
+      throw new IllegalArgumentException("Enter appropriate expected lifespan");
     }
 
-    oldName.setName(newName);
-    newName.setExpectedLifeSpan(newExpectedLifeSpanInDays);
+    AssetType assetType = AssetType.getWithName(oldName);
+    if (assetType == null) {
+      throw new IllegalArgumentException("Enter appropriate old name for asset type");
+    }
 
-    // Remove this exception when you implement this method
-    // throw new UnsupportedOperationException("Not Implemented!");
+    assetType.setName(newName);
+    assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
+
+    return "Asset type updated";
   }
 
   public static void deleteAssetType(String name) {
-    if (name == null) {
-      throw new IllegalArgumentException("Enter approporaite name");
+    if (name == null || name.length() == 0) {
+      throw new IllegalArgumentException("Enter appropriate name");
     }
-    name.delete();
+    
+    AssetType assetType = AssetType.getWithName(name);
+    if (assetType == null) {
+      throw new IllegalArgumentException("Enter appropriate name for asset type");
+    }
 
-    // Remove this exception when you implement this method
-    // throw new UnsupportedOperationException("Not Implemented!");
+    assetType.delete();
   }
 
 }
