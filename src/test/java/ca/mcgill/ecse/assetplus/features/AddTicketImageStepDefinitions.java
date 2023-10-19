@@ -184,23 +184,16 @@ private int errorCntr;
     String url = string2;
     int id = Integer.parseInt(string);
     
-    MaintenanceTicket test = assetPlus.getMaintenanceTicket(id);
-    System.out.println("TEST");
-    System.out.println(test.getTicketImages());
-    System.out.println("TEST");
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
-    System.out.println("TICKET");
-    System.out.println(ticket.getTicketImages());
-    System.out.println("TICKET");
     
     
     List<TicketImage> images = ticket.getTicketImages();
-    System.out.println(images);
     for (TicketImage image : images) {
-    	System.out.println(image.getImageURL());
-    	if (image.getImageURL().equals(url)) {
-    		return;
+      if (!(image.getImageURL() == null)) {
+    	  if (image.getImageURL().equals(url)) {
+    		  return;
       }
+    }
     }
     fail();
   }
