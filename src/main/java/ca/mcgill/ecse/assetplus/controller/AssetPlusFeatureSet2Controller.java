@@ -112,11 +112,9 @@ public class AssetPlusFeatureSet2Controller {
 
     AssetType assetType = AssetType.getWithName(name);
 
-    if (!(assetType.getName().equals(name))) {
-      return;
+    if (assetType != null) {
+      assetType.delete();;
     }
-
-    assetType.delete();
   }
 
 }
