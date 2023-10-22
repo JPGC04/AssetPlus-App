@@ -12,9 +12,10 @@ For more information about the AssetPlus application, please consult the [wiki](
 
 | Name          | GitHub username |
 | ------------- | --------------- |
-| Team Member A | ...             |
-| Team Member B | ...             |
+| Team Member A | Dramocrystal    |
+| Team Member B | sdotlee24       |
 | Team Member C | ...             |
 | Team Member D | ...             |
-| Team Member E | ...             |
+| Team Member E | AlanBrotherton  |
 | Team Member F | ...             |
+| Team Member G | ...             |
