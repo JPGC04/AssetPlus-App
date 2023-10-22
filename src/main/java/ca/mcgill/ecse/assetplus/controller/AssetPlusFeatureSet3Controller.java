@@ -26,13 +26,13 @@ public class AssetPlusFeatureSet3Controller {
   private static String isValidAsset(int assetNumber, int floorNumber, int roomNumber) {
     var error = "";
     if (assetNumber < 1) {
-      error = "The Asset number must be greater than or equal to one.";
+      error = "The asset number shall not be less than 1";
     }
     if (floorNumber < 0) {
-      error = "The floor number must be greater than or equal to zero.";
+      error = "The floor number shall not be less than 0";
     }
     if (roomNumber < -1) {
-      error = "The room number must be greater than or equal to minus one.";
+      error = "The room number shall not be less than -1";
     }
 
     return error.trim();
@@ -101,7 +101,7 @@ public class AssetPlusFeatureSet3Controller {
           error = "The specific asset cannot be added.";
         }
     } else {
-      return "The asset type: " + assetTypeName + " Does not exist.";
+      return "The asset type does not exist";
     }
     return error;
   }
@@ -127,7 +127,7 @@ public class AssetPlusFeatureSet3Controller {
     }
     AssetType newAssetType = getAssetType(newAssetTypeName);
     if (newAssetType == null) {
-      return "The asset type: " + newAssetTypeName + " Does not exist.";
+      return "The asset type does not exist";
     }
     SpecificAsset asset = assetPlus.getSpecificAsset(index);
     asset.setFloorNumber(newFloorNumber);
@@ -144,7 +144,7 @@ public class AssetPlusFeatureSet3Controller {
    */
   
   public static void deleteSpecificAsset(int assetNumber) {
-        int index = getSpecificAsset(assetNumber);
+    int index = getSpecificAsset(assetNumber);
     if (index != -1) {
       SpecificAsset removableAsset = assetPlus.getSpecificAsset(index);
       assetPlus.removeSpecificAsset(removableAsset);
