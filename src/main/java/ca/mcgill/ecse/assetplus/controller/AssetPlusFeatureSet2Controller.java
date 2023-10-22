@@ -11,7 +11,7 @@ import java.util.List;
  * asset types
  * 
  * @author John-Paul Chouery
- * @version ECSE 223 - Group Project Iteration 2a
+ * @version ECSE 223 - Group Project Iteration 2b
  * @since ECSE 223 - Group Project Iteration 2a
  */
 public class AssetPlusFeatureSet2Controller {
@@ -23,25 +23,24 @@ public class AssetPlusFeatureSet2Controller {
    * Written by: John-Paul Chouery
    * 
    * @param name a string containing the name of the asset type
-   * @param expectedLifeSpanInDays an int containing the expected life span of the asset type in
+   * @param expectedLifeSpanInDays an integer containing the expected life span of the asset type in
    *        days
-   * @throws IllegalArgumentException if name empty, expected lifespan less than 1, or asset type
-   *         already exists
+   * @return string containing error message if error detected
    * @return empty string if no error detected and asset type added
    */
   public static String addAssetType(String name, int expectedLifeSpanInDays) {
     if (name == null || name.length() == 0) {
-      throw new IllegalArgumentException("The name must not be empty");
+      return "The name must not be empty";
     }
     if (expectedLifeSpanInDays <= 0) {
-      throw new IllegalArgumentException("The expected life span must be greater than 0 days");
+      return "The expected life span must be greater than 0 days";
     }
 
     if (assetPlus.hasAssetTypes()) {
       List<AssetType> assetTypes = assetPlus.getAssetTypes();
       for (AssetType aType : assetTypes) {
         if (aType.getName().equals(name)) {
-          throw new IllegalArgumentException("The asset type already exists");
+          return "The asset type already exists";
         }
       }
     }
@@ -58,19 +57,18 @@ public class AssetPlusFeatureSet2Controller {
    * 
    * @param oldName a string containing the name of the asset type to be updated
    * @param newName a string containing the new name of the asset type to be updated
-   * @param newExpectedLifeSpanInDays a string containing the new expected life span of the asset
+   * @param newExpectedLifeSpanInDays an integer containing the new expected life span of the asset
    *        type to be updated
-   * @throws IllegalArgumentException if names are empty, expected lifespan less than 1, old asset
-   *         type does not already exists, or new asset type already exists
+   * @return string containing error message if error detected
    * @return empty string if no error detected and asset type updated
    */
   public static String updateAssetType(String oldName, String newName,
       int newExpectedLifeSpanInDays) {
     if (oldName == null || oldName.length() == 0 || newName == null || newName.length() == 0) {
-      throw new IllegalArgumentException("The name must not be empty");
+      return "The name must not be empty";
     }
     if (newExpectedLifeSpanInDays <= 0) {
-      throw new IllegalArgumentException("The expected life span must be greater than 0 days");
+      return "The expected life span must be greater than 0 days";
     }
 
     if (assetPlus.hasAssetTypes()) {
@@ -78,17 +76,17 @@ public class AssetPlusFeatureSet2Controller {
       int exist = 0;
       for (AssetType aType : assetTypes) {
         if (aType.getName().equals(newName)) {
-          throw new IllegalArgumentException("The asset type already exists");
+          return "The asset type already exists";
         }
         if (aType.getName().equals(oldName) && exist == 0) {
           exist = 1;
         }
       }
       if (exist == 0) {
-        throw new IllegalArgumentException("The asset type does not exist");
+        return "The asset type does not exist";
       }
     } else {
-      throw new IllegalArgumentException("The asset type does not exist");
+      return "The asset type does not exist";
     }
 
     AssetType assetType = AssetType.getWithName(oldName);
@@ -103,17 +101,16 @@ public class AssetPlusFeatureSet2Controller {
    * Written by: John-Paul Chouery
    * 
    * @param name a string containing the name of the asset type to be deleted
-   * @throws IllegalArgumentException if name is null or has a length of 0
    */
   public static void deleteAssetType(String name) {
     if (name == null || name.length() == 0) {
-      throw new IllegalArgumentException("The name must not be empty");
+      return;
     }
 
     AssetType assetType = AssetType.getWithName(name);
 
     if (assetType != null) {
-      assetType.delete();;
+      assetType.delete();
     }
   }
 
