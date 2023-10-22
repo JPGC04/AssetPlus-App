@@ -103,14 +103,12 @@ public class AssetPlusFeatureSet2Controller {
    * @param name a string containing the name of the asset type to be deleted
    */
   public static void deleteAssetType(String name) {
-    if (name == null || name.length() == 0) {
-      return;
-    }
-
-    AssetType assetType = AssetType.getWithName(name);
-
-    if (assetType != null) {
-      assetType.delete();
+    if (name != null && name.length() > 0) {
+      AssetType assetType = AssetType.getWithName(name);
+      
+      if (assetType != null) {
+        assetType.delete();
+      }
     }
   }
 
