@@ -29,7 +29,7 @@ public class AssetPlusFeatureSet6Controller {
   public static void deleteEmployeeOrGuest(String email) {
     
     if (getEmployeeByEmail(email) == null && getGuestByEmail(email) == null) {
-      throw new IllegalArgumentException("Invalid email address");
+      return;
     } 
     
     if (email.contains("@ap.com")){
