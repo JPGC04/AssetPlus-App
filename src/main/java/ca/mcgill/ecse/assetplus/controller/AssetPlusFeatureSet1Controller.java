@@ -37,7 +37,7 @@ public class AssetPlusFeatureSet1Controller {
 	      }
 	  }
       
-	  if(password == null){
+	  if(password == null || password == ""){
 			return "Password cannot be empty ";
 		}
 	  if(password.length() < 4){
@@ -72,7 +72,7 @@ public class AssetPlusFeatureSet1Controller {
   public static String addEmployeeOrGuest(String email, String password, String name, String phoneNumber,
         boolean isEmployee) {
 	  AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
-	  if (email == "manager@ap.com") {
+	  if (email.equals("manager@ap.com")) {
 		  return "Email cannot be manager@ap.com";
 	  }
 	  if (email.contains(" ")) {
