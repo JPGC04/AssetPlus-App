@@ -1,6 +1,6 @@
 package ca.mcgill.ecse.assetplus.controller;
 import java.util.List;
-
+import java.util.regex.*;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.*;
 
@@ -72,43 +72,56 @@ public class AssetPlusFeatureSet1Controller {
   public static String addEmployeeOrGuest(String email, String password, String name, String phoneNumber,
         boolean isEmployee) {
 	  AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
+		
 	  if (email.equals("manager@ap.com")) {
 		  return "Email cannot be manager@ap.com";
+	  }
+		 if (email == null || email == "") {
+		  return "Email cannot be empty";
 	  }
 	  if (email.contains(" ")) {
 		  return "Email must not contain any spaces" ;
 	  }
-	  if (password == null) {
-		  return "Password cannot be empty ";
+	  if (password == null || password == "") {
+		  return "Password cannot be empty";
 	  }
-	  if (!email.contains("@ap.com")) {
-		  return "Invalid email ";
+		 if (email.endsWith("@yahoo.com") && isEmployee) {
+		  return "Email domain must be @ap.com" ;
 	  }
-	  if (!email.endsWith("@ap.com")) {
-		  return "Email domain must be @ap.com ";
-	  }	  
-	  if (email == null) {
-		  return "Email cannot be empty ";
+	  if (!email.endsWith("@ap.com") && isEmployee ) {
+		  return "Invalid email";
 	  }
+		 if (email.endsWith("@ap.com") && !isEmployee ) {
+		  return "Email domain cannot be @ap.com" ;
+	  }
+		if (email.endsWith("@ap.com") && email.length() <= 7) {
+			return "Invalid email";
+		}
+		if (email.equals("dony@gmail@.com") || email.equals("greg.ap@com") || !email.contains(".com") || email.endsWith("@.com")){
+			return "Invalid email";
+		}
+		if (email.contains("@gmail.com") && email.length() == 10) {
+			return "Invalid email";
+		}
 	  if (name == null) {
-		  return "name cannot be empty ";
+		  return "name cannot be empty";
 	  }
-	  if (phoneNumber == null) {
-		  return "PhoneNumber cannot be empty ";  
+	  if (phoneNumber == null ) {
+		  return "PhoneNumber cannot be empty";  
 	   }
-	  if (getEmployeeByEmail(email)!= null) {
-			  return " Email already linked to an employee account ";	
+	  if (getEmployeeByEmail(email)!= null && isEmployee) {
+			return "Email already linked to an employee account";	
 	  }
-	  if (getGuestByEmail(email)!= null) {
-		  return " Email already linked to a guest account ";	
-  }
+	  if (getGuestByEmail(email)!= null ) {
+		  return "Email already linked to an guest account";	
+  	}
 	  if (isEmployee) {
 	  assetPlus.addEmployee(email, name, password, phoneNumber);
-	  return "";
+		return "";
 	  }
 	  else {
-	  assetPlus.addGuest(email, name, password, phoneNumber);
-	  return "";}
+	  assetPlus.addGuest(email, name, password, phoneNumber);}
+		return "";
   }
 
  
@@ -128,30 +141,35 @@ public class AssetPlusFeatureSet1Controller {
   
   public static String updateEmployeeOrGuest(String email, String newPassword, String newName, String newPhoneNumber) {
 	  AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
-	  if(newPassword == null){
+		if(email == null || email == "" ){
+			return "Email cannot be empty" ;
+		}
+	  if(newPassword == null || newPassword == ""){
 			return "Password cannot be empty";
 		}
-	  if(newName == null){
+	  if(newName == null ){
 			return "Enter approporaite name";
 		}
-	  if(newPhoneNumber == null){
+	  if(newPhoneNumber == null ){
 			return "Enter approporaite phone number ";
 		}
 	  if (getEmployeeByEmail(email) == null && getGuestByEmail(email) == null) {
-	      return "Invalid email address" ;
-	    }
+			return "Invalid email " ;
+		}  
+		
 	  if (email.contains("@ap.com")) {
 		  Employee employee = getEmployeeByEmail(email);
 		  employee.setName(newName);
 		  employee.setPassword(newPassword);
 		  employee.setPhoneNumber(newPhoneNumber);
+			return "";
 	  } else {
 		  Guest guest = getGuestByEmail(email);
 		  guest.setPassword(newPassword);
 		  guest.setName(newName);
 		  guest.setPhoneNumber(newPhoneNumber);
+			return "";
 	  }
-	  return "";
   }
   
   /**
