@@ -1,6 +1,7 @@
 package ca.mcgill.ecse.assetplus.controller;
 
 import java.util.List;
+import javax.management.RuntimeErrorException;
 import java.util.ArrayList;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
@@ -86,7 +87,7 @@ public class AssetPlusFeatureSet6Controller {
   public static List<TOMaintenanceTicket> getTickets() {
     AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
     List<MaintenanceTicket> maintenanceTickets = assetplus.getMaintenanceTickets();
-    List<TOMaintenanceTicket> TOMaintenanceTickets = null;
+    List<TOMaintenanceTicket> TOMaintenanceTickets = new ArrayList<TOMaintenanceTicket>();
     for (MaintenanceTicket t : maintenanceTickets) {
       TOMaintenanceTickets.add(createTOMaintenanceTicket(t));
     }
@@ -105,13 +106,13 @@ public class AssetPlusFeatureSet6Controller {
       Date aRaisedOnDate = t.getRaisedOnDate();
       String aDescription = t.getDescription();
       String aRaisedByEmail = t.getTicketRaiser().getEmail();
-      SpecificAsset specificAsset = t.getAsset();
-      String aAssetName = t.getAsset().getAssetType().getName();
-      int aExpectLifeSpanInDays = specificAsset.getAssetType().getExpectedLifeSpan();
-      Date aPurchaseDate = specificAsset.getPurchaseDate();
-      int aFloorNumber = specificAsset.getFloorNumber();
-      int aRoomNumber = specificAsset.getRoomNumber();
-      List<String> aImageURLs = null;
+      SpecificAsset specificAsset = (t.getAsset() != null) ? t.getAsset() : null;
+      String aAssetName = (t.getAsset() != null) ? t.getAsset().getAssetType().getName() : null ;
+      int aExpectLifeSpanInDays = (specificAsset != null) ? specificAsset.getAssetType().getExpectedLifeSpan() : -1;
+      Date aPurchaseDate = (specificAsset != null) ? specificAsset.getPurchaseDate() : null;
+      int aFloorNumber = (specificAsset != null) ? specificAsset.getFloorNumber() : -1;
+      int aRoomNumber = (specificAsset != null) ? specificAsset.getRoomNumber() : -1;
+      List<String> aImageURLs = new ArrayList<String>();
       List<TicketImage> ticketImages = t.getTicketImages();
       for (TicketImage i : ticketImages) {
         aImageURLs.add(i.getImageURL());
@@ -122,11 +123,11 @@ public class AssetPlusFeatureSet6Controller {
       for (MaintenanceNote n : allNotes) {
         TOmaintenanceNotes.add(createTOMaintenanceNote(n));
       }
-      
       TOMaintenanceTicket aTOMaintenanceTicket = new TOMaintenanceTicket(aId, aRaisedOnDate, aDescription, aRaisedByEmail, aAssetName, aExpectLifeSpanInDays,  aPurchaseDate, aFloorNumber, aRoomNumber, aImageURLs, TOmaintenanceNotes.toArray(new TOMaintenanceNote[TOmaintenanceNotes.size()]));
       return aTOMaintenanceTicket;
+
     } catch (Exception e) {
-      return null;
+      throw e;
     } 
   }
   /**
@@ -146,6 +147,4 @@ public class AssetPlusFeatureSet6Controller {
       return null;
     }
   }
-
-  
 }
