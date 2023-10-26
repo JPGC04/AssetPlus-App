@@ -4,8 +4,6 @@ import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 
-import java.util.List;
-
 /**
  * AssetPlusFeatureSet2Controller is the main entity that we'll be using to add, update, and delete
  * asset types
@@ -36,13 +34,8 @@ public class AssetPlusFeatureSet2Controller {
       return "The expected life span must be greater than 0 days";
     }
 
-    if (assetPlus.hasAssetTypes()) {
-      List<AssetType> assetTypes = assetPlus.getAssetTypes();
-      for (AssetType aType : assetTypes) {
-        if (aType.getName().equals(name)) {
-          return "The asset type already exists";
-        }
-      }
+    if (AssetType.getWithName(name) != null) {
+      return "The asset type already exists";
     }
 
     AssetType assetType = new AssetType(name, expectedLifeSpanInDays, assetPlus);
@@ -71,30 +64,12 @@ public class AssetPlusFeatureSet2Controller {
       return "The expected life span must be greater than 0 days";
     }
 
-    int oldExist = 0;
-    int newExist = 0;
-
-    if (assetPlus.hasAssetTypes()) {
-      List<AssetType> assetTypes = assetPlus.getAssetTypes();
-      for (AssetType aType : assetTypes) {
-        if (aType.getName().equals(newName)) {
-          newExist = 1;
-          if (aType.getExpectedLifeSpan() == (newExpectedLifeSpanInDays)) {
-            return "The asset type already exists";
-          }
-        }
-        if (aType.getName().equals(oldName)) {
-          oldExist = 1;
-        }
-      }
-      if (oldExist == 0) {
-        return "The asset type does not exist";
-      }
-    } else {
+    if (AssetType.getWithName(oldName) == null) {
       return "The asset type does not exist";
     }
-
-    if (!oldName.equals(newName) && newExist == 1) {
+    if (AssetType.getWithName(newName) != null
+        && (AssetType.getWithName(newName).getExpectedLifeSpan() == newExpectedLifeSpanInDays
+            || !oldName.equals(newName))) {
       return "The asset type already exists";
     }
 
