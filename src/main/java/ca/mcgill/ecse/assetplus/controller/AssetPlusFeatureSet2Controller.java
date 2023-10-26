@@ -71,22 +71,31 @@ public class AssetPlusFeatureSet2Controller {
       return "The expected life span must be greater than 0 days";
     }
 
+    int oldExist = 0;
+    int newExist = 0;
+
     if (assetPlus.hasAssetTypes()) {
       List<AssetType> assetTypes = assetPlus.getAssetTypes();
-      int exist = 0;
       for (AssetType aType : assetTypes) {
         if (aType.getName().equals(newName)) {
-          return "The asset type already exists";
+          newExist = 1;
+          if (aType.getExpectedLifeSpan() == (newExpectedLifeSpanInDays)) {
+            return "The asset type already exists";
+          }
         }
-        if (aType.getName().equals(oldName) && exist == 0) {
-          exist = 1;
+        if (aType.getName().equals(oldName)) {
+          oldExist = 1;
         }
       }
-      if (exist == 0) {
+      if (oldExist == 0) {
         return "The asset type does not exist";
       }
     } else {
       return "The asset type does not exist";
+    }
+
+    if (!oldName.equals(newName) && newExist == 1) {
+      return "The asset type already exists";
     }
 
     AssetType assetType = AssetType.getWithName(oldName);
@@ -105,7 +114,7 @@ public class AssetPlusFeatureSet2Controller {
   public static void deleteAssetType(String name) {
     if (name != null && name.length() > 0) {
       AssetType assetType = AssetType.getWithName(name);
-      
+
       if (assetType != null) {
         assetType.delete();
       }
