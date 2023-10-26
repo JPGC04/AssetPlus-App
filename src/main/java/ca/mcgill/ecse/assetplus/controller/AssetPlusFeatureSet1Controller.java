@@ -113,7 +113,7 @@ public class AssetPlusFeatureSet1Controller {
 			return "Email already linked to an employee account";	
 	  }
 	  if (getGuestByEmail(email)!= null ) {
-		  return "Email already linked to an guest account";	
+		  return "Email already linked to a guest account";	
   	}
 	  if (isEmployee) {
 	  assetPlus.addEmployee(email, name, password, phoneNumber);
