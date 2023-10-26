@@ -68,7 +68,8 @@ public class AssetPlusFeatureSet5Controller {
       
       for (TicketImage image : ticketImages) {
         if(imageURL.equals(image.getImageURL())){
-          maintenanceTicket.removeTicketImage(image);
+          image.delete();
+          return;
         }
       }
     }
