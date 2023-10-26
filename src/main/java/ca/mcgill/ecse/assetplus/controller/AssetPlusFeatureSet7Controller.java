@@ -6,6 +6,7 @@ import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.model.User;
 /**
  @author NizarKheireddine
  */
@@ -29,11 +30,11 @@ public class AssetPlusFeatureSet7Controller {
       String s = "Ticket description cannot be empty";
       return s;
     }
-    MaintenanceTicket ticket=Utils.getMaintenanceTicketbyID(ticketID);
+    MaintenanceTicket ticket=MaintenanceTicket.getWithId(ticketID);
     if(ticket==null){
       return "Ticket does not exist";
     }
-    HotelStaff staff=Utils.getHotelStaffbyemail(email);
+    HotelStaff staff=(HotelStaff) User.getWithEmail(email);
     if(staff==null){
       return "Hotel staff does not exist";
     }
@@ -54,11 +55,15 @@ public class AssetPlusFeatureSet7Controller {
    */
   public static String updateMaintenanceNote(int ticketID, int index, Date newDate,
       String newDescription, String newEmail) {
-    MaintenanceTicket ticket=Utils.getMaintenanceTicketbyID(ticketID);
+    MaintenanceTicket ticket=MaintenanceTicket.getWithId(ticketID);
     if(ticket==null){
       return "Ticket does not exist";
     }
-    HotelStaff staff=Utils.getHotelStaffbyemail(newEmail);
+    HotelStaff staff=(HotelStaff)User.getWithEmail(newEmail);
+    int number_of_notes=ticket.getTicketNotes().size();
+    if(index>=number_of_notes){
+      return "Note does not exist";
+    }
     MaintenanceNote maintenanceNote=ticket.getTicketNotes().get(index);
     if (newDescription==""||newDescription==null){
       String s = "Ticket description cannot be empty";
@@ -86,7 +91,14 @@ public class AssetPlusFeatureSet7Controller {
    * @return error message if there is any.
    */
   public static void deleteMaintenanceNote(int ticketID, int index) {
-    MaintenanceTicket ticket=Utils.getMaintenanceTicketbyID(ticketID);
+    MaintenanceTicket ticket=MaintenanceTicket.getWithId(ticketID);
+    if(ticket==null){
+        return;
+    }
+    int size=ticket.getTicketNotes().size();
+    if(size<=index||ticket==null){
+        return;
+    }
     MaintenanceNote maintenanceNote=ticket.getTicketNotes().get(index);
     if(maintenanceNote!=null){
       maintenanceNote.delete();
