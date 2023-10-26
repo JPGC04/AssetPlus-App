@@ -146,8 +146,7 @@ public class AssetPlusFeatureSet3Controller {
   public static void deleteSpecificAsset(int assetNumber) {
     int index = getSpecificAsset(assetNumber);
     if (index != -1) {
-      SpecificAsset removableAsset = assetPlus.getSpecificAsset(index);
-      assetPlus.removeSpecificAsset(removableAsset);
+      assetPlus.getSpecificAsset(index).delete();
     }
   }
 }
