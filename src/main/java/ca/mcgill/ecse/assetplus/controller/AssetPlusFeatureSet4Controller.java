@@ -38,7 +38,7 @@ public class AssetPlusFeatureSet4Controller {
       
         //Input validation constraint
         if (description.isEmpty() || description == null) {
-          return "Error Description cannot be empty";
+          return "Ticket description cannot be empty";
         }
 
         //Find the user by email
@@ -46,7 +46,7 @@ public class AssetPlusFeatureSet4Controller {
           User ticketRaiser = User.getWithEmail(email);
 
           if (ticketRaiser == null) {
-            return "User not found";
+            return "The ticket raiser does not exist";
           }
 
 
@@ -57,7 +57,7 @@ public class AssetPlusFeatureSet4Controller {
         if (assetNumber != -1) {
           specificAsset = SpecificAsset.getWithAssetNumber(assetNumber);
           if (specificAsset == null) {
-            return "Specific asset not found";
+            return "The asset does not exist";
           }
         }
         
@@ -70,7 +70,7 @@ public class AssetPlusFeatureSet4Controller {
           }
         } catch (RuntimeException e){
 
-          return e.getMessage();
+          return "Ticket id already exists";
         }
 
         return ""; 
@@ -96,13 +96,13 @@ public class AssetPlusFeatureSet4Controller {
 
         //Input validation constraint
         if (newDescription.isEmpty() || newDescription == null) {
-          return "Error Description cannot be empty";
+          return "Ticket description cannot be empty";
         }
 
         //Find specific user
         User newTicketRaiser = User.getWithEmail(newEmail);
           if (newTicketRaiser == null) {
-            return "User not found";
+            return "The ticket raiser does not exist";
           }
 
         //Find specific asset
@@ -111,12 +111,12 @@ public class AssetPlusFeatureSet4Controller {
         if (newAssetNumber != -1) {
           newSpecificAsset = SpecificAsset.getWithAssetNumber(newAssetNumber);
           if (newSpecificAsset == null) {
-            return "Specific asset not found";
+            return "The asset does not exist";
           }
         }
 
         //Find specific Ticket
-        MaintenanceTicket ticket = assetplus.getMaintenanceTicket(id);
+        MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
 
         if (ticket == null) {
           return "ticket not found";
@@ -127,6 +127,9 @@ public class AssetPlusFeatureSet4Controller {
         ticket.setRaisedOnDate(newRaisedOnDate);
         ticket.setTicketRaiser(newTicketRaiser);
         ticket.setTicketRaiser(newTicketRaiser);
+        if (newAssetNumber == -1) {
+          ticket.getAsset().delete();
+        }
         ticket.setAsset(newSpecificAsset);
 
         return "";
@@ -144,9 +147,12 @@ public class AssetPlusFeatureSet4Controller {
   public static void deleteMaintenanceTicket(int id) {
     //Find ticket
         //Find specific Ticket
-        MaintenanceTicket ticket = assetplus.getMaintenanceTicket(id);
+        MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
         
-        ticket.delete();
+        if (ticket != null) {
+          ticket.delete();
+        }
+        
   }
 
 }
