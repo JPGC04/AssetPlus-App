@@ -119,11 +119,11 @@ public class AssetPlusFeatureSet6Controller {
       }
       List<MaintenanceNote> allNotes = t.getTicketNotes();
       
-      ArrayList<TOMaintenanceNote> TOmaintenanceNotes = new ArrayList<TOMaintenanceNote>();
-      for (MaintenanceNote n : allNotes) {
-        TOmaintenanceNotes.add(createTOMaintenanceNote(n));
+      TOMaintenanceNote[] TOmaintenanceNotes = new TOMaintenanceNote[allNotes.size()];
+      for (int i = 0; i < allNotes.size(); i++) {
+        TOmaintenanceNotes[i] = createTOMaintenanceNote(allNotes.get(i));
       }
-      TOMaintenanceTicket aTOMaintenanceTicket = new TOMaintenanceTicket(aId, aRaisedOnDate, aDescription, aRaisedByEmail, aAssetName, aExpectLifeSpanInDays,  aPurchaseDate, aFloorNumber, aRoomNumber, aImageURLs, TOmaintenanceNotes.toArray(new TOMaintenanceNote[TOmaintenanceNotes.size()]));
+      TOMaintenanceTicket aTOMaintenanceTicket = new TOMaintenanceTicket(aId, aRaisedOnDate, aDescription, aRaisedByEmail, aAssetName, aRaisedByEmail, aDescription, aRaisedByEmail, false, aAssetName, aExpectLifeSpanInDays, aPurchaseDate, aFloorNumber, aRoomNumber, aImageURLs, TOmaintenanceNotes);
       return aTOMaintenanceTicket;
 
     } catch (Exception e) {
