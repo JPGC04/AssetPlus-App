@@ -5,7 +5,8 @@ package ca.mcgill.ecse.assetplus.model;
 import java.util.*;
 import java.sql.Date;
 
-// line 43 "../../../../../AssetPlus.ump"
+// line 44 "../../../../../AssetPlus.ump"
+// line 1 "../../../../../MaintenanceTicketStates.ump"
 public class MaintenanceTicket
 {
 
@@ -32,6 +33,11 @@ public class MaintenanceTicket
   private String description;
   private TimeEstimate timeToResolve;
   private PriorityLevel priority;
+  private boolean requiresApproval;
+
+  //MaintenanceTicket State Machines
+  public enum Status { Open, Assigned, InProgress, Resolved, Closed }
+  private Status status;
 
   //MaintenanceTicket Associations
   private List<MaintenanceNote> ticketNotes;
@@ -50,6 +56,7 @@ public class MaintenanceTicket
   {
     raisedOnDate = aRaisedOnDate;
     description = aDescription;
+    requiresApproval = false;
     if (!setId(aId))
     {
       throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
@@ -66,6 +73,7 @@ public class MaintenanceTicket
     {
       throw new RuntimeException("Unable to create raisedTicket due to ticketRaiser. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+    setStatus(Status.Open);
   }
 
   //------------------------
@@ -123,6 +131,14 @@ public class MaintenanceTicket
     return wasSet;
   }
 
+  public boolean setRequiresApproval(boolean aRequiresApproval)
+  {
+    boolean wasSet = false;
+    requiresApproval = aRequiresApproval;
+    wasSet = true;
+    return wasSet;
+  }
+
   public int getId()
   {
     return id;
@@ -156,6 +172,132 @@ public class MaintenanceTicket
   public PriorityLevel getPriority()
   {
     return priority;
+  }
+
+  public boolean getRequiresApproval()
+  {
+    return requiresApproval;
+  }
+
+  public String getStatusFullName()
+  {
+    String answer = status.toString();
+    return answer;
+  }
+
+  public Status getStatus()
+  {
+    return status;
+  }
+
+  public boolean assignTicket(int id,String employeeEmail,String aTimeToResolve,String aPriority,boolean requiresApproval)
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case Open:
+        // line 8 "../../../../../MaintenanceTicketStates.ump"
+        doAssignTicket(id, employeeEmail, aTimeToResolve, aPriority, requiresApproval);
+        setStatus(Status.Assigned);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean startProgress()
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case Assigned:
+        setStatus(Status.InProgress);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean Resolve()
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case InProgress:
+        if (!getRequiresApproval())
+        {
+          setStatus(Status.Closed);
+          wasEventProcessed = true;
+          break;
+        }
+        if (getRequiresApproval())
+        {
+          setStatus(Status.Resolved);
+          wasEventProcessed = true;
+          break;
+        }
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean disaprove(int id,Date aNoteDate,String description)
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case Resolved:
+        // line 24 "../../../../../MaintenanceTicketStates.ump"
+        doCreateMaintenanceNote(id, aNoteDate, description);
+        setStatus(Status.InProgress);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean approve()
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case Resolved:
+        setStatus(Status.Closed);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  //Changed to public
+  public void setStatus(Status aStatus)
+  {
+    status = aStatus;
   }
   /* Code from template association_GetMany */
   public MaintenanceNote getTicketNote(int index)
@@ -543,12 +685,68 @@ public class MaintenanceTicket
     }
   }
 
+  // line 35 "../../../../../MaintenanceTicketStates.ump"
+   private String doAssignTicket(int id, String employeeEmail, String aTimeToResolve, String aPriority, boolean requiresApproval){
+    //Get ticket
+        MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+        if (ticket == null) {
+            return "ticket not found";
+        }
+
+        if (ticket.status != status.Open) {
+          return "cannot assign ticket that is not in open state";
+        }
+        //Get employee
+        HotelStaff ticketFixer = (HotelStaff) User.getWithEmail(employeeEmail);
+        if (ticketFixer == null) {
+            return "The ticket fixer does not exist";
+          }
+        Manager fixApprover = (Manager) User.getWithEmail("manager@ap.com");
+
+        if (fixApprover == null) {
+            return "manager not found";
+          }
+        //Convert Strings
+        timeToResolve = TimeEstimate.valueOf(aTimeToResolve);
+        priority = PriorityLevel.valueOf(aPriority);
+
+        ticket.requiresApproval = requiresApproval;
+        ticket.timeToResolve = timeToResolve;
+        ticket.priority = priority;
+        ticket.ticketFixer = ticketFixer;
+        if (requiresApproval) {
+            ticket.fixApprover = fixApprover;
+        }   else {
+            ticket.fixApprover = null;
+        }
+        return "";
+  }
+
+  // line 70 "../../../../../MaintenanceTicketStates.ump"
+   private String doCreateMaintenanceNote(int id, Date aNoteDate, String description){
+    //Get Ticket
+        MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+        if (ticket == null) {
+            return "ticket not found";
+        }
+        //Convert string to date object
+        HotelStaff author = (HotelStaff) User.getWithEmail("manager@ap.com");
+
+        if (author == null) {
+            return "manager not found";
+          }
+        
+        MaintenanceNote Note = new MaintenanceNote(aNoteDate, description, ticket, author);
+        return "";
+  }
+
 
   public String toString()
   {
     return super.toString() + "["+
             "id" + ":" + getId()+ "," +
-            "description" + ":" + getDescription()+ "]" + System.getProperties().getProperty("line.separator") +
+            "description" + ":" + getDescription()+ "," +
+            "requiresApproval" + ":" + getRequiresApproval()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "raisedOnDate" + "=" + (getRaisedOnDate() != null ? !getRaisedOnDate().equals(this)  ? getRaisedOnDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "timeToResolve" + "=" + (getTimeToResolve() != null ? !getTimeToResolve().equals(this)  ? getTimeToResolve().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "priority" + "=" + (getPriority() != null ? !getPriority().equals(this)  ? getPriority().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
