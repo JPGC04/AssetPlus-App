@@ -20,6 +20,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 public class MaintenanceTicketsStepDefinitions {
   private AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
@@ -162,46 +165,63 @@ public class MaintenanceTicketsStepDefinitions {
       String string, String string2, String string3, String string4, String string5) {
 
     int id = Integer.parseInt(string);
-    String email = string2;
-    MaintenanceTicket.TimeEstimate timeEstimate = MaintenanceTicket.TimeEstimate.valueOf(string3);
-    MaintenanceTicket.PriorityLevel priority = MaintenanceTicket.PriorityLevel.valueOf(string4);
-    boolean requiresApproval = false;
-    if (string5.toLowerCase().equals("true")){
-      requiresApproval = true;
-    }
+    boolean requiresApproval = Boolean.parseBoolean(string5);
 
-    throw new io.cucumber.java.PendingException();
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+
+    ticket.assignTicket(id, string2, string3, string4, requiresApproval);
+    
   }
 
   @When("the hotel staff attempts to start the ticket {string}")
   public void the_hotel_staff_attempts_to_start_the_ticket(String string) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int ticketId = Integer.parseInt(string);
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    ticket.startProgress();
   }
 
   @When("the manager attempts to approve the ticket {string}")
   public void the_manager_attempts_to_approve_the_ticket(String string) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int ticketId = Integer.parseInt(string);
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    ticket.approve();
   }
 
   @When("the hotel staff attempts to complete the ticket {string}")
   public void the_hotel_staff_attempts_to_complete_the_ticket(String string) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int ticketId = Integer.parseInt(string);
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    ticket.Resolve();
   }
 
   @When("the manager attempts to disapprove the ticket {string} on date {string} and with reason {string}")
   public void the_manager_attempts_to_disapprove_the_ticket_on_date_and_with_reason(String string,
       String string2, String string3) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int ticketId = Integer.parseInt(string);
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    Date date = Date.valueOf(string2);
+
+    //TODO not sure what to put as id
+    ticket.disaprove(1, date, string3);
+
   }
 
+  /**
+   * Checks the state of a given maintenance ticket, after some operations.
+   * @param string TicketID of ticket we are testing.
+   * @param string2 The expected state of the maintenance ticket.
+   */
   @Then("the ticket {string} shall be marked as {string}")
   public void the_ticket_shall_be_marked_as(String string, String string2) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int ticketId = Integer.parseInt(string);
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    String state = ticket.getStatusFullName();
+    assertEquals(string2, state);
   }
 
   @Then("the system shall raise the error {string}")
@@ -210,29 +230,68 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+  /**
+   * Checks the existence of the ticket in the system.
+   * @param string TicketID of ticket subject to this test.
+   */
   @Then("the ticket {string} shall not exist in the system")
   public void the_ticket_shall_not_exist_in_the_system(String string) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int ticketId = Integer.parseInt(string);
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    assertNull(ticket);
   }
 
+  /**
+   * Tests if a given ticket has the expected estimated time, priority and if it require approval.
+   * @param string The ticketId of the maintenanceTicket.
+   * @param string2 The expected time its going to take.
+   * @param string3 The expected priority level of the ticket.
+   * @param string4 The expected approval setting of the ticket.
+   */
   @Then("the ticket {string} shall have estimated time {string}, priority {string}, and requires approval {string}")
   public void the_ticket_shall_have_estimated_time_priority_and_requires_approval(String string,
       String string2, String string3, String string4) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int ticketId = Integer.parseInt(string);
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    String time = String.valueOf(ticket.getTimeToResolve());
+    String priority = String.valueOf(ticket.getPriority());
+    String reqApproval = String.valueOf(ticket.getRequiresApproval());
+
+    assertEquals(string2, time);
+    assertEquals(string3, priority);
+    assertEquals(string4, reqApproval);
+
   }
 
+  /**
+   * Checks the assignee of a given ticket.
+   * @param string TicketID of the maintenance ticket.
+   * @param string2 The expected name of the hotel staff assigned to this ticket.
+   */
   @Then("the ticket {string} shall be assigned to {string}")
   public void the_ticket_shall_be_assigned_to(String string, String string2) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int ticketId = Integer.parseInt(string);
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    HotelStaff assignee = ticket.getTicketFixer();
+    String staffName = assignee.getName();
+    assertEquals(staffName, string2);
   }
 
+  /**
+   * Checks the number of tickets in the system.
+   * @param string the expected number of tickets in the system.
+   */
   @Then("the number of tickets in the system shall be {string}")
   public void the_number_of_tickets_in_the_system_shall_be(String string) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    List<MaintenanceTicket> tickets = assetPlus.getMaintenanceTickets();
+    int realSize = tickets.size();
+    int expectedSize = Integer.parseInt(string);
+
+    assertEquals(expectedSize, realSize);
   }
 
   @Then("the following maintenance tickets shall be presented")

@@ -1,6 +1,8 @@
 package ca.mcgill.ecse.assetplus.controller;
 
 import java.sql.Date;
+import java.util.List;
+
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
@@ -82,10 +84,10 @@ public class AssetPlusFeatureSet4Controller {
    * Written by: Yazid Asselah
    * 
    * @param id an int corresponding to the id of the ticket
-   * @param newrRaisedOnDate a Date object corresponding to the date of when the ticket was updated
+   * @param newRaisedOnDate a Date object corresponding to the date of when the ticket was updated
    * @param newDescription a String that will contain the new description of the ticket
    * @param newEmail a String that will enable us to retrace the editor of the ticket
-   * @param assetNumber an int that will enable us to retrace the specific asset, if -1 it means no asset
+   * @param newAssetNumber an int that will enable us to retrace the specific asset, if -1 it means no asset
    * @return a string that indicates the error, if no error returns an empty string
    */
 
