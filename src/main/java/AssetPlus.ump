@@ -111,4 +111,5 @@ association
   0..1 Manager fixApprover -- * MaintenanceTicket ticketsForApproval;
 }
 
+use use MaintenanceTicketStates.ump;
 use AssetPlusTransferObjects.ump;
