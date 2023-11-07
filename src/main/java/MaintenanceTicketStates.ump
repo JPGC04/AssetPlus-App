@@ -1,0 +1,86 @@
+class MaintenanceTicket{
+    boolean requiresApproval=false;
+
+    Status {
+
+        Open {
+            //TO IMPLEMENT
+            assignTicket(int id, String employeeEmail, String aTimeToResolve, String aPriority, boolean requiresApproval) / 
+            {doAssignTicket(id, employeeEmail, aTimeToResolve, aPriority, requiresApproval);} -> Assigned;
+        }
+
+        Assigned {
+            startProgress() -> InProgress;
+        }
+
+        InProgress {
+            Resolve()[!requiresApproval]-> Closed;
+            Resolve()[requiresApproval]-> Resolved;
+        }
+
+
+        Resolved {
+            //TO IMPLEMENT
+            disaprove(int id, Date aNoteDate, String description) / 
+            {doCreateMaintenanceNote(id, aNoteDate, description);} -> InProgress;
+            approve() -> Closed;
+
+        }
+
+        Closed{}
+    }
+
+    private String doAssignTicket(int id, String employeeEmail, String aTimeToResolve, String aPriority, boolean requiresApproval){
+        
+        //Get ticket
+        MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+        if (ticket == null) {
+            return "ticket not found";
+        }
+        //Get employee
+        HotelStaff ticketFixer = (HotelStaff) User.getWithEmail(employeeEmail);
+        if (ticketFixer == null) {
+            return "The ticket fixer does not exist";
+          }
+        Manager fixApprover = (Manager) User.getWithEmail("manager@ap.com");
+
+        if (fixApprover == null) {
+            return "manager not found";
+          }
+        //Convert Strings
+        timeToResolve = TimeEstimate.valueOf(aTimeToResolve);
+        priority = PriorityLevel.valueOf(aPriority);
+
+        ticket.requiresApproval = requiresApproval;
+        ticket.timeToResolve = timeToResolve;
+        ticket.priority = priority;
+        ticket.ticketFixer = ticketFixer;
+        if (requiresApproval) {
+            ticket.fixApprover = fixApprover;
+        }   else {
+            ticket.fixApprover = null;
+        }
+        return "";
+
+    }
+        
+
+    private String doCreateMaintenanceNote(int id, Date aNoteDate, String description) {
+        
+        //Get Ticket
+        MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+        if (ticket == null) {
+            return "ticket not found";
+        }
+        //Convert string to date object
+        HotelStaff author = (HotelStaff) User.getWithEmail("manager@ap.com");
+
+        if (author == null) {
+            return "manager not found";
+          }
+        
+        MaintenanceNote Note = new MaintenanceNote(aNoteDate, description, ticket, author);
+        return "";
+    }
+
+}
