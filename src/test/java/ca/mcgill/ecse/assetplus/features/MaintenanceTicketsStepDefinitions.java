@@ -84,13 +84,19 @@ public class MaintenanceTicketsStepDefinitions {
         String ticketRaiserEmail = data.get("ticketRaiser");
         Date raisedOnDate = Date.valueOf(data.get("raisedOnDate"));
         String description = data.get("description");
-        int assetNumber = Integer.parseInt(data.get("assetNumber"));
+
+        int assetNumber = -1;
+        String tempNumber = data.get("assetNumber");
+        if (tempNumber != null) {
+          assetNumber = Integer.parseInt(tempNumber);
+        }
         User ticketRaiser = User.getWithEmail(ticketRaiserEmail);
         SpecificAsset specificAsset = SpecificAsset.getWithAssetNumber(assetNumber);
         AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
         MaintenanceTicket newMaintenanceTicket =
             new MaintenanceTicket(id, raisedOnDate, description, assetPlus, ticketRaiser);
       newMaintenanceTicket.setAsset(specificAsset);
+      assetPlus.addMaintenanceTicket(newMaintenanceTicket);
     }
   }
 
@@ -170,7 +176,7 @@ public class MaintenanceTicketsStepDefinitions {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
 
     ticket.assignTicket(id, string2, string3, string4, requiresApproval);
-    
+
   }
 
   @When("the hotel staff attempts to start the ticket {string}")
@@ -276,8 +282,9 @@ public class MaintenanceTicketsStepDefinitions {
     int ticketId = Integer.parseInt(string);
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
     HotelStaff assignee = ticket.getTicketFixer();
-    String staffName = assignee.getName();
-    assertEquals(staffName, string2);
+    String staffName = assignee.getEmail();
+
+    assertEquals(string2, staffName);
   }
 
   /**
@@ -293,7 +300,7 @@ public class MaintenanceTicketsStepDefinitions {
 
     assertEquals(expectedSize, realSize);
   }
-
+//TODO NOT FINISHED
   @Then("the following maintenance tickets shall be presented")
   public void the_following_maintenance_tickets_shall_be_presented(
       io.cucumber.datatable.DataTable dataTable) {
@@ -304,7 +311,22 @@ public class MaintenanceTicketsStepDefinitions {
     // Double, Byte, Short, Long, BigInteger or BigDecimal.
     //
     // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> maintenanceTickets = dataTable.asMaps();
+    for (Map<String, String> ticket: maintenanceTickets) {
+      int id = Integer.parseInt(ticket.get("id"));
+
+      String email = ticket.get("ticketRaiser");
+      String raisedDate = ticket.get("raisedOnDate");
+      String description = ticket.get("description");
+      String assetNumber = ticket.get("assetNumber");
+      String status = ticket.get("status");
+      String assigneeEmail = ticket.get("fixedByEmail");
+      String estimatedTime = ticket.get("timeToResolve");
+      String priority = ticket.get("priority");
+      String approval = ticket.get("approvalRequired");
+
+
+    }
   }
 
   @Then("the ticket with id {string} shall have the following notes")
