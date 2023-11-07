@@ -155,4 +155,12 @@ public class AssetPlusFeatureSet4Controller {
         
   }
 
+    public static void listMaintenanceTickets(){
+    List<MaintenanceTicket> tickets = assetplus.getMaintenanceTickets();
+
+    for (MaintenanceTicket ticket : tickets) {
+      System.out.println(ticket);
+    }
+  }
+
 }
