@@ -6,6 +6,7 @@ import java.util.*;
 import java.sql.Date;
 
 // line 3 "../../../../../AssetPlus.ump"
+// line 1 "../../../../../AssetPlusPersistence.ump"
 public class AssetPlus
 {
 
@@ -630,6 +631,18 @@ public class AssetPlus
       specificAssets.remove(aSpecificAsset);
     }
     
+  }
+
+  // line 3 "../../../../../AssetPlusPersistence.ump"
+   public void reinitialize(){
+    List<Employee> employees = getEmployees();
+    List<Guest> guests = getGuests();
+    List<User> users = new ArrayList<>(employees);
+    users.addAll(guests);
+    User.reinitializeUsers(users);
+    MaintenanceTicket.reinitializeMaintenanceTickets(getMaintenanceTickets());
+    AssetType.reinitializeAssetType(getAssetTypes());
+    SpecificAsset.reinitializeSpecificAsset(getSpecificAssets());
   }
 
 }

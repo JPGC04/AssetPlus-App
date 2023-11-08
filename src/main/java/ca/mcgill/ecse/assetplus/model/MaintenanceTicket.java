@@ -5,8 +5,9 @@ package ca.mcgill.ecse.assetplus.model;
 import java.util.*;
 import java.sql.Date;
 
-// line 44 "../../../../../AssetPlus.ump"
+// line 43 "../../../../../AssetPlus.ump"
 // line 1 "../../../../../MaintenanceTicketStates.ump"
+// line 23 "../../../../../AssetPlusPersistence.ump"
 public class MaintenanceTicket
 {
 
@@ -294,7 +295,6 @@ public class MaintenanceTicket
     return wasEventProcessed;
   }
 
-  //Changed to public
   public void setStatus(Status aStatus)
   {
     status = aStatus;
@@ -692,10 +692,6 @@ public class MaintenanceTicket
         if (ticket == null) {
             return "ticket not found";
         }
-
-        if (ticket.status != status.Open) {
-          return "cannot assign ticket that is not in open state";
-        }
         //Get employee
         HotelStaff ticketFixer = (HotelStaff) User.getWithEmail(employeeEmail);
         if (ticketFixer == null) {
@@ -738,6 +734,14 @@ public class MaintenanceTicket
         
         MaintenanceNote Note = new MaintenanceNote(aNoteDate, description, ticket, author);
         return "";
+  }
+
+  // line 25 "../../../../../AssetPlusPersistence.ump"
+   public static  void reinitializeMaintenanceTickets(List<MaintenanceTicket> maintenanceTickets){
+    maintenanceticketsById.clear();
+    for (var m : maintenanceTickets) {
+      maintenanceticketsById.put(m.getId(), m);
+    }
   }
 
 

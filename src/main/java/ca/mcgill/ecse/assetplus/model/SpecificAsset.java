@@ -6,6 +6,7 @@ import java.util.*;
 import java.sql.Date;
 
 // line 70 "../../../../../AssetPlus.ump"
+// line 41 "../../../../../AssetPlusPersistence.ump"
 public class SpecificAsset
 {
 
@@ -300,6 +301,14 @@ public class SpecificAsset
     if(placeholderAssetType != null)
     {
       placeholderAssetType.removeSpecificAsset(this);
+    }
+  }
+
+  // line 43 "../../../../../AssetPlusPersistence.ump"
+   public static  void reinitializeSpecificAsset(List<SpecificAsset> specificAssets){
+    specificassetsByAssetNumber.clear();
+    for (var s : specificAssets) {
+      specificassetsByAssetNumber.put(s.getAssetNumber(), s);
     }
   }
 

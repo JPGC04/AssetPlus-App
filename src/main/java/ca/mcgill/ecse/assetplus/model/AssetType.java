@@ -6,6 +6,7 @@ import java.util.*;
 import java.sql.Date;
 
 // line 78 "../../../../../AssetPlus.ump"
+// line 32 "../../../../../AssetPlusPersistence.ump"
 public class AssetType
 {
 
@@ -236,6 +237,14 @@ public class AssetType
     {
       SpecificAsset aSpecificAsset = specificAssets.get(i - 1);
       aSpecificAsset.delete();
+    }
+  }
+
+  // line 34 "../../../../../AssetPlusPersistence.ump"
+   public static  void reinitializeAssetType(List<AssetType> assetTypes){
+    assettypesByName.clear();
+    for (var a: assetTypes) {
+      assettypesByName.put(a.getName(), a);
     }
   }
 

@@ -6,6 +6,7 @@ import java.util.*;
 import java.sql.Date;
 
 // line 13 "../../../../../AssetPlus.ump"
+// line 14 "../../../../../AssetPlusPersistence.ump"
 public abstract class User
 {
 
@@ -230,6 +231,14 @@ public abstract class User
     {
       MaintenanceTicket aRaisedTicket = raisedTickets.get(i - 1);
       aRaisedTicket.delete();
+    }
+  }
+
+  // line 16 "../../../../../AssetPlusPersistence.ump"
+   public static  void reinitializeUsers(List<User> users){
+    usersByEmail.clear();
+    for (var u : users) {
+      usersByEmail.put(u.getEmail(), u);
     }
   }
 
