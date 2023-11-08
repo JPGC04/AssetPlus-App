@@ -187,6 +187,9 @@ public class AssetPlusFeatureSet4Controller {
       if (ticket.getStatus() == MaintenanceTicket.Status.InProgress) {
           return "Cannot assign a maintenance ticket which is in progress.";
       }
+      if (ticket.getStatus() == MaintenanceTicket.Status.Assigned) {
+          return "The maintenance ticket is already assigned.";
+      }
 
       if (error.isEmpty()) {
           ticket.assignTicket(id, employeeEmail, aTimeToResolve, aPriority, requiresApproval);
