@@ -175,10 +175,6 @@ public class MaintenanceTicketsStepDefinitions {
     int id = Integer.parseInt(string);
     boolean requiresApproval = Boolean.parseBoolean(string5);
 
-    MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
-
-//    ticket.assignTicket(id, string2, string3, string4, requiresApproval);
-
     error = AssetPlusFeatureSet4Controller.assignMaintenanceTicket(id, string2, string3, string4, requiresApproval);
   }
 
@@ -186,24 +182,21 @@ public class MaintenanceTicketsStepDefinitions {
   public void the_hotel_staff_attempts_to_start_the_ticket(String string) {
     // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
-    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
-    ticket.startProgress();
+    error = AssetPlusFeatureSet4Controller.startTicketProgress(ticketId);
   }
 
   @When("the manager attempts to approve the ticket {string}")
   public void the_manager_attempts_to_approve_the_ticket(String string) {
     // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
-    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
-    ticket.approve();
+    error = AssetPlusFeatureSet4Controller.approveTicket(ticketId);
   }
 
   @When("the hotel staff attempts to complete the ticket {string}")
   public void the_hotel_staff_attempts_to_complete_the_ticket(String string) {
     // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
-    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
-    ticket.Resolve();
+    error = AssetPlusFeatureSet4Controller.completeTicket(ticketId);
   }
 
   @When("the manager attempts to disapprove the ticket {string} on date {string} and with reason {string}")
