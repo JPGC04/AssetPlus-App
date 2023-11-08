@@ -26,6 +26,8 @@ import static org.junit.Assert.assertNull;
 public class MaintenanceTicketsStepDefinitions {
   private AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
+  private String error;
+
   @Given("the following employees exist in the system")
   public void the_following_employees_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -175,8 +177,9 @@ public class MaintenanceTicketsStepDefinitions {
 
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
 
-    ticket.assignTicket(id, string2, string3, string4, requiresApproval);
+//    ticket.assignTicket(id, string2, string3, string4, requiresApproval);
 
+    error = AssetPlusFeatureSet4Controller.assignMaintenanceTicket(id, string2, string3, string4, requiresApproval);
   }
 
   @When("the hotel staff attempts to start the ticket {string}")
@@ -233,7 +236,7 @@ public class MaintenanceTicketsStepDefinitions {
   @Then("the system shall raise the error {string}")
   public void the_system_shall_raise_the_error(String string) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    assertEquals(string, error);
   }
 
   /**

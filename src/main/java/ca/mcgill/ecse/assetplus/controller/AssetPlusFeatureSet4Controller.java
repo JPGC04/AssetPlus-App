@@ -4,10 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
-import ca.mcgill.ecse.assetplus.model.AssetPlus;
-import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
-import ca.mcgill.ecse.assetplus.model.User;
-import ca.mcgill.ecse.assetplus.model.SpecificAsset;
+import ca.mcgill.ecse.assetplus.model.*;
 
 /**
  * AssetPlusFeatureSet4Controller is the main entity that we'll be using to add, update, and delete MaintenanceTicket
@@ -158,11 +155,47 @@ public class AssetPlusFeatureSet4Controller {
   }
 
     public static void listMaintenanceTickets(){
-    List<MaintenanceTicket> tickets = assetplus.getMaintenanceTickets();
+        List<MaintenanceTicket> tickets = assetplus.getMaintenanceTickets();
 
-    for (MaintenanceTicket ticket : tickets) {
-      System.out.println(ticket);
-    }
+        for (MaintenanceTicket ticket : tickets) {
+          System.out.println(ticket);
+        }
+  }
+
+  public static String assignMaintenanceTicket(int id, String employeeEmail, String aTimeToResolve, String aPriority, boolean requiresApproval) {
+      MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+      String error = "";
+      if (ticket == null) {
+          return "Maintenance ticket does not exist.";
+      }
+      if (ticket.getStatus() == MaintenanceTicket.Status.Resolved) {
+          return  "Cannot assign a maintenance ticket which is resolved.";
+      }
+      //Get employee
+      HotelStaff ticketFixer = (HotelStaff) User.getWithEmail(employeeEmail);
+      if (ticketFixer == null) {
+          return  "Staff to assign does not exist.";
+      }
+      Manager fixApprover = (Manager) User.getWithEmail("manager@ap.com");
+
+      if (fixApprover == null) {
+          return "manager not found";
+      }
+      if (ticket.getStatus() == MaintenanceTicket.Status.Closed) {
+          return "Cannot assign a maintenance ticket which is closed.";
+      }
+      if (ticket.getStatus() == MaintenanceTicket.Status.InProgress) {
+          return "Cannot assign a maintenance ticket which is in progress.";
+      }
+
+      if (error.isEmpty()) {
+          ticket.assignTicket(id, employeeEmail, aTimeToResolve, aPriority, requiresApproval);
+      } else {
+          return error;
+      }
+      return error;
+
+
   }
 
 }
