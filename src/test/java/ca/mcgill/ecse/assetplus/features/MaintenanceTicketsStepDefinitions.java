@@ -326,6 +326,11 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * 
+   * @param string
+   * @param dataTable
+   */
   @Then("the ticket with id {string} shall have the following notes")
   public void the_ticket_with_id_shall_have_the_following_notes(String string,
       io.cucumber.datatable.DataTable dataTable) {
@@ -336,7 +341,23 @@ public class MaintenanceTicketsStepDefinitions {
     // Double, Byte, Short, Long, BigInteger or BigDecimal.
     //
     // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(string));
+    List<MaintenanceNote> ticketMaintenanceNotes = ticket.getTicketNotes();
+    List<Map<String, String>> maintenanceNotes = dataTable.asMaps();
+    int i = 0;
+    for (Map<String,String> note : maintenanceNotes) {
+      String noteTaker = note.get("noteTaker");
+      String addedOnDate = note.get("addedOnDate");
+      String description = note.get("description");
+      MaintenanceNote ticketNote = ticketMaintenanceNotes.get(i);
+      String ticketNoteTaker = ticketNote.getNoteTaker().getName();
+      String ticketAddedOnDate = ticketNote.getDate().toString();
+      String ticketDescription = ticketNote.getDescription();
+      assertEquals(noteTaker, ticketNoteTaker);
+      assertEquals(addedOnDate, ticketAddedOnDate);
+      assertEquals(description, ticketDescription);
+      i++;
+    }
   }
 
   @Then("the ticket with id {string} shall have no notes")
