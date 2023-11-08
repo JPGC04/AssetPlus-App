@@ -4,7 +4,8 @@ import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 
 public class AssetPlusPersistence {
-  private static String filename = "data.json";
+
+  private static String filename = "ap.data";
   private static JsonSerializer serializer = new JsonSerializer("ca.mcgill.ecse.assetplus");
 
   public static void setFilename(String filename) {
@@ -21,11 +22,14 @@ public class AssetPlusPersistence {
 
   public static AssetPlus load() {
     var assetPlus = (AssetPlus) serializer.deserialize(filename);
+
     if (assetPlus == null) {
       assetPlus = new AssetPlus();
+
     } else {
       assetPlus.reinitialize();
     }
+
     return assetPlus;
   }
 
