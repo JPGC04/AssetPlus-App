@@ -366,11 +366,7 @@ public class MaintenanceTicketsStepDefinitions {
     int id = Integer.parseInt(string);
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
     List notes = ticket.getTicketNotes();
-    int num = 1;
-    if(notes == null){
-     num = 0;
-    }
-    assertTrue(num == 0);
+    assertTrue(notes == null || notes.isEmpty());
   }
 
   @Then("the ticket with id {string} shall have the following images")
