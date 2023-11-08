@@ -347,8 +347,14 @@ public class MaintenanceTicketsStepDefinitions {
 
   @Then("the ticket with id {string} shall have no notes")
   public void the_ticket_with_id_shall_have_no_notes(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int id = Integer.parseInt(string);
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+    List notes = ticket.getTicketNotes();
+    int num = 1;
+    if(notes == null){
+     num = 0;
+    }
+    assertTrue(num == 0);
   }
 
   @Then("the ticket with id {string} shall have the following images")
