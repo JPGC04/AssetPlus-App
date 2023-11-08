@@ -197,5 +197,76 @@ public class AssetPlusFeatureSet4Controller {
 
 
   }
+    public static String startTicketProgress(int id) {
+      MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+      if (ticket == null) {
+          return "Maintenance ticket does not exist.";
+      }
+      if (ticket.getStatus() == MaintenanceTicket.Status.Resolved) {
+          return  "Cannot start a maintenance ticket which is resolved.";
+      }
 
+      if (ticket.getStatus() == MaintenanceTicket.Status.Closed) {
+          return "Cannot start a maintenance ticket which is closed.";
+      }
+      if (ticket.getStatus() == MaintenanceTicket.Status.InProgress) {
+          return "The maintenance ticket is already in progress.";
+      }
+      if (ticket.getStatus() == MaintenanceTicket.Status.Open) {
+          return "Cannot start a maintenance ticket which is open.";
+      }
+      ticket.startProgress();
+
+      return "";
+  }
+
+  public static String completeTicket(int id) {
+      MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+      if (ticket == null) {
+          return "Maintenance ticket does not exist.";
+      }
+      if (ticket.getStatus() == MaintenanceTicket.Status.Resolved) {
+          return  "The maintenance ticket is already resolved.";
+      }
+
+      if (ticket.getStatus() == MaintenanceTicket.Status.Closed) {
+          return "The maintenance ticket is already closed.";
+      }
+      if (ticket.getStatus() == MaintenanceTicket.Status.Open) {
+          return "Cannot complete a maintenance ticket which is open.";
+      }
+      if (ticket.getStatus() == MaintenanceTicket.Status.Assigned) {
+          return "Cannot complete a maintenance ticket which is assigned.";
+      }
+      ticket.Resolve();
+      return "";
+  }
+    public static String approveTicket(int id){
+
+        MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+
+        if (ticket == null) {
+            return "Maintenance ticket does not exist.";
+        }
+
+        MaintenanceTicket.Status status = ticket.getStatus();
+        if (status == MaintenanceTicket.Status.Open) {
+            return "Cannot approve a maintenance ticket which is open.";
+        }
+
+        if (status == MaintenanceTicket.Status.Assigned) {
+            return "Cannot approve a maintenance ticket which is assigned.";
+        }
+
+        if (status == MaintenanceTicket.Status.Closed) {
+            return "The maintenance ticket is already closed.";
+        }
+
+        if (status == MaintenanceTicket.Status.InProgress) {
+            return "Cannot approve a maintenance ticket which is in progress.";
+        }
+
+        ticket.approve();
+        return "";
+    }
 }
