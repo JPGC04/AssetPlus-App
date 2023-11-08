@@ -375,7 +375,6 @@ public class MaintenanceTicketsStepDefinitions {
         MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(string));
         List<TicketImage> ticketMaintenanceimages = ticket.getTicketImages();
         List<Map<String, String>> images = dataTable.asMaps();
-        int i = 0;
         for (Map<String,String> image : images) {
           String imageurl = image.get("imageUrl");
           boolean image_found=false;

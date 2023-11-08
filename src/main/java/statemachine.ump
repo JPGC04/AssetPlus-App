@@ -1,0 +1,26 @@
+class MaintenanceTicket{
+  boolean needApproval=false;
+  boolean approved=false;
+  String state;
+  Status {
+    
+    Open {
+      assignTicket(int id, String employeeEmail,String timeEstimate, String priority,boolean needApproval) -> Assigned;
+      
+    }
+    Assigned {
+      startProgress() -> InProgress;
+    }
+    InProgress {
+      
+      SetState(String state)[!needApproval]-> Closed ;
+      SetState(String state)[needApproval]-> Resolved;
+    }
+    Closed{}
+    Resolved{
+      SetState(String state)[!approved]/ {addNote(MaintenanceNote note)}-> InProgress;
+      SetState(String state)-> Closed;
+      
+    }
+  }
+}
