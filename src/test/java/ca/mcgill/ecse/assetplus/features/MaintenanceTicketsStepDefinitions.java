@@ -375,11 +375,7 @@ public class MaintenanceTicketsStepDefinitions {
     int id = Integer.parseInt(string);
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
     List images = ticket.getTicketImages();
-    int num = 1;
-    if(images == null){
-     num = 0;
-    }
-    assertTrue(num == 0);
+    assertTrue(images != null && images.isEmpty());
   }
 }
 
