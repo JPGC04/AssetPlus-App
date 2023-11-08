@@ -209,9 +209,10 @@ public class MaintenanceTicketsStepDefinitions {
     Date date = Date.valueOf(string2);
 
     //TODO not sure what to put as id
-    ticket.disaprove(1, date, string3);
+    error = AssetPlusFeatureSet4Controller.disapproveTicket(ticketId, date, string3);
 
   }
+  
 
   /**
    * Checks the state of a given maintenance ticket, after some operations.
