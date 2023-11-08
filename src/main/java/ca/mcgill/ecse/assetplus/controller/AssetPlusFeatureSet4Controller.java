@@ -272,4 +272,33 @@ public class AssetPlusFeatureSet4Controller {
         ticket.approve();
         return "";
     }
+
+  public static String disapproveTicket(int id, Date aDate, String aDescription){
+
+      MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+  
+        if (ticket == null) {
+            return "Maintenance ticket does not exist.";
+        }
+  
+        MaintenanceTicket.Status status = ticket.getStatus();
+        if (status == MaintenanceTicket.Status.Open) {
+          return "Cannot disapprove a maintenance ticket which is open.";
+        }
+  
+        if (status == MaintenanceTicket.Status.Assigned) {
+          return "Cannot disapprove a maintenance ticket which is assigned.";
+        }
+  
+        if (status == MaintenanceTicket.Status.Closed) {
+          return "Cannot disapprove a maintenance ticket which is closed.";
+        }
+  
+        if (status == MaintenanceTicket.Status.InProgress) {
+          return "Cannot disapprove a maintenance ticket which is in progress.";
+        }
+  
+        ticket.disaprove(id, aDate, aDescription);
+        return "";
+    }
 }
