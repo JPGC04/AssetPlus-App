@@ -351,7 +351,7 @@ public class MaintenanceTicketsStepDefinitions {
       String addedOnDate = note.get("addedOnDate");
       String description = note.get("description");
       MaintenanceNote ticketNote = ticketMaintenanceNotes.get(i);
-      String ticketNoteTaker = ticketNote.getNoteTaker().getName();
+      String ticketNoteTaker = ticketNote.getNoteTaker().getEmail();
       String ticketAddedOnDate = ticketNote.getDate().toString();
       String ticketDescription = ticketNote.getDescription();
       assertEquals(noteTaker, ticketNoteTaker);
