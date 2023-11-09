@@ -11,6 +11,7 @@ import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import java.sql.Date;
 /**
    * AssetPlusFeatureSet6Controller is a set of controller methods that allow us to delete an employee or a guest given their email, and get all maintenancetickets
@@ -28,17 +29,21 @@ public class AssetPlusFeatureSet6Controller {
    * @throws IllegalArgumentException if the email provided is invalid or person with the email is not in the system.
    */
   public static void deleteEmployeeOrGuest(String email) {
+    try {
+      if (getEmployeeByEmail(email) == null && getGuestByEmail(email) == null) {
+        return;
+      } 
     
-    if (getEmployeeByEmail(email) == null && getGuestByEmail(email) == null) {
+      if (email.contains("@ap.com")){
+        Employee employee = getEmployeeByEmail(email);
+        employee.delete();
+      } else {
+        Guest guest = getGuestByEmail(email);
+        guest.delete();
+      }
+      AssetPlusPersistence.save();
+    } catch (RuntimeException e) {
       return;
-    } 
-    
-    if (email.contains("@ap.com")){
-      Employee employee = getEmployeeByEmail(email);
-      employee.delete();
-    } else {
-      Guest guest = getGuestByEmail(email);
-      guest.delete();
     }
     
       
@@ -68,14 +73,19 @@ public class AssetPlusFeatureSet6Controller {
    * @return a Guest matched
    */
   private static Guest getGuestByEmail(String email) {
-    AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
-    List<Guest> guests = assetPlus.getGuests();
-    for (Guest g : guests) {
-      if (g.getEmail().equals(email)) {
-        return g;
+    try {
+      AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
+      List<Guest> guests = assetPlus.getGuests();
+      for (Guest g : guests) {
+        if (g.getEmail().equals(email)) {
+          return g;
+        }
       }
+      AssetPlusPersistence.save();
+      return null;
+    } catch (RuntimeErrorException e) {
+      return null;
     }
-    return null;
   }
   
   /**
@@ -85,13 +95,18 @@ public class AssetPlusFeatureSet6Controller {
    * @return a list of Transfer Obeject of MaintenanceTicket
    */
   public static List<TOMaintenanceTicket> getTickets() {
-    AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
-    List<MaintenanceTicket> maintenanceTickets = assetplus.getMaintenanceTickets();
-    List<TOMaintenanceTicket> TOMaintenanceTickets = new ArrayList<TOMaintenanceTicket>();
-    for (MaintenanceTicket t : maintenanceTickets) {
-      TOMaintenanceTickets.add(createTOMaintenanceTicket(t));
+    try {
+      AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
+      List<MaintenanceTicket> maintenanceTickets = assetplus.getMaintenanceTickets();
+      List<TOMaintenanceTicket> TOMaintenanceTickets = new ArrayList<TOMaintenanceTicket>();
+      for (MaintenanceTicket t : maintenanceTickets) {
+        TOMaintenanceTickets.add(createTOMaintenanceTicket(t));
+      }
+      AssetPlusPersistence.save();
+      return TOMaintenanceTickets;
+    } catch (RuntimeException e) {
+      return null;
     }
-    return TOMaintenanceTickets;
   }
   /**
    * Initialize a transfer obejct of MaintenanceTicket.
@@ -124,8 +139,8 @@ public class AssetPlusFeatureSet6Controller {
         TOmaintenanceNotes[i] = createTOMaintenanceNote(allNotes.get(i));
       }
       TOMaintenanceTicket aTOMaintenanceTicket = new TOMaintenanceTicket(aId, aRaisedOnDate, aDescription, aRaisedByEmail, aAssetName, aRaisedByEmail, aDescription, aRaisedByEmail, false, aAssetName, aExpectLifeSpanInDays, aPurchaseDate, aFloorNumber, aRoomNumber, aImageURLs, TOmaintenanceNotes);
+      AssetPlusPersistence.save();
       return aTOMaintenanceTicket;
-
     } catch (Exception e) {
       throw e;
     } 
@@ -142,6 +157,7 @@ public class AssetPlusFeatureSet6Controller {
       Date aDate = maintenanceNote.getDate();
       String aDescription = maintenanceNote.getDescription();
       String aNoteTakerEmail = maintenanceNote.getNoteTaker().getEmail();
+      AssetPlusPersistence.save();
       return new TOMaintenanceNote(aDate, aDescription, aNoteTakerEmail);
     } catch (Exception e) {
       return null;
