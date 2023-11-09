@@ -3,13 +3,14 @@ package ca.mcgill.ecse.assetplus.controller;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 /**
  * AssetPlusFeatureSet2Controller is the main entity that we'll be using to add, update, and delete
  * asset types
  * 
  * @author John-Paul Chouery
- * @version ECSE 223 - Group Project Iteration 2b
+ * @version ECSE 223 - Group Project Iteration 3
  * @since ECSE 223 - Group Project Iteration 2a
  */
 public class AssetPlusFeatureSet2Controller {
@@ -38,10 +39,15 @@ public class AssetPlusFeatureSet2Controller {
       return "The asset type already exists";
     }
 
-    AssetType assetType = new AssetType(name, expectedLifeSpanInDays, assetPlus);
-    assetPlus.addAssetType(assetType);
+    try {
+      AssetType assetType = new AssetType(name, expectedLifeSpanInDays, assetPlus);
+      assetPlus.addAssetType(assetType);
+      AssetPlusPersistence.save();
+      return "";
+    } catch (Exception e) {
+      return "Error: somthing went wrong";
+    }
 
-    return "";
   }
 
   /**
@@ -73,11 +79,16 @@ public class AssetPlusFeatureSet2Controller {
       return "The asset type already exists";
     }
 
-    AssetType assetType = AssetType.getWithName(oldName);
-    assetType.setName(newName);
-    assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
+    try {
+      AssetType assetType = AssetType.getWithName(oldName);
+      assetType.setName(newName);
+      assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
+      AssetPlusPersistence.save();
+      return "";
+    } catch (Exception e) {
+      return "Error: somthing went wrong";
+    }
 
-    return "";
   }
 
   /**
@@ -87,13 +98,19 @@ public class AssetPlusFeatureSet2Controller {
    * @param name a string containing the name of the asset type to be deleted
    */
   public static void deleteAssetType(String name) {
-    if (name != null && name.length() > 0) {
-      AssetType assetType = AssetType.getWithName(name);
+    try {
+      if (name != null && name.length() > 0) {
+        AssetType assetType = AssetType.getWithName(name);
 
-      if (assetType != null) {
-        assetType.delete();
+        if (assetType != null) {
+          assetType.delete();
+        }
       }
+      AssetPlusPersistence.save();
+    } catch (Exception e) {
+      return;
     }
+
   }
 
 }
