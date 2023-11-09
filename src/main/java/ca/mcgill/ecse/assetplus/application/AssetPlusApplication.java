@@ -1,6 +1,7 @@
 package ca.mcgill.ecse.assetplus.application;
 
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 public class AssetPlusApplication {
 
@@ -12,7 +13,7 @@ public class AssetPlusApplication {
 
   public static AssetPlus getAssetPlus() {
     if (assetPlus == null) {
-      assetPlus = AssetPlusPersistence.load();
+      assetPlus = new AssetPlus();
     }
     return assetPlus;
   }
