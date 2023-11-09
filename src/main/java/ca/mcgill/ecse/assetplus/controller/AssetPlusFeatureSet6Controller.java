@@ -32,8 +32,7 @@ public class AssetPlusFeatureSet6Controller {
     try {
       if (getEmployeeByEmail(email) == null && getGuestByEmail(email) == null) {
         return;
-      } 
-    
+      }
       if (email.contains("@ap.com")){
         Employee employee = getEmployeeByEmail(email);
         employee.delete();
@@ -81,7 +80,6 @@ public class AssetPlusFeatureSet6Controller {
           return g;
         }
       }
-      AssetPlusPersistence.save();
       return null;
     } catch (RuntimeErrorException e) {
       return null;
