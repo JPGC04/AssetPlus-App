@@ -1,13 +1,15 @@
 package ca.mcgill.ecse.assetplus.features;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
-import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet5Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
 import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
-import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.HotelStaff;
@@ -17,15 +19,11 @@ import ca.mcgill.ecse.assetplus.model.Manager;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
 import ca.mcgill.ecse.assetplus.model.User;
-import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.TimeEstimate;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 public class MaintenanceTicketsStepDefinitions {
   private AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
@@ -35,38 +33,38 @@ public class MaintenanceTicketsStepDefinitions {
   @Given("the following employees exist in the system")
   public void the_following_employees_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-      List<Map<String, String>> rows = dataTable.asMaps();
-      for (var row : rows) {
-        String email = row.get("email");
-        String name = row.get("name");
-        String password = row.get("password");
-        String phoneNumber = row.get("phoneNumber");
-        assetPlus.addEmployee(email, name, password, phoneNumber);
-      }
+    List<Map<String, String>> rows = dataTable.asMaps();
+    for (var row : rows) {
+      String email = row.get("email");
+      String name = row.get("name");
+      String password = row.get("password");
+      String phoneNumber = row.get("phoneNumber");
+      assetPlus.addEmployee(email, name, password, phoneNumber);
+    }
   }
 
   @Given("the following manager exists in the system")
   public void the_following_manager_exists_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-      List<Map<String, String>> managerData = dataTable.asMaps();
-      for (Map<String, String> data : managerData) {
-        String email = data.get("email");
-        String password = data.get("password");
-        if (assetPlus.hasManager()) {
-          assetPlus.getManager().setPassword(password);
-        } else {
-          new Manager(email, "", password, "", assetPlus);
-        }
+    List<Map<String, String>> managerData = dataTable.asMaps();
+    for (Map<String, String> data : managerData) {
+      String email = data.get("email");
+      String password = data.get("password");
+      if (assetPlus.hasManager()) {
+        assetPlus.getManager().setPassword(password);
+      } else {
+        new Manager(email, "", password, "", assetPlus);
       }
+    }
   }
 
   @Given("the following asset types exist in the system")
   public void the_following_asset_types_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-        List<Map<String, String>> assetTypes = dataTable.asMaps();
-        for (Map<String, String> data : assetTypes) {
-          assetPlus.addAssetType(data.get("name"), Integer.parseInt(data.get("expectedLifeSpan")));
-        }
+    List<Map<String, String>> assetTypes = dataTable.asMaps();
+    for (Map<String, String> data : assetTypes) {
+      assetPlus.addAssetType(data.get("name"), Integer.parseInt(data.get("expectedLifeSpan")));
+    }
   }
 
   @Given("the following assets exist in the system")
@@ -84,23 +82,23 @@ public class MaintenanceTicketsStepDefinitions {
 
   @Given("the following tickets exist in the system")
   public void the_following_tickets_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-      List<Map<String, String>> tickets = dataTable.asMaps();
-      for (Map<String, String> data : tickets) {
-        int id = Integer.parseInt(data.get("id"));
-        String ticketRaiserEmail = data.get("ticketRaiser");
-        Date raisedOnDate = Date.valueOf(data.get("raisedOnDate"));
-        String description = data.get("description");
+    List<Map<String, String>> tickets = dataTable.asMaps();
+    for (Map<String, String> data : tickets) {
+      int id = Integer.parseInt(data.get("id"));
+      String ticketRaiserEmail = data.get("ticketRaiser");
+      Date raisedOnDate = Date.valueOf(data.get("raisedOnDate"));
+      String description = data.get("description");
 
-        int assetNumber = -1;
-        String tempNumber = data.get("assetNumber");
-        if (tempNumber != null) {
-          assetNumber = Integer.parseInt(tempNumber);
-        }
-        User ticketRaiser = User.getWithEmail(ticketRaiserEmail);
-        SpecificAsset specificAsset = SpecificAsset.getWithAssetNumber(assetNumber);
-        AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
-        MaintenanceTicket newMaintenanceTicket =
-            new MaintenanceTicket(id, raisedOnDate, description, assetPlus, ticketRaiser);
+      int assetNumber = -1;
+      String tempNumber = data.get("assetNumber");
+      if (tempNumber != null) {
+        assetNumber = Integer.parseInt(tempNumber);
+      }
+      User ticketRaiser = User.getWithEmail(ticketRaiserEmail);
+      SpecificAsset specificAsset = SpecificAsset.getWithAssetNumber(assetNumber);
+      AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
+      MaintenanceTicket newMaintenanceTicket =
+          new MaintenanceTicket(id, raisedOnDate, description, assetPlus, ticketRaiser);
       newMaintenanceTicket.setAsset(specificAsset);
       assetPlus.addMaintenanceTicket(newMaintenanceTicket);
     }
@@ -143,18 +141,18 @@ public class MaintenanceTicketsStepDefinitions {
 
   @Given("ticket {string} is marked as {string} with requires approval {string}")
   public void ticket_is_marked_as_with_requires_approval(String string, String string2,
-      String string3) { 
-        int id = Integer.parseInt(string);
-        boolean approval = false;
-        MaintenanceTicket.Status status = MaintenanceTicket.Status.valueOf(string2);
-        if (string3.toLowerCase().equals("true")) {
-           approval = true;
-        }
+      String string3) {
+    int id = Integer.parseInt(string);
+    boolean approval = false;
+    MaintenanceTicket.Status status = MaintenanceTicket.Status.valueOf(string2);
+    if (string3.toLowerCase().equals("true")) {
+      approval = true;
+    }
 
-        //Get the ticket
-        MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
-        ticket.setRequiresApproval(approval);
-        ticket.setStatus(status);
+    // Get the ticket
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+    ticket.setRequiresApproval(approval);
+    ticket.setStatus(status);
 
   }
 
@@ -168,10 +166,10 @@ public class MaintenanceTicketsStepDefinitions {
 
   @When("the manager attempts to view all maintenance tickets in the system")
   public void the_manager_attempts_to_view_all_maintenance_tickets_in_the_system() {
-    listTickets=AssetPlusFeatureSet6Controller.getTickets();
+    listTickets = AssetPlusFeatureSet6Controller.getTickets();
   }
 
-  //NOT FINISHED
+  // NOT FINISHED
   @When("the manager attempts to assign the ticket {string} to {string} with estimated time {string}, priority {string}, and requires approval {string}")
   public void the_manager_attempts_to_assign_the_ticket_to_with_estimated_time_priority_and_requires_approval(
       String string, String string2, String string3, String string4, String string5) {
@@ -179,7 +177,8 @@ public class MaintenanceTicketsStepDefinitions {
     int id = Integer.parseInt(string);
     boolean requiresApproval = Boolean.parseBoolean(string5);
 
-    error = AssetPlusFeatureSet4Controller.assignMaintenanceTicket(id, string2, string3, string4, requiresApproval);
+    error = AssetPlusFeatureSet4Controller.assignMaintenanceTicket(id, string2, string3, string4,
+        requiresApproval);
   }
 
   @When("the hotel staff attempts to start the ticket {string}")
@@ -208,17 +207,16 @@ public class MaintenanceTicketsStepDefinitions {
       String string2, String string3) {
     // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
-    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
     Date date = Date.valueOf(string2);
 
-    //TODO not sure what to put as id
     error = AssetPlusFeatureSet4Controller.disapproveTicket(ticketId, date, string3);
 
   }
-  
+
 
   /**
    * Checks the state of a given maintenance ticket, after some operations.
+   * 
    * @param string TicketID of ticket we are testing.
    * @param string2 The expected state of the maintenance ticket.
    */
@@ -239,6 +237,7 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Checks the existence of the ticket in the system.
+   * 
    * @param string TicketID of ticket subject to this test.
    */
   @Then("the ticket {string} shall not exist in the system")
@@ -251,6 +250,7 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Tests if a given ticket has the expected estimated time, priority and if it require approval.
+   * 
    * @param string The ticketId of the maintenanceTicket.
    * @param string2 The expected time its going to take.
    * @param string3 The expected priority level of the ticket.
@@ -274,6 +274,7 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Checks the assignee of a given ticket.
+   * 
    * @param string TicketID of the maintenance ticket.
    * @param string2 The expected name of the hotel staff assigned to this ticket.
    */
@@ -290,6 +291,7 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Checks the number of tickets in the system.
+   * 
    * @param string the expected number of tickets in the system.
    */
   @Then("the number of tickets in the system shall be {string}")
@@ -301,19 +303,20 @@ public class MaintenanceTicketsStepDefinitions {
 
     assertEquals(expectedSize, realSize);
   }
-// FINISHED
+
+  // FINISHED
   @Then("the following maintenance tickets shall be presented")
   public void the_following_maintenance_tickets_shall_be_presented(
       io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> maintenanceTickets = dataTable.asMaps();
-    for (Map<String, String> ticket: maintenanceTickets) {
+    for (Map<String, String> ticket : maintenanceTickets) {
       int id = Integer.parseInt(ticket.get("id"));
-      boolean ticketFound=false;
-      TOMaintenanceTicket comparingTicket=null;
+      boolean ticketFound = false;
+      TOMaintenanceTicket comparingTicket = null;
       for (TOMaintenanceTicket toTICKET : listTickets) {
-        if(toTICKET.getId()==id){
-          comparingTicket=toTICKET;
-          ticketFound=true;
+        if (toTICKET.getId() == id) {
+          comparingTicket = toTICKET;
+          ticketFound = true;
         }
       }
       assertTrue(ticketFound);
@@ -322,19 +325,19 @@ public class MaintenanceTicketsStepDefinitions {
       String description = ticket.get("description");
       String purchaseDate = ticket.get("purchaseDate");
       String assetName = ticket.get("assetName");
-      if (assetName!=null){
+      if (assetName != null) {
         int expectLifeSpan = Integer.parseInt(ticket.get("expectLifeSpan"));
         int floorNumber = Integer.parseInt(ticket.get("floorNumber"));
         int roomNumber = Integer.parseInt(ticket.get("roomNumber"));
-        assertEquals(roomNumber,comparingTicket.getRoomNumber());
-        assertEquals(floorNumber,comparingTicket.getFloorNumber());
-        assertEquals(expectLifeSpan,comparingTicket.getExpectLifeSpanInDays());
-        assertEquals(purchaseDate,String.valueOf(comparingTicket.getPurchaseDate()));
+        assertEquals(roomNumber, comparingTicket.getRoomNumber());
+        assertEquals(floorNumber, comparingTicket.getFloorNumber());
+        assertEquals(expectLifeSpan, comparingTicket.getExpectLifeSpanInDays());
+        assertEquals(purchaseDate, String.valueOf(comparingTicket.getPurchaseDate()));
       }
-      assertEquals(email,comparingTicket.getRaisedByEmail());
-      assertEquals(raisedDate,String.valueOf(comparingTicket.getRaisedOnDate()));
-      assertEquals(description,comparingTicket.getDescription());
-      assertEquals(assetName,comparingTicket.getAssetName());
+      assertEquals(email, comparingTicket.getRaisedByEmail());
+      assertEquals(raisedDate, String.valueOf(comparingTicket.getRaisedOnDate()));
+      assertEquals(description, comparingTicket.getDescription());
+      assertEquals(assetName, comparingTicket.getAssetName());
     }
   }
 
@@ -357,7 +360,7 @@ public class MaintenanceTicketsStepDefinitions {
     List<MaintenanceNote> ticketMaintenanceNotes = ticket.getTicketNotes();
     List<Map<String, String>> maintenanceNotes = dataTable.asMaps();
     int i = 0;
-    for (Map<String,String> note : maintenanceNotes) {
+    for (Map<String, String> note : maintenanceNotes) {
       String noteTaker = note.get("noteTaker");
       String addedOnDate = note.get("addedOnDate");
       String description = note.get("description");
@@ -376,33 +379,33 @@ public class MaintenanceTicketsStepDefinitions {
   public void the_ticket_with_id_shall_have_no_notes(String string) {
     int id = Integer.parseInt(string);
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
-    List notes = ticket.getTicketNotes();
+    List<MaintenanceNote> notes = ticket.getTicketNotes();
     assertTrue(notes == null || notes.isEmpty());
   }
 
   @Then("the ticket with id {string} shall have the following images")
   public void the_ticket_with_id_shall_have_the_following_images(String string,
       io.cucumber.datatable.DataTable dataTable) {
-        MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(string));
-        List<TicketImage> ticketMaintenanceimages = ticket.getTicketImages();
-        List<Map<String, String>> images = dataTable.asMaps();
-        for (Map<String,String> image : images) {
-          String imageurl = image.get("imageUrl");
-          boolean image_found=false;
-          for (TicketImage image1 : ticketMaintenanceimages) {
-            if(image1.getImageURL().equals(imageurl)){
-              image_found=true;
-            }
-          }
-          assertTrue(image_found);
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(string));
+    List<TicketImage> ticketMaintenanceimages = ticket.getTicketImages();
+    List<Map<String, String>> images = dataTable.asMaps();
+    for (Map<String, String> image : images) {
+      String imageurl = image.get("imageUrl");
+      boolean image_found = false;
+      for (TicketImage image1 : ticketMaintenanceimages) {
+        if (image1.getImageURL().equals(imageurl)) {
+          image_found = true;
         }
+      }
+      assertTrue(image_found);
+    }
   }
 
   @Then("the ticket with id {string} shall have no images")
   public void the_ticket_with_id_shall_have_no_images(String string) {
     int id = Integer.parseInt(string);
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
-    List images = ticket.getTicketImages();
+    List<TicketImage> images = ticket.getTicketImages();
     assertTrue(images != null && images.isEmpty());
   }
 }
