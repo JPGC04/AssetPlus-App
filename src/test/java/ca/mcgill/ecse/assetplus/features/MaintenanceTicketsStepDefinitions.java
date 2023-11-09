@@ -340,7 +340,10 @@ public class MaintenanceTicketsStepDefinitions {
     assertEquals(expectedSize, realSize);
   }
 
-  // FINISHED
+  /**
+   * Checks for the presence of the maintenance ticket submited by the system.
+   * @param dataTable table containing a list of all maintenance tickets in the system.
+   */
   @Then("the following maintenance tickets shall be presented")
   public void the_following_maintenance_tickets_shall_be_presented(
       io.cucumber.datatable.DataTable dataTable) {
@@ -378,9 +381,9 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
-   * 
-   * @param string
-   * @param dataTable
+   * Verifies the notes of a given ticket. Test fails if a ticket's notes does not match the expected.
+   * @param string TicketID in string form.
+   * @param dataTable A table containing a list of notes.
    */
   @Then("the ticket with id {string} shall have the following notes")
   public void the_ticket_with_id_shall_have_the_following_notes(String string,
@@ -411,6 +414,10 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Verifies that the ticket has no notes. Test fails if the ticket contains notes.
+   * @param string TicketID in string form
+   */
   @Then("the ticket with id {string} shall have no notes")
   public void the_ticket_with_id_shall_have_no_notes(String string) {
     int id = Integer.parseInt(string);
@@ -419,6 +426,11 @@ public class MaintenanceTicketsStepDefinitions {
     assertTrue(notes == null || notes.isEmpty());
   }
 
+  /**
+   * Verifies the images linked to a ticket.
+   * @param string ticketID in string form
+   * @param dataTable Table containing a list of images.
+   */
   @Then("the ticket with id {string} shall have the following images")
   public void the_ticket_with_id_shall_have_the_following_images(String string,
       io.cucumber.datatable.DataTable dataTable) {
@@ -437,6 +449,10 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Verifies if the chosen ticket contains any images. Test fails if it does contain images.
+   * @param string
+   */
   @Then("the ticket with id {string} shall have no images")
   public void the_ticket_with_id_shall_have_no_images(String string) {
     int id = Integer.parseInt(string);
