@@ -7,17 +7,19 @@ import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.User;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
+
 /**
- @author NizarKheireddine
+ * @author NizarKheireddine
  */
 public class AssetPlusFeatureSet7Controller {
-  private static AssetPlus assetplus=AssetPlusApplication.getAssetPlus();
+  private static AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
 
   private AssetPlusFeatureSet7Controller() {}
 
   /**
-   * <p>Adds a maintenance note to a ticket using the ticket ID.
-   * </p>
+   * <p>Adds a maintenance note to a ticket using the ticket ID.</p>
+   * 
    * @param date date the note is added.
    * @param description description of the note.
    * @param ticketID id of the ticket.
@@ -26,26 +28,30 @@ public class AssetPlusFeatureSet7Controller {
    */
   public static String addMaintenanceNote(Date date, String description, int ticketID,
       String email) {
-    if (description==""||description==null){
+    if (description == "" || description == null) {
       String s = "Ticket description cannot be empty";
       return s;
     }
-    MaintenanceTicket ticket=MaintenanceTicket.getWithId(ticketID);
-    if(ticket==null){
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketID);
+    if (ticket == null) {
       return "Ticket does not exist";
     }
-    HotelStaff staff=(HotelStaff) User.getWithEmail(email);
-    if(staff==null){
+    HotelStaff staff = (HotelStaff) User.getWithEmail(email);
+    if (staff == null) {
       return "Hotel staff does not exist";
     }
-    ticket.addTicketNote(new MaintenanceNote(date,description,ticket,staff));
-    return "";
+    try {
+      ticket.addTicketNote(new MaintenanceNote(date, description, ticket, staff));
+      AssetPlusPersistence.save();
+      return "";
+    } catch (Exception e) {
+      return "Error: " + e;
+    }
   }
 
   // index starts at 0
   /**
-   * <p>Updates a maintenance note to a ticket using the ticket ID.
-   * </p>
+   * <p>Updates a maintenance note to a ticket using the ticket ID.</p>
    * @param newDate date the note is updated.
    * @param newDescription description of the updated note.
    * @param ticketID id of the ticket.
@@ -76,33 +82,43 @@ public class AssetPlusFeatureSet7Controller {
       return "Hotel staff does not exist";
     }
 
-    maintenanceNote.setDate(newDate);
-    maintenanceNote.setNoteTaker(staff);
-    maintenanceNote.setDescription(newDescription);
-    return "";
+    try {
+      maintenanceNote.setDate(newDate);
+      maintenanceNote.setNoteTaker(staff);
+      maintenanceNote.setDescription(newDescription);
+      AssetPlusPersistence.save();
+      return "";
+    } catch (Exception e) {
+      return "Error: " + e;
+    }
   }
 
   // index starts at 0
   /**
-   * <p>Deletes a maintenance note from a ticket using the ticket ID.
-   * </p>
+   * <p>Deletes a maintenance note from a ticket using the ticket ID.</p>
+   * 
    * @param ticketID id of the ticket.
    * @param index index of the note.
    * @return error message if there is any.
    */
   public static void deleteMaintenanceNote(int ticketID, int index) {
-    MaintenanceTicket ticket=MaintenanceTicket.getWithId(ticketID);
-    if(ticket==null){
-        return;
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketID);
+    if (ticket == null) {
+      return;
     }
-    int size=ticket.getTicketNotes().size();
-    if(size<=index||ticket==null){
-        return;
+    int size = ticket.getTicketNotes().size();
+    if (size <= index || ticket == null) {
+      return;
     }
-    MaintenanceNote maintenanceNote=ticket.getTicketNotes().get(index);
-    if(maintenanceNote!=null){
-      maintenanceNote.delete();
+    MaintenanceNote maintenanceNote = ticket.getTicketNotes().get(index);
+    try {
+      if (maintenanceNote != null) {
+        maintenanceNote.delete();
+      }
+    } catch (Exception e) {
+      return;
     }
+
   }
 
 }
