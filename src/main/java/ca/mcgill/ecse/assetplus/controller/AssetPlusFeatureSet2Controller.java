@@ -45,7 +45,7 @@ public class AssetPlusFeatureSet2Controller {
       AssetPlusPersistence.save();
       return "";
     } catch (Exception e) {
-      return "Error: somthing went wrong";
+      return "Error: " + e;
     }
 
   }
@@ -86,7 +86,7 @@ public class AssetPlusFeatureSet2Controller {
       AssetPlusPersistence.save();
       return "";
     } catch (Exception e) {
-      return "Error: somthing went wrong";
+      return "Error: " + e;
     }
 
   }
