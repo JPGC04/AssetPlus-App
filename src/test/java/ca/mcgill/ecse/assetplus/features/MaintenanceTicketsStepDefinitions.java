@@ -30,6 +30,13 @@ public class MaintenanceTicketsStepDefinitions {
   private List<TOMaintenanceTicket> listTickets;
   private String error;
 
+  /**
+   * Defines the intial employees found in the system
+   * 
+   * @author Group 5
+   * @param dataTable tabular data containing email, password, name, and phone number of employees
+   *        in system
+   */
   @Given("the following employees exist in the system")
   public void the_following_employees_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -43,6 +50,12 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Defines the intial managers found in the system
+   * 
+   * @author Group 5
+   * @param dataTable tabular data containing email and password of managers in system
+   */
   @Given("the following manager exists in the system")
   public void the_following_manager_exists_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -58,6 +71,12 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Defines the intial asset types found in the system
+   * 
+   * @author Group 5
+   * @param dataTable tabular data containing name and expected lifespan of asset types in system
+   */
   @Given("the following asset types exist in the system")
   public void the_following_asset_types_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
