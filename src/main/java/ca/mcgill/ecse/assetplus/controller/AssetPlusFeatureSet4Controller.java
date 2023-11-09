@@ -154,14 +154,6 @@ public class AssetPlusFeatureSet4Controller {
         
   }
 
-    public static void listMaintenanceTickets(){
-        List<MaintenanceTicket> tickets = assetplus.getMaintenanceTickets();
-
-        for (MaintenanceTicket ticket : tickets) {
-          System.out.println(ticket);
-        }
-  }
-
   public static String assignMaintenanceTicket(int id, String employeeEmail, String aTimeToResolve, String aPriority, boolean requiresApproval) {
       MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
       String error = "";

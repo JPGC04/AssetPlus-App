@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet5Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
+import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
@@ -23,10 +25,11 @@ import io.cucumber.java.en.When;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class MaintenanceTicketsStepDefinitions {
   private AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
-
+  private List<TOMaintenanceTicket> listTickets;
   private String error;
 
   @Given("the following employees exist in the system")
@@ -165,7 +168,7 @@ public class MaintenanceTicketsStepDefinitions {
 
   @When("the manager attempts to view all maintenance tickets in the system")
   public void the_manager_attempts_to_view_all_maintenance_tickets_in_the_system() {
-    AssetPlusFeatureSet4Controller.listMaintenanceTickets();
+    listTickets=AssetPlusFeatureSet6Controller.getTickets();
   }
 
   //NOT FINISHED
@@ -298,32 +301,40 @@ public class MaintenanceTicketsStepDefinitions {
 
     assertEquals(expectedSize, realSize);
   }
-//TODO NOT FINISHED
+// FINISHED
   @Then("the following maintenance tickets shall be presented")
   public void the_following_maintenance_tickets_shall_be_presented(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
     List<Map<String, String>> maintenanceTickets = dataTable.asMaps();
     for (Map<String, String> ticket: maintenanceTickets) {
       int id = Integer.parseInt(ticket.get("id"));
-
+      boolean ticketFound=false;
+      TOMaintenanceTicket comparingTicket=null;
+      for (TOMaintenanceTicket toTICKET : listTickets) {
+        if(toTICKET.getId()==id){
+          comparingTicket=toTICKET;
+          ticketFound=true;
+        }
+      }
+      assertTrue(ticketFound);
       String email = ticket.get("ticketRaiser");
       String raisedDate = ticket.get("raisedOnDate");
       String description = ticket.get("description");
-      String assetNumber = ticket.get("assetNumber");
-      String status = ticket.get("status");
-      String assigneeEmail = ticket.get("fixedByEmail");
-      String estimatedTime = ticket.get("timeToResolve");
-      String priority = ticket.get("priority");
-      String approval = ticket.get("approvalRequired");
-
-
+      String purchaseDate = ticket.get("purchaseDate");
+      String assetName = ticket.get("assetName");
+      if (assetName!=null){
+        int expectLifeSpan = Integer.parseInt(ticket.get("expectLifeSpan"));
+        int floorNumber = Integer.parseInt(ticket.get("floorNumber"));
+        int roomNumber = Integer.parseInt(ticket.get("roomNumber"));
+        assertEquals(roomNumber,comparingTicket.getRoomNumber());
+        assertEquals(floorNumber,comparingTicket.getFloorNumber());
+        assertEquals(expectLifeSpan,comparingTicket.getExpectLifeSpanInDays());
+        assertEquals(purchaseDate,String.valueOf(comparingTicket.getPurchaseDate()));
+      }
+      assertEquals(email,comparingTicket.getRaisedByEmail());
+      assertEquals(raisedDate,String.valueOf(comparingTicket.getRaisedOnDate()));
+      assertEquals(description,comparingTicket.getDescription());
+      assertEquals(assetName,comparingTicket.getAssetName());
     }
   }
 
