@@ -85,7 +85,13 @@ public class MaintenanceTicketsStepDefinitions {
       assetPlus.addAssetType(data.get("name"), Integer.parseInt(data.get("expectedLifeSpan")));
     }
   }
-
+  /**
+   * Defines the intial assets found in the system
+   * 
+   * @author Group 5
+   * @param dataTable tabular data containing assetNumber, type, purchase date, floor number, and
+   *        room number of assets in system
+   */
   @Given("the following assets exist in the system")
   public void the_following_assets_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> assetData = dataTable.asMaps();
@@ -99,6 +105,13 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Defines the intial tickets found in the system
+   * 
+   * @author Group 5
+   * @param dataTable tabular data containing id, ticket raiser, raise date, raisedOnDate,
+   *        description, and asset numberasset of tickets in system
+   */
   @Given("the following tickets exist in the system")
   public void the_following_tickets_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> tickets = dataTable.asMaps();
@@ -123,6 +136,10 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * NOT FINISHED
+   * @param dataTable
+   */
   @Given("the following notes exist in the system")
   public void the_following_notes_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     // Turns the dataTable into a list of lists (each row becomes a list).
