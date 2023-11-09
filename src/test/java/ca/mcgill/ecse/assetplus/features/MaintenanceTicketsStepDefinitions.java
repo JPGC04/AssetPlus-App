@@ -30,6 +30,13 @@ public class MaintenanceTicketsStepDefinitions {
   private List<TOMaintenanceTicket> listTickets;
   private String error;
 
+  /**
+   * Defines the intial employees found in the system
+   * 
+   * @author Group 5
+   * @param dataTable tabular data containing email, password, name, and phone number of employees
+   *        in system
+   */
   @Given("the following employees exist in the system")
   public void the_following_employees_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -43,6 +50,12 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Defines the intial managers found in the system
+   * 
+   * @author Group 5
+   * @param dataTable tabular data containing email and password of managers in system
+   */
   @Given("the following manager exists in the system")
   public void the_following_manager_exists_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -58,6 +71,12 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Defines the intial asset types found in the system
+   * 
+   * @author Group 5
+   * @param dataTable tabular data containing name and expected lifespan of asset types in system
+   */
   @Given("the following asset types exist in the system")
   public void the_following_asset_types_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -66,7 +85,13 @@ public class MaintenanceTicketsStepDefinitions {
       assetPlus.addAssetType(data.get("name"), Integer.parseInt(data.get("expectedLifeSpan")));
     }
   }
-
+  /**
+   * Defines the intial assets found in the system
+   * 
+   * @author Group 5
+   * @param dataTable tabular data containing assetNumber, type, purchase date, floor number, and
+   *        room number of assets in system
+   */
   @Given("the following assets exist in the system")
   public void the_following_assets_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> assetData = dataTable.asMaps();
@@ -80,6 +105,13 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Defines the intial tickets found in the system
+   * 
+   * @author Group 5
+   * @param dataTable tabular data containing id, ticket raiser, raise date, raisedOnDate,
+   *        description, and asset numberasset of tickets in system
+   */
   @Given("the following tickets exist in the system")
   public void the_following_tickets_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> tickets = dataTable.asMaps();
@@ -104,6 +136,10 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * NOT FINISHED
+   * @param dataTable
+   */
   @Given("the following notes exist in the system")
   public void the_following_notes_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     // Turns the dataTable into a list of lists (each row becomes a list).
@@ -304,7 +340,10 @@ public class MaintenanceTicketsStepDefinitions {
     assertEquals(expectedSize, realSize);
   }
 
-  // FINISHED
+  /**
+   * Checks for the presence of the maintenance ticket submited by the system.
+   * @param dataTable table containing a list of all maintenance tickets in the system.
+   */
   @Then("the following maintenance tickets shall be presented")
   public void the_following_maintenance_tickets_shall_be_presented(
       io.cucumber.datatable.DataTable dataTable) {
@@ -342,9 +381,9 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
-   * 
-   * @param string
-   * @param dataTable
+   * Verifies the notes of a given ticket. Test fails if a ticket's notes does not match the expected.
+   * @param string TicketID in string form.
+   * @param dataTable A table containing a list of notes.
    */
   @Then("the ticket with id {string} shall have the following notes")
   public void the_ticket_with_id_shall_have_the_following_notes(String string,
@@ -375,6 +414,10 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Verifies that the ticket has no notes. Test fails if the ticket contains notes.
+   * @param string TicketID in string form
+   */
   @Then("the ticket with id {string} shall have no notes")
   public void the_ticket_with_id_shall_have_no_notes(String string) {
     int id = Integer.parseInt(string);
@@ -383,6 +426,11 @@ public class MaintenanceTicketsStepDefinitions {
     assertTrue(notes == null || notes.isEmpty());
   }
 
+  /**
+   * Verifies the images linked to a ticket.
+   * @param string ticketID in string form
+   * @param dataTable Table containing a list of images.
+   */
   @Then("the ticket with id {string} shall have the following images")
   public void the_ticket_with_id_shall_have_the_following_images(String string,
       io.cucumber.datatable.DataTable dataTable) {
@@ -401,6 +449,10 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Verifies if the chosen ticket contains any images. Test fails if it does contain images.
+   * @param string
+   */
   @Then("the ticket with id {string} shall have no images")
   public void the_ticket_with_id_shall_have_no_images(String string) {
     int id = Integer.parseInt(string);
