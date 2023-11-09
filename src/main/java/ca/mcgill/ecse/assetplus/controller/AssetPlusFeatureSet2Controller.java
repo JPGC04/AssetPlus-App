@@ -101,12 +101,11 @@ public class AssetPlusFeatureSet2Controller {
     try {
       if (name != null && name.length() > 0) {
         AssetType assetType = AssetType.getWithName(name);
-
         if (assetType != null) {
           assetType.delete();
+          AssetPlusPersistence.save();
         }
       }
-      AssetPlusPersistence.save();
     } catch (Exception e) {
       return;
     }
