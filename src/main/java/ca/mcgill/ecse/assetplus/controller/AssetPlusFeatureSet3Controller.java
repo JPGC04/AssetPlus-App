@@ -3,6 +3,7 @@ import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 import java.sql.Date;
 import java.util.List;
@@ -95,10 +96,15 @@ public class AssetPlusFeatureSet3Controller {
     }
     AssetType assetType = getAssetType(assetTypeName);
     if (assetType != null) {
-        SpecificAsset specificAsset = assetPlus.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType);
-        boolean added = assetPlus.addSpecificAsset(specificAsset);
-        if (!added) {
-          error = "The specific asset cannot be added.";
+        try {
+          SpecificAsset specificAsset = assetPlus.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType);
+          AssetPlusPersistence.save();
+          boolean added = assetPlus.addSpecificAsset(specificAsset);
+          if (!added) {
+            error = "The specific asset cannot be added.";
+          }
+        } catch (Exception e) {
+          return "ERROR: " + e;
         }
     } else {
       return "The asset type does not exist";
@@ -129,11 +135,17 @@ public class AssetPlusFeatureSet3Controller {
     if (newAssetType == null) {
       return "The asset type does not exist";
     }
-    SpecificAsset asset = assetPlus.getSpecificAsset(index);
-    asset.setFloorNumber(newFloorNumber);
-    asset.setRoomNumber(newRoomNumber);
-    asset.setPurchaseDate(newPurchaseDate);
-    asset.setAssetType(newAssetType);
+    try {
+      SpecificAsset asset = assetPlus.getSpecificAsset(index);
+      AssetPlusPersistence.save();
+      asset.setFloorNumber(newFloorNumber);
+      asset.setRoomNumber(newRoomNumber);
+      asset.setPurchaseDate(newPurchaseDate);
+      asset.setAssetType(newAssetType);
+    } catch (Exception e) {
+      return "ERROR: " + e;
+    }
+
 
     return error;
   }
@@ -145,8 +157,14 @@ public class AssetPlusFeatureSet3Controller {
   
   public static void deleteSpecificAsset(int assetNumber) {
     int index = getSpecificAsset(assetNumber);
-    if (index != -1) {
-      assetPlus.getSpecificAsset(index).delete();
+    try {
+      if (index != -1) {
+        assetPlus.getSpecificAsset(index).delete();
+        AssetPlusPersistence.save();
+      }
+    } catch (Exception e) {
+      System.out.println(e);
     }
+
   }
 }
