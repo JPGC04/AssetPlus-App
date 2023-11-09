@@ -2,7 +2,7 @@ package ca.mcgill.ecse.assetplus.controller;
 
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
-
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ public class AssetPlusFeatureSet5Controller {
    */
 
   public static String addImageToMaintenanceTicket(String imageURL, int ticketID) {
-    if (imageURL == null || imageURL.isEmpty() ) {
+    if (imageURL == null || imageURL.isEmpty()) {
       return "Image URL cannot be empty";
     }
 
@@ -34,22 +34,28 @@ public class AssetPlusFeatureSet5Controller {
       return "Image URL must start with http:// or https://";
     }
 
-    MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(ticketID);
+    try {
+      MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(ticketID);
 
-    if (maintenanceTicket != null) {
-      List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
+      if (maintenanceTicket != null) {
+        List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
 
-      for (TicketImage image : ticketImages) {
-        if (imageURL.equals(image.getImageURL())) {
-          return "Image already exists for the ticket";
+        for (TicketImage image : ticketImages) {
+          if (imageURL.equals(image.getImageURL())) {
+            return "Image already exists for the ticket";
+          }
         }
-      }
 
-      maintenanceTicket.addTicketImage(imageURL);
+        maintenanceTicket.addTicketImage(imageURL);
+        AssetPlusPersistence.save();
+        return "";
 
-      return "";
+      } else
+        return "Ticket does not exist";
+        
+    } catch (Exception e) {
+      return "Error: " + e;
     }
-    else return "Ticket does not exist";
   }
 
   /**
@@ -60,18 +66,23 @@ public class AssetPlusFeatureSet5Controller {
    * @param ticketID an integer that cointains the ID number of a specific maintenance ticket
    */
 
-  public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
-    MaintenanceTicket maintenanceTicket = Utils.getMaintenanceTicketbyID(ticketID);
+   public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
+    try {
+      MaintenanceTicket maintenanceTicket = Utils.getMaintenanceTicketbyID(ticketID);
 
-    if(maintenanceTicket != null){
-      List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
-      
-      for (TicketImage image : ticketImages) {
-        if(imageURL.equals(image.getImageURL())){
-          image.delete();
-          return;
+      if (maintenanceTicket != null) {
+        List<TicketImage> ticketImages = maintenanceTicket.getTicketImages();
+
+        for (TicketImage image : ticketImages) {
+          if (imageURL.equals(image.getImageURL())) {
+            image.delete();
+            AssetPlusPersistence.save();
+            return;
+          }
         }
       }
+    } catch (Exception e) {
+      return;
     }
   }
 }
