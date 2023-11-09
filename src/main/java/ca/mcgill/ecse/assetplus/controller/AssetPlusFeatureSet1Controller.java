@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.regex.*;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.*;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 /**
  * AssetPlusFeatureSet1Controller is used to to update manager password and add/update employee and guest.
@@ -22,9 +23,9 @@ public class AssetPlusFeatureSet1Controller {
 	   */
 	
   public static String updateManager(String password) {
-	  String regex = "[!#$]";
 	  boolean containsLowercase = false;
 	  boolean containsUppercase = false;
+		String regex = "[!#$]";
 
 	  for (char c : password.toCharArray()) {
 	      if (Character.isLowerCase(c)) {
@@ -52,11 +53,16 @@ public class AssetPlusFeatureSet1Controller {
 	  if(!containsUppercase) {
 		  return" Password must contain one upper-case character ";
 	  }
+		try{
 	  AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 	  Manager manager = assetPlus.getManager();
 	  manager.setPassword(password);
-	  return "";
-  }
+		 AssetPlusPersistence.save();
+		 return"";
+		} catch (RuntimeException e) {
+      return null;
+		}
+	}
   
   /**
    * <p>add employee or guest information.
@@ -115,13 +121,21 @@ public class AssetPlusFeatureSet1Controller {
 	  if (getGuestByEmail(email)!= null ) {
 		  return "Email already linked to a guest account";	
   	}
+
+
+		try{
 	  if (isEmployee) {
 	  assetPlus.addEmployee(email, name, password, phoneNumber);
+		AssetPlusPersistence.save();
 		return "";
 	  }
 	  else {
 	  assetPlus.addGuest(email, name, password, phoneNumber);}
+		AssetPlusPersistence.save();
 		return "";
+		}catch (RuntimeException e) {
+      return null;
+		}
   }
 
  
@@ -140,7 +154,6 @@ public class AssetPlusFeatureSet1Controller {
    */ 
   
   public static String updateEmployeeOrGuest(String email, String newPassword, String newName, String newPhoneNumber) {
-	  AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 		if(email == null || email == "" ){
 			return "Email cannot be empty" ;
 		}
@@ -156,20 +169,26 @@ public class AssetPlusFeatureSet1Controller {
 	  if (getEmployeeByEmail(email) == null && getGuestByEmail(email) == null) {
 			return "Invalid email " ;
 		}  
-		
+
+		try{
 	  if (email.contains("@ap.com")) {
 		  Employee employee = getEmployeeByEmail(email);
 		  employee.setName(newName);
 		  employee.setPassword(newPassword);
 		  employee.setPhoneNumber(newPhoneNumber);
+			AssetPlusPersistence.save();
 			return "";
 	  } else {
 		  Guest guest = getGuestByEmail(email);
 		  guest.setPassword(newPassword);
 		  guest.setName(newName);
 		  guest.setPhoneNumber(newPhoneNumber);
+			AssetPlusPersistence.save();
 			return "";
 	  }
+	}catch (Exception e) {
+		return "Error: " + e;
+		}
   }
   
   /**
@@ -208,3 +227,4 @@ public class AssetPlusFeatureSet1Controller {
 	    return null;
 	  }
 }
+
