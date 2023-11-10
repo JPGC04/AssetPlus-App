@@ -85,6 +85,7 @@ public class MaintenanceTicketsStepDefinitions {
       assetPlus.addAssetType(data.get("name"), Integer.parseInt(data.get("expectedLifeSpan")));
     }
   }
+
   /**
    * Defines the intial assets found in the system
    * 
@@ -138,25 +139,22 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Defines the notes that are present inside the system.
+   * 
+   * @author Group 5
    * @param dataTable Contains an array of information about each note.
    */
   @Given("the following notes exist in the system")
   public void the_following_notes_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-    // Turns the dataTable into a list of lists (each row becomes a list).
     List<Map<String, Object>> tableList = dataTable.asMaps(String.class, Object.class);
 
-    // Iterates through each list to create the specified tickets and add them to the AssetPlus
-    // application.
     for (Map<String, Object> row : tableList) {
       String noteTaker = (row.get("noteTaker").toString());
       int ticketID = Integer.parseInt(row.get("ticketId").toString());
       Date addedOnDate = Date.valueOf(row.get("addedOnDate").toString());
       String description = (row.get("description").toString());
 
-      // Instantiate and add the specified maintenance ticket notes to the appropriate maintenance
-      // ticket.
       MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketID);
-      HotelStaff staff = (HotelStaff) HotelStaff.getWithEmail(noteTaker); // check this
+      HotelStaff staff = (HotelStaff) HotelStaff.getWithEmail(noteTaker);
       MaintenanceNote note = new MaintenanceNote(addedOnDate, description, ticket, staff);
       ticket.addTicketNote(note);
     }
@@ -165,6 +163,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Defines the images that are present inside theh system.
+   * 
+   * @author Group 5
    * @param dataTable Contains an array of informatin about each image: its URL, and ticketID/
    */
   @Given("the following ticket images exist in the system")
@@ -181,6 +181,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Defines the status and if the ticket needs approval.
+   * 
+   * @author Group 5
    * @param string the TicketID in string.
    * @param string2 The status of the ticket.
    * @param string3 true/false value indicating if the ticket requires approval.
@@ -195,7 +197,6 @@ public class MaintenanceTicketsStepDefinitions {
       approval = true;
     }
 
-    // Get the ticket
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
     ticket.setRequiresApproval(approval);
     ticket.setStatus(status);
@@ -204,6 +205,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Defines the status of a given ticket
+   * 
+   * @author Group 5
    * @param string TicketID of ticket.
    * @param string2 Status of the ticket.
    */
@@ -217,6 +220,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * The scenario when the manager attempts to view all maintenance tickets.
+   * 
+   * @author Group 5
    */
   @When("the manager attempts to view all maintenance tickets in the system")
   public void the_manager_attempts_to_view_all_maintenance_tickets_in_the_system() {
@@ -225,6 +230,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Theh scenario when a manager attempts to assign a ticket with the following properties.
+   * 
+   * @author Group 5
    * @param string ticketID
    * @param string2 email address of employee that is getting tasked with this ticket.
    * @param string3 Estimated time for ticket to resolve.
@@ -244,39 +251,45 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Scenario where the staff attempts to start the ticket.
+   * 
+   * @author Group 5
    * @param string TicketID
    */
   @When("the hotel staff attempts to start the ticket {string}")
   public void the_hotel_staff_attempts_to_start_the_ticket(String string) {
-    // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
     error = AssetPlusFeatureSet4Controller.startTicketProgress(ticketId);
   }
 
   /**
    * When the manager tries to approve a given ticket.
+   * 
+   * @author Group 5
    * @param string TicketID
    */
   @When("the manager attempts to approve the ticket {string}")
   public void the_manager_attempts_to_approve_the_ticket(String string) {
-    // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
     error = AssetPlusFeatureSet4Controller.approveTicket(ticketId);
   }
 
   /**
    * When the hotel staff tries to complete a ticket.
+   * 
+   * @author Group 5
    * @param string ticketID
    */
   @When("the hotel staff attempts to complete the ticket {string}")
   public void the_hotel_staff_attempts_to_complete_the_ticket(String string) {
-    // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
     error = AssetPlusFeatureSet4Controller.completeTicket(ticketId);
   }
 
   /**
-   * When the manager attempts to disapprove a ticket on a specific date, and with a specific reason.
+   * When the manager attempts to disapprove a ticket on a specific date, and with a specific
+   * reason.
+   * 
+   * @author Group 5
    * @param string TicketID
    * @param string2 Date of attempted disapproval.
    * @param string3 Reasoning behind the disapproval.
@@ -284,7 +297,6 @@ public class MaintenanceTicketsStepDefinitions {
   @When("the manager attempts to disapprove the ticket {string} on date {string} and with reason {string}")
   public void the_manager_attempts_to_disapprove_the_ticket_on_date_and_with_reason(String string,
       String string2, String string3) {
-    // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
     Date date = Date.valueOf(string2);
 
@@ -296,32 +308,37 @@ public class MaintenanceTicketsStepDefinitions {
   /**
    * Checks the state of a given maintenance ticket, after some operations.
    * 
+   * @author Group 5
    * @param string TicketID of ticket we are testing.
    * @param string2 The expected state of the maintenance ticket.
    */
   @Then("the ticket {string} shall be marked as {string}")
   public void the_ticket_shall_be_marked_as(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
     String state = ticket.getStatusFullName();
     assertEquals(string2, state);
   }
 
+  /**
+   * Checks whether the correct error is raised.
+   * 
+   * @author Group 5
+   * @param string The error string we are expecting.
+   */
   @Then("the system shall raise the error {string}")
   public void the_system_shall_raise_the_error(String string) {
-    // Write code here that turns the phrase above into concrete actions
     assertEquals(string, error);
   }
 
   /**
    * Checks the existence of the ticket in the system.
    * 
+   * @author Group 5
    * @param string TicketID of ticket subject to this test.
    */
   @Then("the ticket {string} shall not exist in the system")
   public void the_ticket_shall_not_exist_in_the_system(String string) {
-    // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
     assertNull(ticket);
@@ -330,6 +347,7 @@ public class MaintenanceTicketsStepDefinitions {
   /**
    * Tests if a given ticket has the expected estimated time, priority and if it require approval.
    * 
+   * @author Group 5
    * @param string The ticketId of the maintenanceTicket.
    * @param string2 The expected time its going to take.
    * @param string3 The expected priority level of the ticket.
@@ -338,7 +356,6 @@ public class MaintenanceTicketsStepDefinitions {
   @Then("the ticket {string} shall have estimated time {string}, priority {string}, and requires approval {string}")
   public void the_ticket_shall_have_estimated_time_priority_and_requires_approval(String string,
       String string2, String string3, String string4) {
-    // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
     String time = String.valueOf(ticket.getTimeToResolve());
@@ -354,12 +371,12 @@ public class MaintenanceTicketsStepDefinitions {
   /**
    * Checks the assignee of a given ticket.
    * 
+   * @author Group 5
    * @param string TicketID of the maintenance ticket.
    * @param string2 The expected name of the hotel staff assigned to this ticket.
    */
   @Then("the ticket {string} shall be assigned to {string}")
   public void the_ticket_shall_be_assigned_to(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
     int ticketId = Integer.parseInt(string);
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
     HotelStaff assignee = ticket.getTicketFixer();
@@ -371,11 +388,11 @@ public class MaintenanceTicketsStepDefinitions {
   /**
    * Checks the number of tickets in the system.
    * 
+   * @author Group 5
    * @param string the expected number of tickets in the system.
    */
   @Then("the number of tickets in the system shall be {string}")
   public void the_number_of_tickets_in_the_system_shall_be(String string) {
-    // Write code here that turns the phrase above into concrete actions
     List<MaintenanceTicket> tickets = assetPlus.getMaintenanceTickets();
     int realSize = tickets.size();
     int expectedSize = Integer.parseInt(string);
@@ -385,6 +402,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Checks for the presence of the maintenance ticket submited by the system.
+   * 
+   * @author Group 5
    * @param dataTable table containing a list of all maintenance tickets in the system.
    */
   @Then("the following maintenance tickets shall be presented")
@@ -424,20 +443,16 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
-   * Verifies the notes of a given ticket. Test fails if a ticket's notes does not match the expected.
+   * Verifies the notes of a given ticket. Test fails if a ticket's notes does not match the
+   * expected.
+   * 
+   * @author Group 5
    * @param string TicketID in string form.
    * @param dataTable A table containing a list of notes.
    */
   @Then("the ticket with id {string} shall have the following notes")
   public void the_ticket_with_id_shall_have_the_following_notes(String string,
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(string));
     List<MaintenanceNote> ticketMaintenanceNotes = ticket.getTicketNotes();
     List<Map<String, String>> maintenanceNotes = dataTable.asMaps();
@@ -459,6 +474,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Verifies that the ticket has no notes. Test fails if the ticket contains notes.
+   * 
+   * @author Group 5
    * @param string TicketID in string form
    */
   @Then("the ticket with id {string} shall have no notes")
@@ -471,6 +488,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Verifies the images linked to a ticket.
+   * 
+   * @author Group 5
    * @param string ticketID in string form
    * @param dataTable Table containing a list of images.
    */
@@ -494,6 +513,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * Verifies if the chosen ticket contains any images. Test fails if it does contain images.
+   * 
+   * @author Group 5
    * @param string
    */
   @Then("the ticket with id {string} shall have no images")
