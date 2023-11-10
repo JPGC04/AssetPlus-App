@@ -1,7 +1,6 @@
 package ca.mcgill.ecse.assetplus.controller;
 
 import java.sql.Date;
-import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.*;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
@@ -11,14 +10,12 @@ import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
  * MaintenanceTicket
  * 
  * @author Yazid Asselah -- Dramocrystal
- * @version ECSE 223 - Group Project Iteration 2a
+ * @version ECSE 223 - Group Project Iteration 3
  * @since ECSE 223 - Group Project Iteration 2a
  */
 public class AssetPlusFeatureSet4Controller {
 
   private static AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
-
-  // assetNumber -1 means that no asset is specified
 
   /**
    * Adds an MainteanceTicket type with the given id, date, description, email, assetnumber.
@@ -34,17 +31,15 @@ public class AssetPlusFeatureSet4Controller {
    */
   public static String addMaintenanceTicket(int id, Date raisedOnDate, String description,
       String email, int assetNumber) {
-    // Input validation constraint
     if (description.isEmpty() || description == null) {
       return "Ticket description cannot be empty";
     }
 
-    // Find the user by email
     User ticketRaiser = User.getWithEmail(email);
     if (ticketRaiser == null) {
       return "The ticket raiser does not exist";
     }
-    // Find the specific Asset
+
     SpecificAsset specificAsset = null;
     if (assetNumber != -1) {
       specificAsset = SpecificAsset.getWithAssetNumber(assetNumber);
@@ -65,7 +60,6 @@ public class AssetPlusFeatureSet4Controller {
     return "";
   }
 
-  // newAssetNumber -1 means that no asset is specified
   /**
    * Updates a MainteanceTicket type with the given id, date, description, email, assetnumber.
    * Written by: Yazid Asselah
@@ -84,13 +78,11 @@ public class AssetPlusFeatureSet4Controller {
     if (newDescription.isEmpty() || newDescription == null) {
       return "Ticket description cannot be empty";
     }
-    // Find specific user
     User newTicketRaiser = User.getWithEmail(newEmail);
     if (newTicketRaiser == null) {
       return "The ticket raiser does not exist";
     }
 
-    // Find specific asset
     SpecificAsset newSpecificAsset = null;
     if (newAssetNumber != -1) {
       newSpecificAsset = SpecificAsset.getWithAssetNumber(newAssetNumber);
@@ -99,7 +91,6 @@ public class AssetPlusFeatureSet4Controller {
       }
     }
 
-    // Find specific Ticket
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
     if (ticket == null) {
       return "ticket not found";
@@ -129,12 +120,11 @@ public class AssetPlusFeatureSet4Controller {
    * @return nothing
    */
   public static void deleteMaintenanceTicket(int id) {
-    // Find ticket
-    // Find specific Ticket
     try {
       MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
       if (ticket != null) {
         ticket.delete();
+        AssetPlusPersistence.save();
       }
     } catch (Exception e) {
       return;

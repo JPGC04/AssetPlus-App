@@ -13,27 +13,32 @@ import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import java.sql.Date;
+
 /**
-   * AssetPlusFeatureSet6Controller is a set of controller methods that allow us to delete an employee or a guest given their email, and get all maintenancetickets
-   * @author Cleo Tang
-   * @version ECSE 223 - Group Project Iteration 2a
-   * @since ECSE 223 - Group Project Iteration 2a
-   */
+ * AssetPlusFeatureSet6Controller is a set of controller methods that allow us to delete an employee
+ * or a guest given their email, and get all maintenancetickets
+ * 
+ * @author Cleo Tang
+ * @version ECSE 223 - Group Project Iteration 3
+ * @since ECSE 223 - Group Project Iteration 2a
+ */
 public class AssetPlusFeatureSet6Controller {
+
   /**
    * delete an employee or a guest given their email.
    * Written by: Cleo Tang
    * 
    * @param email a string of the email of the user aimed to be deleted
    * @return null, void method
-   * @throws IllegalArgumentException if the email provided is invalid or person with the email is not in the system.
+   * @throws IllegalArgumentException if the email provided is invalid or person with the email is
+   *         not in the system.
    */
   public static void deleteEmployeeOrGuest(String email) {
     try {
       if (getEmployeeByEmail(email) == null && getGuestByEmail(email) == null) {
         return;
       }
-      if (email.contains("@ap.com")){
+      if (email.contains("@ap.com")) {
         Employee employee = getEmployeeByEmail(email);
         employee.delete();
       } else {
@@ -44,9 +49,10 @@ public class AssetPlusFeatureSet6Controller {
     } catch (RuntimeException e) {
       return;
     }
-    
-      
+
+
   }
+
   /**
    * get the particular employee with the specified email.
    * Written by: Cleo Tang
@@ -64,6 +70,7 @@ public class AssetPlusFeatureSet6Controller {
     }
     return null;
   }
+
   /**
    * get the particular guest with the specified email.
    * Written by: Cleo Tang
@@ -85,7 +92,7 @@ public class AssetPlusFeatureSet6Controller {
       return null;
     }
   }
-  
+
   /**
    * Gets all maintenancetickets
    * Written by: Cleo Tang
@@ -106,6 +113,7 @@ public class AssetPlusFeatureSet6Controller {
       return null;
     }
   }
+
   /**
    * Initialize a transfer obejct of MaintenanceTicket.
    * Written by: Cleo Tang
@@ -114,14 +122,15 @@ public class AssetPlusFeatureSet6Controller {
    * @return TOMaintenanceTicket that is a transfer object of MaintenanceTicket t
    */
   private static TOMaintenanceTicket createTOMaintenanceTicket(MaintenanceTicket t) {
-    try {  
+    try {
       int aId = t.getId();
       Date aRaisedOnDate = t.getRaisedOnDate();
       String aDescription = t.getDescription();
       String aRaisedByEmail = t.getTicketRaiser().getEmail();
       SpecificAsset specificAsset = (t.getAsset() != null) ? t.getAsset() : null;
-      String aAssetName = (t.getAsset() != null) ? t.getAsset().getAssetType().getName() : null ;
-      int aExpectLifeSpanInDays = (specificAsset != null) ? specificAsset.getAssetType().getExpectedLifeSpan() : -1;
+      String aAssetName = (t.getAsset() != null) ? t.getAsset().getAssetType().getName() : null;
+      int aExpectLifeSpanInDays =
+          (specificAsset != null) ? specificAsset.getAssetType().getExpectedLifeSpan() : -1;
       Date aPurchaseDate = (specificAsset != null) ? specificAsset.getPurchaseDate() : null;
       int aFloorNumber = (specificAsset != null) ? specificAsset.getFloorNumber() : -1;
       int aRoomNumber = (specificAsset != null) ? specificAsset.getRoomNumber() : -1;
@@ -131,18 +140,22 @@ public class AssetPlusFeatureSet6Controller {
         aImageURLs.add(i.getImageURL());
       }
       List<MaintenanceNote> allNotes = t.getTicketNotes();
-      
+
       TOMaintenanceNote[] TOmaintenanceNotes = new TOMaintenanceNote[allNotes.size()];
       for (int i = 0; i < allNotes.size(); i++) {
         TOmaintenanceNotes[i] = createTOMaintenanceNote(allNotes.get(i));
       }
-      TOMaintenanceTicket aTOMaintenanceTicket = new TOMaintenanceTicket(aId, aRaisedOnDate, aDescription, aRaisedByEmail, aAssetName, aRaisedByEmail, aDescription, aRaisedByEmail, false, aAssetName, aExpectLifeSpanInDays, aPurchaseDate, aFloorNumber, aRoomNumber, aImageURLs, TOmaintenanceNotes);
+      TOMaintenanceTicket aTOMaintenanceTicket = new TOMaintenanceTicket(aId, aRaisedOnDate,
+          aDescription, aRaisedByEmail, aAssetName, aRaisedByEmail, aDescription, aRaisedByEmail,
+          false, aAssetName, aExpectLifeSpanInDays, aPurchaseDate, aFloorNumber, aRoomNumber,
+          aImageURLs, TOmaintenanceNotes);
       AssetPlusPersistence.save();
       return aTOMaintenanceTicket;
     } catch (Exception e) {
       throw e;
-    } 
+    }
   }
+
   /**
    * Initialize a transfer object of MaintenanceNote.
    * Written by: Cleo Tang
@@ -151,7 +164,7 @@ public class AssetPlusFeatureSet6Controller {
    * @return TOMaintenanceNote that is a transfer object of MaintenanceNote
    */
   private static TOMaintenanceNote createTOMaintenanceNote(MaintenanceNote maintenanceNote) {
-    try {  
+    try {
       Date aDate = maintenanceNote.getDate();
       String aDescription = maintenanceNote.getDescription();
       String aNoteTakerEmail = maintenanceNote.getNoteTaker().getEmail();

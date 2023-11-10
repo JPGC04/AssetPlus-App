@@ -1,4 +1,5 @@
 package ca.mcgill.ecse.assetplus.controller;
+
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
@@ -9,17 +10,21 @@ import java.sql.Date;
 import java.util.List;
 
 /**
- *AssetPlusFeatureSet3Controller is the main class we will use to Add, update, and delete Asset
+ * AssetPlusFeatureSet3Controller is the main class we will use to Add, update, and delete Asset
  *
  * @author Seungyeon Lee
- * @version ECSE 223 - Group Project Iteration 2a
+ * @version ECSE 223 - Group Project Iteration 3
  * @since ECSE 223 - Group Project Iteration 2a
  */
 public class AssetPlusFeatureSet3Controller {
-  
+
   private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
+
   /**
-   * <p>Input validation for the parameteres</p>
+   * <p>
+   * Input validation for the parameteres
+   * </p>
+   * 
    * @param assetNumber: # of asset
    * @param floorNumber: floor number of asset
    * @param roomNumber: room number of asset
@@ -38,8 +43,10 @@ public class AssetPlusFeatureSet3Controller {
 
     return error.trim();
   }
+
   /**
    * <p>Returns the AssetType, given its name</p>
+   * 
    * @param assetTypeName asset type's name as a String
    * @return AssetType object if found; null if not.
    */
@@ -62,7 +69,8 @@ public class AssetPlusFeatureSet3Controller {
   }
 
   /**
-   *<p>Used to get the index of a SpecificAsset</p>
+   * <p>Used to get the index of a SpecificAsset</p>
+   * 
    * @param assetNumber unique id to identify each asset
    * @return index of specificAsset object if found; -1 if not found
    */
@@ -70,7 +78,7 @@ public class AssetPlusFeatureSet3Controller {
     List<SpecificAsset> assets = assetPlus.getSpecificAssets();
     if (!assets.isEmpty()) {
       int i = 0;
-      for (SpecificAsset sAsset: assets) {
+      for (SpecificAsset sAsset : assets) {
         if (sAsset.getAssetNumber() == assetNumber) {
           return i;
         }
@@ -79,8 +87,10 @@ public class AssetPlusFeatureSet3Controller {
     }
     return -1;
   }
+
   /**
-   *<p>Adds a SpecificAsset to the AssetPlus app.</p>
+   * <p>Adds a SpecificAsset to the AssetPlus app.</p>
+   * 
    * @param assetNumber asset number of new asset
    * @param floorNumber floor number of new asset
    * @param roomNumber room location of new asset
@@ -88,24 +98,25 @@ public class AssetPlusFeatureSet3Controller {
    * @param assetTypeName asset type of new asset
    * @return The error message if a failure is encountered; empty string if successful.
    */
-  public static String addSpecificAsset(int assetNumber, int floorNumber, int roomNumber, Date purchaseDate, String assetTypeName) {
-    //input validation
+  public static String addSpecificAsset(int assetNumber, int floorNumber, int roomNumber,
+      Date purchaseDate, String assetTypeName) {
     var error = isValidAsset(assetNumber, floorNumber, roomNumber);
     if (!error.isEmpty()) {
       return error;
     }
     AssetType assetType = getAssetType(assetTypeName);
     if (assetType != null) {
-        try {
-          SpecificAsset specificAsset = assetPlus.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType);
-          AssetPlusPersistence.save();
-          boolean added = assetPlus.addSpecificAsset(specificAsset);
-          if (!added) {
-            error = "The specific asset cannot be added.";
-          }
-        } catch (Exception e) {
-          return "ERROR: " + e;
+      try {
+        SpecificAsset specificAsset = assetPlus.addSpecificAsset(assetNumber, floorNumber,
+            roomNumber, purchaseDate, assetType);
+        boolean added = assetPlus.addSpecificAsset(specificAsset);
+        AssetPlusPersistence.save();
+        if (!added) {
+          error = "The specific asset cannot be added.";
         }
+      } catch (Exception e) {
+        return "ERROR: " + e;
+      }
     } else {
       return "The asset type does not exist";
     }
@@ -114,6 +125,7 @@ public class AssetPlusFeatureSet3Controller {
 
   /**
    * <p>Updates a chosen SpecificAsset with new parameters</p>
+   * 
    * @param assetNumber asset number of SpecificAsset
    * @param newFloorNumber updated floor number of asset
    * @param newRoomNumber updated room number of asset
@@ -137,24 +149,22 @@ public class AssetPlusFeatureSet3Controller {
     }
     try {
       SpecificAsset asset = assetPlus.getSpecificAsset(index);
-      AssetPlusPersistence.save();
       asset.setFloorNumber(newFloorNumber);
       asset.setRoomNumber(newRoomNumber);
       asset.setPurchaseDate(newPurchaseDate);
       asset.setAssetType(newAssetType);
+      AssetPlusPersistence.save();
     } catch (Exception e) {
       return "ERROR: " + e;
     }
-
-
     return error;
   }
-  
+
   /**
    * <p>Deletes an asset given its asset number</p>
+   * 
    * @param assetNumber asset number of SpecificAsset
    */
-  
   public static void deleteSpecificAsset(int assetNumber) {
     int index = getSpecificAsset(assetNumber);
     try {
@@ -165,6 +175,5 @@ public class AssetPlusFeatureSet3Controller {
     } catch (Exception e) {
       System.out.println(e);
     }
-
   }
 }

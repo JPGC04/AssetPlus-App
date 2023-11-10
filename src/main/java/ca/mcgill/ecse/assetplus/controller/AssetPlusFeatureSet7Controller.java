@@ -1,8 +1,6 @@
 package ca.mcgill.ecse.assetplus.controller;
 
 import java.sql.Date;
-import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
-import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
@@ -10,11 +8,14 @@ import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 /**
+ * AssetPlusFeatureSet7Controller is a set of controller methods that allow us to add, update, and 
+ * delete maintenance notes
+ * 
  * @author NizarKheireddine
+ * @version ECSE 223 - Group Project Iteration 3
+ * @since ECSE 223 - Group Project Iteration 2a
  */
 public class AssetPlusFeatureSet7Controller {
-  private static AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
-
   private AssetPlusFeatureSet7Controller() {}
 
   /**
@@ -49,9 +50,9 @@ public class AssetPlusFeatureSet7Controller {
     }
   }
 
-  // index starts at 0
   /**
    * <p>Updates a maintenance note to a ticket using the ticket ID.</p>
+   * 
    * @param newDate date the note is updated.
    * @param newDescription description of the updated note.
    * @param ticketID id of the ticket.
@@ -61,24 +62,24 @@ public class AssetPlusFeatureSet7Controller {
    */
   public static String updateMaintenanceNote(int ticketID, int index, Date newDate,
       String newDescription, String newEmail) {
-    MaintenanceTicket ticket=MaintenanceTicket.getWithId(ticketID);
-    if(ticket==null){
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketID);
+    if (ticket == null) {
       return "Ticket does not exist";
     }
-    HotelStaff staff=(HotelStaff)User.getWithEmail(newEmail);
-    int number_of_notes=ticket.getTicketNotes().size();
-    if(index>=number_of_notes){
+    HotelStaff staff = (HotelStaff) User.getWithEmail(newEmail);
+    int number_of_notes = ticket.getTicketNotes().size();
+    if (index >= number_of_notes) {
       return "Note does not exist";
     }
-    MaintenanceNote maintenanceNote=ticket.getTicketNotes().get(index);
-    if (newDescription==""||newDescription==null){
+    MaintenanceNote maintenanceNote = ticket.getTicketNotes().get(index);
+    if (newDescription == "" || newDescription == null) {
       String s = "Ticket description cannot be empty";
       return s;
     }
-    if(maintenanceNote==null){
+    if (maintenanceNote == null) {
       return "Note does not exist";
     }
-    if(staff==null){
+    if (staff == null) {
       return "Hotel staff does not exist";
     }
 
@@ -93,7 +94,6 @@ public class AssetPlusFeatureSet7Controller {
     }
   }
 
-  // index starts at 0
   /**
    * <p>Deletes a maintenance note from a ticket using the ticket ID.</p>
    * 
@@ -114,11 +114,11 @@ public class AssetPlusFeatureSet7Controller {
     try {
       if (maintenanceNote != null) {
         maintenanceNote.delete();
+        AssetPlusPersistence.save();
       }
     } catch (Exception e) {
       return;
     }
-
   }
 
 }

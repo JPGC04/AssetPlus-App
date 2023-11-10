@@ -6,7 +6,7 @@ import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 /**
- * AssetPlusFeatureSet2Controller is the main entity that we'll be using to add, update, and delete
+ * AssetPlusFeatureSet2Controller is the main entity that is used to add, update, and delete
  * asset types
  * 
  * @author John-Paul Chouery

@@ -6,10 +6,11 @@ import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import java.util.List;
 
 /**
- * AssetPlusFeatureSet5Controller is a set of methods that add and delete images to maintenance tickets
+ * AssetPlusFeatureSet5Controller is a set of methods that add and delete images to maintenance
+ * tickets
  *
  * @author Alan Brotherton -- AlanBrotherton
- * @version ECSE 223 - Group Project Iteration 2a
+ * @version ECSE 223 - Group Project Iteration 3
  * @since ECSE 223 - Group Project Iteration 2a
  */
 
@@ -21,10 +22,10 @@ public class AssetPlusFeatureSet5Controller {
    * 
    * @param imageURL a string that contains the URL of an image
    * @param ticketID an integer that cointains the ID number of a specific maintenance ticket
-   * @return an error message corresponding to where a problem was found if the image cannot be succesfullly added
+   * @return an error message corresponding to where a problem was found if the image cannot be
+   *         succesfullly added
    * @return an empty string if the image was succesfully added to the maintenance ticket
    */
-
   public static String addImageToMaintenanceTicket(String imageURL, int ticketID) {
     if (imageURL == null || imageURL.isEmpty()) {
       return "Image URL cannot be empty";
@@ -52,7 +53,7 @@ public class AssetPlusFeatureSet5Controller {
 
       } else
         return "Ticket does not exist";
-        
+
     } catch (Exception e) {
       return "Error: " + e;
     }
@@ -65,8 +66,7 @@ public class AssetPlusFeatureSet5Controller {
    * @param imageURL a string that contains the URL of an image
    * @param ticketID an integer that cointains the ID number of a specific maintenance ticket
    */
-
-   public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
+  public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
     try {
       MaintenanceTicket maintenanceTicket = Utils.getMaintenanceTicketbyID(ticketID);
 
