@@ -74,7 +74,6 @@ public class AssetPlusFeatureSet4Controller {
    */
   public static String updateMaintenanceTicket(int id, Date newRaisedOnDate, String newDescription,
       String newEmail, int newAssetNumber) {
-    // Input validation constraint
     if (newDescription.isEmpty() || newDescription == null) {
       return "Ticket description cannot be empty";
     }
@@ -108,16 +107,16 @@ public class AssetPlusFeatureSet4Controller {
       AssetPlusPersistence.save();
       return "";
     } catch (Exception e) {
-      return  "Error: " + e;
+      return "Error: " + e;
     }
-    
+
   }
 
   /**
-   * Deletes a MainteanceTicket type with the given id Written by: Yazid Asselah
+   * Deletes a MainteanceTicket type with the given id
+   * Written by: Yazid Asselah
    * 
    * @param id an int corresponding to the id of the ticket
-   * @return nothing
    */
   public static void deleteMaintenanceTicket(int id) {
     try {
@@ -129,9 +128,21 @@ public class AssetPlusFeatureSet4Controller {
     } catch (Exception e) {
       return;
     }
-  
+
   }
 
+  /**
+   * Assigns Maintenance Ticket within the input constraints
+   * 
+   * @author Group 5
+   * @param id an int corresponding to the id of the ticket
+   * @param employeeEmail a String containing email of employee to assign to
+   * @param aTimeToResolve a String containing the time requirement to resolve the ticket
+   * @param aPriority a String containing the priority of the ticket
+   * @param requiresApproval a boolean which indicates whether the manager needs to confirm after
+   *        ticket is completed
+   * @return a string that indicates the error, if no error returns an empty string
+   */
   public static String assignMaintenanceTicket(int id, String employeeEmail, String aTimeToResolve,
       String aPriority, boolean requiresApproval) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
@@ -142,7 +153,7 @@ public class AssetPlusFeatureSet4Controller {
     if (ticket.getStatus() == MaintenanceTicket.Status.Resolved) {
       return "Cannot assign a maintenance ticket which is resolved.";
     }
-    // Get employee
+
     HotelStaff ticketFixer = (HotelStaff) User.getWithEmail(employeeEmail);
     if (ticketFixer == null) {
       return "Staff to assign does not exist.";
@@ -169,9 +180,15 @@ public class AssetPlusFeatureSet4Controller {
     }
     return error;
 
-
   }
 
+  /**
+   * Starts the Maintenance Ticket with the given id
+   * 
+   * @author Group 5
+   * @param id an int corresponding to the id of the ticket
+   * @return a string that indicates the error, if no error returns an empty string
+   */
   public static String startTicketProgress(int id) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
     if (ticket == null) {
@@ -195,6 +212,13 @@ public class AssetPlusFeatureSet4Controller {
     return "";
   }
 
+  /**
+   * Sets the Maintenance Ticket with the given id as complete
+   * 
+   * @author Group 5
+   * @param id an int corresponding to the id of the ticket
+   * @return a string that indicates the error, if no error returns an empty string
+   */
   public static String completeTicket(int id) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
     if (ticket == null) {
@@ -217,6 +241,13 @@ public class AssetPlusFeatureSet4Controller {
     return "";
   }
 
+  /**
+   * Sets the Maintenance Ticket with the given id as approved
+   * 
+   * @author Group 5
+   * @param id an int corresponding to the id of the ticket
+   * @return a string that indicates the error, if no error returns an empty string
+   */
   public static String approveTicket(int id) {
 
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
@@ -246,6 +277,15 @@ public class AssetPlusFeatureSet4Controller {
     return "";
   }
 
+  /**
+   * Sets the Maintenance Ticket from input as disapproved
+   * 
+   * @author Group 5
+   * @param id an int corresponding to the id of the ticket
+   * @param aDate a Date correspinding to the date of the ticket
+   * @param aDescription a String containing the description of the ticket
+   * @return a string that indicates the error, if no error returns an empty string
+   */
   public static String disapproveTicket(int id, Date aDate, String aDescription) {
 
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);

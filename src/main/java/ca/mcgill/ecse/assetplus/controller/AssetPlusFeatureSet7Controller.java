@@ -99,7 +99,6 @@ public class AssetPlusFeatureSet7Controller {
    * 
    * @param ticketID id of the ticket.
    * @param index index of the note.
-   * @return error message if there is any.
    */
   public static void deleteMaintenanceNote(int ticketID, int index) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketID);
