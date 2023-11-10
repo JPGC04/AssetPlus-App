@@ -137,8 +137,8 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
-   * NOT FINISHED
-   * @param dataTable
+   * Defines the notes that are present inside the system.
+   * @param dataTable Contains an array of information about each note.
    */
   @Given("the following notes exist in the system")
   public void the_following_notes_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
@@ -163,6 +163,10 @@ public class MaintenanceTicketsStepDefinitions {
 
   }
 
+  /**
+   * Defines the images that are present inside theh system.
+   * @param dataTable Contains an array of informatin about each image: its URL, and ticketID/
+   */
   @Given("the following ticket images exist in the system")
   public void the_following_ticket_images_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -175,6 +179,12 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
 
+  /**
+   * Defines the status and if the ticket needs approval.
+   * @param string the TicketID in string.
+   * @param string2 The status of the ticket.
+   * @param string3 true/false value indicating if the ticket requires approval.
+   */
   @Given("ticket {string} is marked as {string} with requires approval {string}")
   public void ticket_is_marked_as_with_requires_approval(String string, String string2,
       String string3) {
@@ -192,6 +202,11 @@ public class MaintenanceTicketsStepDefinitions {
 
   }
 
+  /**
+   * Defines the status of a given ticket
+   * @param string TicketID of ticket.
+   * @param string2 Status of the ticket.
+   */
   @Given("ticket {string} is marked as {string}")
   public void ticket_is_marked_as(String string, String string2) {
     int id = Integer.parseInt(string);
@@ -200,12 +215,22 @@ public class MaintenanceTicketsStepDefinitions {
     ticket.setStatus(status);
   }
 
+  /**
+   * The scenario when the manager attempts to view all maintenance tickets.
+   */
   @When("the manager attempts to view all maintenance tickets in the system")
   public void the_manager_attempts_to_view_all_maintenance_tickets_in_the_system() {
     listTickets = AssetPlusFeatureSet6Controller.getTickets();
   }
 
-  // NOT FINISHED
+  /**
+   * Theh scenario when a manager attempts to assign a ticket with the following properties.
+   * @param string ticketID
+   * @param string2 email address of employee that is getting tasked with this ticket.
+   * @param string3 Estimated time for ticket to resolve.
+   * @param string4 Priority of ticket.
+   * @param string5 Does the ticket need approval?
+   */
   @When("the manager attempts to assign the ticket {string} to {string} with estimated time {string}, priority {string}, and requires approval {string}")
   public void the_manager_attempts_to_assign_the_ticket_to_with_estimated_time_priority_and_requires_approval(
       String string, String string2, String string3, String string4, String string5) {
@@ -217,6 +242,10 @@ public class MaintenanceTicketsStepDefinitions {
         requiresApproval);
   }
 
+  /**
+   * Scenario where the staff attempts to start the ticket.
+   * @param string TicketID
+   */
   @When("the hotel staff attempts to start the ticket {string}")
   public void the_hotel_staff_attempts_to_start_the_ticket(String string) {
     // Write code here that turns the phrase above into concrete actions
@@ -224,6 +253,10 @@ public class MaintenanceTicketsStepDefinitions {
     error = AssetPlusFeatureSet4Controller.startTicketProgress(ticketId);
   }
 
+  /**
+   * When the manager tries to approve a given ticket.
+   * @param string TicketID
+   */
   @When("the manager attempts to approve the ticket {string}")
   public void the_manager_attempts_to_approve_the_ticket(String string) {
     // Write code here that turns the phrase above into concrete actions
@@ -231,6 +264,10 @@ public class MaintenanceTicketsStepDefinitions {
     error = AssetPlusFeatureSet4Controller.approveTicket(ticketId);
   }
 
+  /**
+   * When the hotel staff tries to complete a ticket.
+   * @param string ticketID
+   */
   @When("the hotel staff attempts to complete the ticket {string}")
   public void the_hotel_staff_attempts_to_complete_the_ticket(String string) {
     // Write code here that turns the phrase above into concrete actions
@@ -238,6 +275,12 @@ public class MaintenanceTicketsStepDefinitions {
     error = AssetPlusFeatureSet4Controller.completeTicket(ticketId);
   }
 
+  /**
+   * When the manager attempts to disapprove a ticket on a specific date, and with a specific reason.
+   * @param string TicketID
+   * @param string2 Date of attempted disapproval.
+   * @param string3 Reasoning behind the disapproval.
+   */
   @When("the manager attempts to disapprove the ticket {string} on date {string} and with reason {string}")
   public void the_manager_attempts_to_disapprove_the_ticket_on_date_and_with_reason(String string,
       String string2, String string3) {
