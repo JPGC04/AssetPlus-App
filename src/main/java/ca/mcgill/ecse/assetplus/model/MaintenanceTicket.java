@@ -295,7 +295,7 @@ public class MaintenanceTicket
     return wasEventProcessed;
   }
 
-  public void setStatus(Status aStatus)
+  private void setStatus(Status aStatus)
   {
     status = aStatus;
   }
@@ -683,6 +683,11 @@ public class MaintenanceTicket
       this.fixApprover = null;
       placeholderFixApprover.removeTicketsForApproval(this);
     }
+  }
+
+  // line 59 "../../../../../AssetPlus.ump"
+   public void setStatusPublic(Status aStatus){
+    status = aStatus;
   }
 
   // line 35 "../../../../../MaintenanceTicketStates.ump"

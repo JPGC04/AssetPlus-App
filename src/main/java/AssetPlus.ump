@@ -54,6 +54,10 @@ class MaintenanceTicket
 
   enum PriorityLevel {Urgent, Normal, Low}
   lazy PriorityLevel priority;
+
+  public void setStatusPublic(Status aStatus) {
+    status = aStatus;
+  }
 }
 
 class MaintenanceNote

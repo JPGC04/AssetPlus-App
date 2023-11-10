@@ -199,7 +199,7 @@ public class MaintenanceTicketsStepDefinitions {
 
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
     ticket.setRequiresApproval(approval);
-    ticket.setStatus(status);
+    ticket.setStatusPublic(status);
 
   }
 
@@ -215,7 +215,7 @@ public class MaintenanceTicketsStepDefinitions {
     int id = Integer.parseInt(string);
     MaintenanceTicket.Status status = MaintenanceTicket.Status.valueOf(string2);
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
-    ticket.setStatus(status);
+    ticket.setStatusPublic(status);
   }
 
   /**
