@@ -31,6 +31,36 @@
             "specificAssets": [
               ""
             ]
+          },
+          {
+            "name": "hi",
+            "expectedLifeSpan": 4,
+            "assetPlus": {
+              "@reference": "../../.."
+            },
+            "specificAssets": [
+              ""
+            ]
+          },
+          {
+            "name": "newasset",
+            "expectedLifeSpan": 4,
+            "assetPlus": {
+              "@reference": "../../.."
+            },
+            "specificAssets": [
+              ""
+            ]
+          },
+          {
+            "name": "no",
+            "expectedLifeSpan": 4,
+            "assetPlus": {
+              "@reference": "../../.."
+            },
+            "specificAssets": [
+              ""
+            ]
           }
         ]
       }
