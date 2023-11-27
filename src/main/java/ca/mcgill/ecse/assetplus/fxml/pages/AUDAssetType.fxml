@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
@@ -56,25 +55,19 @@
             </Label>
             <Pane layoutX="21.0" layoutY="68.0" prefHeight="313.0" prefWidth="413.0" style="-fx-background-color: A9A9A9;">
                <children>
-                  <TextField layoutX="11.0" layoutY="14.0" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #FFFFFF;" text="Enter Asset Type Name" />
-                  <Button layoutX="216.0" layoutY="14.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #00FF00;" text="Add" />
+                  <TextField fx:id="newAssetTypeName" layoutX="11.0" layoutY="14.0" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #FFFFFF;" text="Enter Asset Type Name" />
+                  <Button fx:id="addAssetTypeButton" layoutX="216.0" layoutY="14.0" mnemonicParsing="false" onAction="#addNewAssetType" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #00FF00;" text="Add" />
                   <TitledPane animated="false" layoutX="10.0" layoutY="56.0" prefHeight="215.0" prefWidth="392.0" text="Asset Types">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #A9A9A9;">
                            <children>
-                              <TableView layoutX="1.0" layoutY="4.0" prefHeight="184.0" prefWidth="380.0" style="-fx-background-color: #A9A9A9;">
-                                 <columns>
-                                    <TableColumn prefWidth="216.66667318344116" text="Asset Type" />
-                                    <TableColumn prefWidth="81.99993896484375" text="Update" />
-                                    <TableColumn prefWidth="82.66665649414062" text="Delete" />
-                                 </columns>
-                              </TableView>
+                              <TableView fx:id="assetTypesList" editable="true" layoutX="1.0" layoutY="4.0" prefHeight="184.0" prefWidth="380.0" style="-fx-background-color: #A9A9A9;" />
                            </children>
                         </AnchorPane>
                     </content>
                   </TitledPane>
-                  <Button layoutX="155.0" layoutY="277.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="122.0" style="-fx-background-color: #00FF00;" text="Update Asset Type" />
-                  <Button layoutX="282.0" layoutY="277.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="117.0" style="-fx-background-color: #FF0000;" text="Delete Asset Type" />
+                  <Button fx:id="updateAssetTypeButton" layoutX="155.0" layoutY="277.0" mnemonicParsing="false" onAction="#updateNewAssetType" prefHeight="29.0" prefWidth="122.0" style="-fx-background-color: #00FF00;" text="Update Asset Type" />
+                  <Button fx:id="deleteAssetTypeButton" layoutX="282.0" layoutY="277.0" mnemonicParsing="false" onAction="#deleteNewAssetType" prefHeight="29.0" prefWidth="117.0" style="-fx-background-color: #FF0000;" text="Delete Asset Type" />
                </children>
             </Pane>
          </children>
