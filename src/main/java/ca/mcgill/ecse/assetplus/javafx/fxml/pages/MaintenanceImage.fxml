@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
@@ -27,7 +27,7 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button layoutY="229.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="153.0" style="-fx-background-color: add8e6;" text="Asset Types">
+                  <Button layoutY="229.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="153.0" style="-fx-background-color: add8e6;" text="Tickets">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -48,16 +48,16 @@
       </VBox>
       <Pane prefHeight="398.0" prefWidth="457.0">
          <children>
-            <Label layoutX="21.0" layoutY="24.0" text="Asset Types">
+            <Label layoutX="21.0" layoutY="24.0" text="Maintenance Ticket Images">
                <font>
                   <Font name="Charter Black" size="28.0" />
                </font>
             </Label>
             <Pane layoutX="21.0" layoutY="68.0" prefHeight="313.0" prefWidth="413.0" style="-fx-background-color: A9A9A9;">
                <children>
-                  <TextField fx:id="newAssetTypeName" layoutX="11.0" layoutY="14.0" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #FFFFFF;" text="Enter Asset Type Name" />
+                  <TextField fx:id="newAssetTypeName" layoutX="11.0" layoutY="14.0" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #FFFFFF;" text="Enter Image URL" />
                   <Button fx:id="addAssetTypeButton" layoutX="216.0" layoutY="14.0" mnemonicParsing="false" onAction="#addNewAssetType" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: #00FF00;" text="Add" />
-                  <TitledPane animated="false" layoutX="10.0" layoutY="56.0" prefHeight="215.0" prefWidth="392.0" text="Asset Types">
+                  <TitledPane animated="false" layoutX="10.0" layoutY="56.0" prefHeight="215.0" prefWidth="392.0" text="Images">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #A9A9A9;">
                            <children>
@@ -66,8 +66,7 @@
                         </AnchorPane>
                     </content>
                   </TitledPane>
-                  <Button fx:id="updateAssetTypeButton" layoutX="155.0" layoutY="277.0" mnemonicParsing="false" onAction="#updateNewAssetType" prefHeight="29.0" prefWidth="122.0" style="-fx-background-color: #00FF00;" text="Update Asset Type" />
-                  <Button fx:id="deleteAssetTypeButton" layoutX="282.0" layoutY="277.0" mnemonicParsing="false" onAction="#deleteNewAssetType" prefHeight="29.0" prefWidth="117.0" style="-fx-background-color: #FF0000;" text="Delete Asset Type" />
+                  <Button fx:id="deleteAssetTypeButton" layoutX="272.0" layoutY="277.0" mnemonicParsing="false" onAction="#deleteNewAssetType" prefHeight="29.0" prefWidth="127.0" style="-fx-background-color: #FF0000;" text="Delete Ticket Image" />
                </children>
             </Pane>
          </children>
