@@ -6,34 +6,14 @@
     "guests": [
       ""
     ],
+    "manager": {
+      ""
+    },
     "maintenanceTickets": [
       ""
     ],
     "assetTypes": [
-      {
-        "AssetType": [
-          {
-            "name": "pillow",
-            "expectedLifeSpan": 700,
-            "assetPlus": {
-              "@reference": "../../.."
-            },
-            "specificAssets": [
-              ""
-            ]
-          },
-          {
-            "name": "bed",
-            "expectedLifeSpan": 5000,
-            "assetPlus": {
-              "@reference": "../../.."
-            },
-            "specificAssets": [
-              ""
-            ]
-          }
-        ]
-      }
+      ""
     ],
     "specificAssets": [
       ""
