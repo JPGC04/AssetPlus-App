@@ -36,7 +36,7 @@ public class MainPageController {
 
     @FXML
     void AssetsButtonClicked(ActionEvent event) {
-      loadPage("pages/AUDAssetType.fxml");
+      loadPage("pages/AUDAsset.fxml");
     }
 
     @FXML
