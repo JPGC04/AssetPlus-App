@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import ca.mcgill.ecse.assetplus.javafx.fxml.AssetPlusFxmlView;
+import ca.mcgill.ecse.assetplus.model.AssetType;
 
 public class AUDAssetTypeController {
 
@@ -24,7 +25,7 @@ public class AUDAssetTypeController {
     private Button DeleteAssetTypeButton;
 
     @FXML
-    private ChoiceBox<?> DeleteAssetTypeName;
+    private ChoiceBox<String> DeleteAssetTypeName;
 
     @FXML
     private Button UpdateAssetTypeButton;
@@ -40,15 +41,17 @@ public class AUDAssetTypeController {
 
     @FXML
     public void initialize() {
-        // the choice boxes listen to the refresh event
         UpdateAssetTypeOldName.addEventHandler(AssetPlusFxmlView.REFRESH_EVENT, e -> {
         UpdateAssetTypeOldName.setItems(ViewUtils.getAssetTypes());
-        // reset the choice
         UpdateAssetTypeOldName.setValue(null);
         });
 
-        // let the application be aware of the refreshable node
-        AssetPlusFxmlView.getInstance().registerRefreshEvent(UpdateAssetTypeOldName);
+        DeleteAssetTypeName.addEventHandler(AssetPlusFxmlView.REFRESH_EVENT, e -> {
+        DeleteAssetTypeName.setItems(ViewUtils.getAssetTypes());
+        DeleteAssetTypeName.setValue(null);
+        });
+
+        AssetPlusFxmlView.getInstance().registerRefreshEvent(UpdateAssetTypeOldName, DeleteAssetTypeName);
     }
 
     @FXML
@@ -69,12 +72,33 @@ public class AUDAssetTypeController {
 
     @FXML
     void DeleteAssetTypeClicked(ActionEvent event) {
-
+        if (DeleteAssetTypeName.getValue() == null || DeleteAssetTypeName.getValue().trim().isEmpty() || DeleteAssetTypeName.getValue().length() == 0) {
+            ViewUtils.showError("The name must not be empty");
+        } else {
+            AssetPlusFeatureSet2Controller.deleteAssetType(DeleteAssetTypeName.getValue());
+            DeleteAssetTypeName.valueProperty().set(null);
+            initialize();
+        }
     }
 
     @FXML
     void UpdateAssetTypeClicked(ActionEvent event) {
-
+        if (UpdateAssetTypeOldName.getValue() == null || UpdateAssetTypeOldName.getValue().trim().isEmpty() || UpdateAssetTypeOldName.getValue().length() == 0) {
+            ViewUtils.showError("The name must not be empty");
+        } else if (UpdateAssetTypeNewName.getText() == null || UpdateAssetTypeNewName.getText().trim().isEmpty() || UpdateAssetTypeNewName.getText().length() == 0) {
+            ViewUtils.showError("The name must not be empty");
+        } else if (UpdateAssetTypeNewLife.getText().trim().isEmpty() || Integer.parseInt(UpdateAssetTypeNewLife.getText()) <= 0) {
+            ViewUtils.showError("The expected life span must be greater than 0 days");
+        } else if (AssetType.getWithName(UpdateAssetTypeNewName.getText()) != null && (AssetType.getWithName(UpdateAssetTypeNewName.getText()).getExpectedLifeSpan() == Integer.parseInt(UpdateAssetTypeNewLife.getText()) || !UpdateAssetTypeOldName.getValue().equals(UpdateAssetTypeNewName.getText()))) {
+            ViewUtils.showError("The asset type already exists");
+        } else {
+            if (successful(AssetPlusFeatureSet2Controller.updateAssetType(UpdateAssetTypeOldName.getValue(), UpdateAssetTypeNewName.getText(), Integer.parseInt(UpdateAssetTypeNewLife.getText())))) {
+                UpdateAssetTypeNewName.setText("");
+                UpdateAssetTypeNewLife.setText("");
+                UpdateAssetTypeOldName.valueProperty().set(null);
+                initialize();
+            }
+        }
     }
 
 }
