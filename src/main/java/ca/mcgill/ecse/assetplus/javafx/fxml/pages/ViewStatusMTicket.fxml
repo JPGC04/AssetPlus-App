@@ -5,105 +5,58 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewStatusMTicketController.java">
    <children>
-      <AnchorPane prefHeight="489.0" prefWidth="200.0" style="-fx-background-color: #CDCDCD;">
+      <Pane layoutX="37.0" layoutY="21.0" opacity="0.8" prefHeight="448.0" prefWidth="435.0" style="-fx-background-color: E4E2E1;">
          <children>
-            <Button layoutY="89.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" textFill="#0d0d0d">
-               <font>
-                  <Font size="54.0" />
-               </font>
-            </Button>
-            <Button alignment="CENTER" layoutY="162.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
-               <font>
-                  <Font size="60.0" />
-               </font>
-            </Button>
-            <Button layoutY="234.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" textFill="#111010">
-               <font>
-                  <Font size="60.0" />
-               </font>
-            </Button>
-            <Button alignment="CENTER" layoutY="306.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" />
-            <Text accessibleRole="BUTTON" layoutX="47.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account" wrappingWidth="99.98306465148926">
-               <font>
-                  <Font name="Arial" size="25.0" />
-               </font>
-            </Text>
-            <Text accessibleRole="BUTTON" layoutX="61.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ticket">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Text>
-            <Text layoutX="63.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asset">
-               <font>
-                  <Font name="Arial" size="25.0" />
-               </font>
-            </Text>
-            <Text layoutX="54.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log Out" wrappingWidth="91.98306465148926">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Text>
-         </children>
-      </AnchorPane>
-      <Pane layoutX="225.0" layoutY="24.0" opacity="0.8" prefHeight="441.0" prefWidth="373.0" style="-fx-background-color: E4E2E1;">
-         <children>
-            <DatePicker layoutX="6.0" layoutY="11.0" prefHeight="26.0" prefWidth="122.0" promptText="DD/MM/YYYY" showWeekNumbers="true" />
-            <ComboBox editable="true" layoutX="154.0" layoutY="51.0" opacity="0.8" prefHeight="17.0" prefWidth="122.0" promptText="Search" />
-            <Text layoutX="13.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TICKET NUMBER" textAlignment="CENTER">
+            <DatePicker fx:id="datePicker" layoutX="6.0" layoutY="11.0" onAction="#getTicketOnDate" prefHeight="26.0" prefWidth="122.0" promptText="DD/MM/YYYY" showWeekNumbers="true" />
+            <ComboBox fx:id="ticketNumberSearchComboBox" editable="true" layoutX="158.0" layoutY="96.0" onAction="#getTicketWithNumber" opacity="0.8" prefHeight="17.0" prefWidth="122.0" promptText="Search" />
+            <Text layoutX="17.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TICKET NUMBER" textAlignment="CENTER">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="18.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ASSET" textAlignment="CENTER" wrappingWidth="115.1962890625">
+            <Text layoutX="22.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ASSET" textAlignment="CENTER" wrappingWidth="115.1962890625">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="19.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STATUS" textAlignment="CENTER" wrappingWidth="115.1962890625">
+            <Text layoutX="23.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STATUS" textAlignment="CENTER" wrappingWidth="115.1962890625">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="14.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PRIORITY LEVEL" textAlignment="CENTER" wrappingWidth="133.1962890625">
+            <Text layoutX="18.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PRIORITY LEVEL" textAlignment="CENTER" wrappingWidth="133.1962890625">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="34.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="START DATE" textAlignment="CENTER">
+            <Text layoutX="38.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="START DATE" textAlignment="CENTER">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Text>
-            <Text layoutX="36.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="END DATE" textAlignment="CENTER">
+            <Text layoutX="40.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="END DATE" textAlignment="CENTER">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Text>
-            <TextField editable="false" layoutX="153.0" layoutY="90.0" style="-fx-background-color: #FFFFFF;" />
-            <TextField editable="false" layoutX="153.0" layoutY="201.0" style="-fx-background-color: #FFFFFF;" />
-            <TextField editable="false" layoutX="153.0" layoutY="129.0" style="-fx-background-color: #FFFFFF;" />
-            <TextField editable="false" layoutX="153.0" layoutY="164.0" style="-fx-background-color: #FFFFFF;" />
-            <TextField editable="false" layoutX="153.0" layoutY="237.0" style="-fx-background-color: #FFFFFF;" />
-            <Text layoutX="19.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DESCRIPTION" textAlignment="CENTER">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Text>
-            <TextField editable="false" layoutX="32.0" layoutY="301.0" prefHeight="66.0" prefWidth="293.0" style="-fx-background-color: #FFFFFF;" />
+            <TextField fx:id="assetTextField" editable="false" layoutX="157.0" layoutY="135.0" onAction="#getAsset" style="-fx-background-color: #FFFFFF;" />
+            <TextField fx:id="startDateTextField" editable="false" layoutX="157.0" layoutY="246.0" onAction="#getStartDate" style="-fx-background-color: #FFFFFF;" />
+            <TextField fx:id="statusTextField" editable="false" layoutX="157.0" layoutY="174.0" onAction="#getStatus" style="-fx-background-color: #FFFFFF;" />
+            <TextField fx:id="priorityLevelTextField" editable="false" layoutX="157.0" layoutY="209.0" onAction="#getPriorityLevel" style="-fx-background-color: #FFFFFF;" />
+            <TextField fx:id="endDateTextField" editable="false" layoutX="157.0" layoutY="282.0" onAction="#getEndDate" style="-fx-background-color: #FFFFFF;" />
             <Text fill="#070707" layoutX="151.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MANAGER APPROVAL">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Text>
-            <CheckBox disable="true" layoutX="303.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" />
-            <Button layoutX="16.0" layoutY="388.0" mnemonicParsing="false" style="-fx-background-color: ffffff;">
+            <CheckBox fx:id="managerApprovalCheckBox" disable="true" layoutX="303.0" layoutY="15.0" mnemonicParsing="false" onAction="#ifManagerApproval" style="-fx-background-color: #FFFFFF;" />
+            <Button fx:id="viewNotesButton" layoutX="16.0" layoutY="388.0" mnemonicParsing="false" onAction="#getNotes" style="-fx-background-color: ffffff;">
                <graphic>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="View/Add Notes" textAlignment="CENTER" wrappingWidth="108.72119140625">
                      <font>
@@ -112,16 +65,7 @@
                   </Text>
                </graphic>
             </Button>
-            <Button layoutX="152.0" layoutY="388.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" style="-fx-background-color: ffffff;">
-               <graphic>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="View Location" textAlignment="CENTER">
-                     <font>
-                        <Font name="Arial" size="15.0" />
-                     </font>
-                  </Text>
-               </graphic>
-            </Button>
-            <Button layoutX="278.0" layoutY="388.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: ffffff;">
+            <Button fx:id="imageButton" layoutX="167.0" layoutY="388.0" mnemonicParsing="false" onAction="#getImages" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: ffffff;">
                <graphic>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Images" textAlignment="CENTER">
                      <font>
@@ -130,6 +74,36 @@
                   </Text>
                </graphic>
             </Button>
+            <Button fx:id="createTicketButton" layoutX="341.0" layoutY="11.0" mnemonicParsing="false" onAction="#createTicket" prefHeight="26.0" prefWidth="84.0" style="-fx-background-color: ffffff;">
+               <graphic>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New" textAlignment="CENTER">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </Button>
+            <Text layoutX="27.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LOCATOIN" textAlignment="CENTER" wrappingWidth="93.33984375">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Text>
+            <TextField fx:id="endDateTextField1" editable="false" layoutX="157.0" layoutY="320.0" onAction="#getEndDate" style="-fx-background-color: #FFFFFF;" />
+            <Button fx:id="viewDescriptionButton" layoutX="261.0" layoutY="388.0" mnemonicParsing="false" onAction="#getDescription" prefHeight="26.0" prefWidth="159.0" style="-fx-background-color: ffffff;">
+               <graphic>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="View Description" textAlignment="CENTER" wrappingWidth="137.72119140625">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Text>
+               </graphic>
+            </Button>
+            <Text layoutX="31.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ASSIGNED EMPLOYEE" textAlignment="CENTER" wrappingWidth="93.33984375">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="assignedEmployeeSearchBox" editable="true" layoutX="158.0" layoutY="59.0" onAction="#getAssigedEmpolyee" opacity="0.8" prefHeight="17.0" prefWidth="122.0" promptText="Search" />
          </children>
       </Pane>
    </children>
