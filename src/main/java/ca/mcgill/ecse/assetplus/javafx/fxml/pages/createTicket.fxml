@@ -55,7 +55,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Button fx:id="submitButton" mnemonicParsing="false" style="-fx-background-color: #2e86de;" text="Submit" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Button fx:id="submitButton" mnemonicParsing="false" onAction="#clickSubmitButton" style="-fx-background-color: #2e86de;" text="Submit" textOverrun="CLIP" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="300.0" top="40.0" />
          </GridPane.margin>
@@ -63,7 +63,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="cancelChangeButton" cancelButton="true" mnemonicParsing="false" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Button fx:id="cancelChangeButton" cancelButton="true" mnemonicParsing="false" onAction="#cancelChange" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="215.0" top="40.0" />
          </GridPane.margin>
