@@ -3,49 +3,50 @@ package ca.mcgill.ecse.assetplus.javafx.fxml;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.Parent;
+import javafx.fxml.FXMLLoader;
 
-public class thecontroller {
+public class MainPageController {
+
     @FXML
-    private Button another;
+    private Button AssetTypes;
+
+    @FXML
+    private Button Assets;
+
+    @FXML
+    private Button Tickets;
+
+    @FXML
+    private Button User;
 
     @FXML
     private AnchorPane ap;
 
     @FXML
-    private Button assetplus;
-
-    @FXML
     private BorderPane bp;
 
     @FXML
-    private Button home;
-
-    @FXML
-    private Button oiterh;
-
-    @FXML
-    void anotherclick(ActionEvent event) {
-      
-    }
-
-    @FXML
-    void apclick(ActionEvent event) {
+    void AssetTypesButtonClicked(ActionEvent event) {
       loadPage("pages/AUDAssetType.fxml");
     }
 
     @FXML
-    void homeclick(ActionEvent event) {
-      loadPage("pages/AUDEmployeeGuest.fxml");
+    void AssetsButtonClicked(ActionEvent event) {
+      loadPage("pages/AUDAssetType.fxml");
     }
 
     @FXML
-    void otehrclick(ActionEvent event) {
+    void TicketsButtonClicked(ActionEvent event) {
+      loadPage("pages/createTicket.fxml");
+    }
 
+    @FXML
+    void UserButtonClicked(ActionEvent event) {
+      loadPage("pages/AUDEmployeeGuest.fxml");
     }
 
     private void loadPage(String page) {
@@ -60,4 +61,5 @@ public class thecontroller {
 
       bp.setCenter(root);
     }
+
 }
