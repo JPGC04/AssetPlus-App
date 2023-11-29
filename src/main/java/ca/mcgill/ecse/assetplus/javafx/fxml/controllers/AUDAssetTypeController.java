@@ -89,7 +89,6 @@ public class AUDAssetTypeController {
 
     @FXML
     void AddAssetTypeClicked(ActionEvent event) {
-
     }
 
     @FXML
