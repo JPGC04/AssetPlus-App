@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
 
-public class AssetController {
+public class AUDAssetController {
 
     @FXML
     private TextField textArea;
