@@ -8,6 +8,7 @@ import javafx.application.Application;
 public class AssetPlusApplication {
 
   private static AssetPlus assetPlus;
+  //hello world
 
   public static void main(String[] args) {
     assetPlus = getAssetPlus(); // might remove this line
