@@ -11,44 +11,48 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" style="-fx-border-color: #000000;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.AUDAssetTypeController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.AUDAssetTypeController">
    <children>
-      <Pane prefHeight="400.0" prefWidth="400.0">
+      <HBox layoutX="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="606.0" style="-fx-border-color: #000000;">
          <children>
-            <BorderPane layoutX="-1.0" prefHeight="65.0" prefWidth="400.0" style="-fx-background-color: #54a0ff;">
-               <center>
-                  <Label text="Asset Types" textFill="WHITE" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="28.0" />
-                     </font>
-                  </Label>
-               </center>
-            </BorderPane>
-            <AnchorPane layoutX="-2.0" layoutY="65.0" prefHeight="90.0" prefWidth="400.0">
+            <Pane prefHeight="397.0" prefWidth="609.0">
                <children>
-                  <TextField fx:id="AddAssetTypeName" layoutX="14.0" layoutY="32.0" promptText="Name" />
-                  <TextField fx:id="AddAssetTypeLife" layoutX="173.0" layoutY="32.0" promptText="Life Expectancy" />
-                  <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Asset Type" />
-                  <Button fx:id="AddAssetTypeButton" layoutX="348.0" layoutY="32.0" mnemonicParsing="false" onAction="#AddAssetTypeClicked" style="-fx-background-color: #54a0ff;" text="Add" textFill="WHITE" />
+                  <BorderPane layoutX="-1.0" prefHeight="65.0" prefWidth="607.0" style="-fx-background-color: #54a0ff;">
+                     <center>
+                        <Label text="Asset Types" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                     </center>
+                  </BorderPane>
+                  <AnchorPane layoutX="-2.0" layoutY="65.0" prefHeight="90.0" prefWidth="400.0">
+                     <children>
+                        <TextField fx:id="AddAssetTypeName" layoutX="14.0" layoutY="32.0" promptText="Name" />
+                        <TextField fx:id="AddAssetTypeLife" layoutX="173.0" layoutY="32.0" promptText="Life Expectancy" />
+                        <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Asset Type" />
+                        <Button fx:id="AddAssetTypeButton" layoutX="348.0" layoutY="32.0" mnemonicParsing="false" onAction="#AddAssetTypeClicked" style="-fx-background-color: #54a0ff;" text="Add" textFill="WHITE" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="-1.0" layoutY="155.0" prefHeight="133.0" prefWidth="400.0">
+                     <children>
+                        <TextField fx:id="UpdateAssetTypeNewName" layoutX="14.0" layoutY="67.0" promptText="New Name" />
+                        <TextField fx:id="UpdateAssetTypeNewLife" layoutX="171.0" layoutY="67.0" promptText="New Life Expectancy" />
+                        <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Asset Type" />
+                        <Button fx:id="UpdateAssetTypeButton" layoutX="330.0" layoutY="67.0" mnemonicParsing="false" onAction="#UpdateAssetTypeClicked" style="-fx-background-color: #54a0ff;" text="Update" textFill="WHITE" />
+                        <ChoiceBox fx:id="UpdateAssetTypeOldName" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="305.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="-1.0" layoutY="277.0" prefHeight="120.0" prefWidth="400.0">
+                     <children>
+                        <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete Asset Type" />
+                        <Button fx:id="DeleteAssetTypeButton" layoutX="330.0" layoutY="31.0" mnemonicParsing="false" onAction="#DeleteAssetTypeClicked" style="-fx-background-color: #54a0ff;" text="Delete" textFill="WHITE" />
+                        <ChoiceBox fx:id="DeleteAssetTypeName" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="252.0" />
+                     </children>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
-            <AnchorPane layoutX="-1.0" layoutY="155.0" prefHeight="133.0" prefWidth="400.0">
-               <children>
-                  <TextField fx:id="UpdateAssetTypeNewName" layoutX="14.0" layoutY="67.0" promptText="New Name" />
-                  <TextField fx:id="UpdateAssetTypeNewLife" layoutX="171.0" layoutY="67.0" promptText="New Life Expectancy" />
-                  <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Asset Type" />
-                  <Button fx:id="UpdateAssetTypeButton" layoutX="330.0" layoutY="67.0" mnemonicParsing="false" onAction="#UpdateAssetTypeClicked" style="-fx-background-color: #54a0ff;" text="Update" textFill="WHITE" />
-                  <ChoiceBox fx:id="UpdateAssetTypeOldName" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="305.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="-1.0" layoutY="277.0" prefHeight="120.0" prefWidth="400.0">
-               <children>
-                  <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete Asset Type" />
-                  <Button fx:id="DeleteAssetTypeButton" layoutX="330.0" layoutY="31.0" mnemonicParsing="false" onAction="#DeleteAssetTypeClicked" style="-fx-background-color: #54a0ff;" text="Delete" textFill="WHITE" />
-                  <ChoiceBox fx:id="DeleteAssetTypeName" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="252.0" />
-               </children>
-            </AnchorPane>
+            </Pane>
          </children>
-      </Pane>
+      </HBox>
    </children>
-</HBox>
+</AnchorPane>

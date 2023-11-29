@@ -1,9 +1,6 @@
 package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
 
-import java.util.List;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet2Controller;
-import ca.mcgill.ecse.assetplus.controller.TOMaintenanceNote;
-import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
 import ca.mcgill.ecse.assetplus.javafx.fxml.AssetPlusFxmlView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,15 +62,8 @@ public class ViewUtils {
   public static void showError(String message) {
     makePopupWindow("Error", message);
   }
-/*
-  public static ObservableList<TODriver> getDrivers() {
-    List<TODriver> drivers = BtmsController.getDrivers();
-    // as javafx works with observable list, we need to convert the java.util.List to
-    // javafx.collections.observableList
-    return FXCollections.observableList(drivers);
-  }
 
-  public static ObservableList<String> getBuses() {
-    return FXCollections.observableList(BtmsController.getBuses());
-  }*/
+  public static ObservableList<String> getAssetTypes() {
+    return FXCollections.observableList(AssetPlusFeatureSet2Controller.getAssetTypes());
+  }
 }

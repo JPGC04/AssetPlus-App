@@ -4,6 +4,8 @@ import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * AssetPlusFeatureSet2Controller is the main entity that is used to add, update, and delete
@@ -110,6 +112,19 @@ public class AssetPlusFeatureSet2Controller {
       return;
     }
 
+  }
+
+  /**
+   * Returns a list of strings of the AssetTypes in the system.
+   * Written by: John-Paul Chouery
+   */
+  public static List<String> getAssetTypes() {
+    List<AssetType> assetTypes = assetPlus.getAssetTypes();
+    List<String> asStrings = new ArrayList<>();
+    for (AssetType a: assetTypes) {
+      asStrings.add(a.getName());
+    }
+    return asStrings;
   }
 
 }

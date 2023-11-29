@@ -30,6 +30,11 @@ public class MainPageController {
     private BorderPane bp;
 
     @FXML
+    public void initialize() {
+      loadPage("pages/AUDEmployeeGuest.fxml");
+    }
+
+    @FXML
     void AssetTypesButtonClicked(ActionEvent event) {
       loadPage("pages/AUDAssetType.fxml");
     }
