@@ -14,10 +14,19 @@ public class ViewStatusMTicketController {
     private TextField assetTextField;
 
     @FXML
-    private TextField descriptionTextField;
+    private ComboBox<?> assignedEmployeeSearchBox;
+
+    @FXML
+    private Button createTicketButton;
+
+    @FXML
+    private DatePicker datePicker;
 
     @FXML
     private TextField endDateTextField;
+
+    @FXML
+    private TextField endDateTextField1;
 
     @FXML
     private Button imageButton;
@@ -35,19 +44,26 @@ public class ViewStatusMTicketController {
     private TextField statusTextField;
 
     @FXML
-    private DatePicker ticketDatePicker;
-
-    @FXML
     private ComboBox<?> ticketNumberSearchComboBox;
 
     @FXML
-    private Button viewLocationButton;
+    private Button viewDescriptionButton;
 
     @FXML
     private Button viewNotesButton;
 
     @FXML
+    void createTicket(ActionEvent event) {
+
+    }
+
+    @FXML
     void getAsset(ActionEvent event) {
+
+    }
+
+    @FXML
+    void getAssigedEmpolyee(ActionEvent event) {
 
     }
 
@@ -63,11 +79,6 @@ public class ViewStatusMTicketController {
 
     @FXML
     void getImages(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getLocation(ActionEvent event) {
 
     }
 
