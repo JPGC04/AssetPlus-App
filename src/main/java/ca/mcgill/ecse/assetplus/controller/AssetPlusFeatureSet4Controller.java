@@ -326,7 +326,13 @@ public class AssetPlusFeatureSet4Controller {
 
     for (MaintenanceTicket ticket: tickets) {
       try {
-        result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()), String.valueOf(ticket.getRaisedOnDate()), String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(), ticket.getStatusFullName(), String.valueOf(ticket.getAsset().getAssetNumber())));
+        String assetNumber = "";
+        if (ticket.getAsset() == null) {
+          assetNumber = "-1";
+        } else {
+          assetNumber = String.valueOf(ticket.getAsset().getAssetNumber());
+        }
+        result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()), String.valueOf(ticket.getRaisedOnDate()), String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(), ticket.getStatusFullName(), assetNumber));
       } catch (Exception e) {
         System.out.println("Didnt work");
       }

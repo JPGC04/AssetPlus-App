@@ -259,6 +259,12 @@ public class maintenanceTicketController implements Initializable{
 
     @FXML
     void editClick(ActionEvent event) {
+
+        try {
+            
+        } catch (Exception e) {
+            showError("Invalid parameters!");
+        }
         ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
         int currentTicketId = Integer.parseInt(ticketInput.getText());
 
