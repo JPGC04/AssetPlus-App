@@ -32,6 +32,9 @@ public class MainPageController {
     @FXML
     public void initialize() {
       loadPage("pages/AUDEmployeeGuest.fxml");
+      
+      String cssFilePath = getClass().getResource("MainPageStyle.css").toExternalForm();
+      bp.getStylesheets().add(cssFilePath);
     }
 
     @FXML
