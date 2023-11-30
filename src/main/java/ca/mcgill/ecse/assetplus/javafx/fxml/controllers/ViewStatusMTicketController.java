@@ -1,20 +1,29 @@
 package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
 
+import ca.mcgill.ecse.assetplus.model.AssetType;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.controller.*;
+import java.util.Date;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableCell;
 
-public class ViewStatusMTicketController {
+public class ViewStatusMTicketController implements Initializable{
 
     @FXML
-    private TextField assetTextField;
-
-    @FXML
-    private ComboBox<?> assignedEmployeeSearchBox;
+    private ComboBox<String> assignedEmployeeSearchBox;
 
     @FXML
     private Button createTicketButton;
@@ -23,28 +32,34 @@ public class ViewStatusMTicketController {
     private DatePicker datePicker;
 
     @FXML
-    private TextField endDateTextField;
-
-    @FXML
-    private TextField endDateTextField1;
-
-    @FXML
     private Button imageButton;
 
     @FXML
     private CheckBox managerApprovalCheckBox;
 
     @FXML
-    private TextField priorityLevelTextField;
+    private ComboBox<Integer> ticketNumberSearchComboBox;
 
     @FXML
-    private TextField startDateTextField;
+    private TableView<?> ticketTable;
 
     @FXML
-    private TextField statusTextField;
+    private TableColumn<MaintenanceTicket, String> assetCol;
 
     @FXML
-    private ComboBox<?> ticketNumberSearchComboBox;
+    private TableColumn<MaintenanceTicket, Date> endDateCol;
+
+    @FXML
+    private TableColumn<MaintenanceTicket, Integer> locationCol;
+
+    @FXML
+    private TableColumn<?, ?> priorityCol;
+
+    @FXML
+    private TableColumn<?, ?> startDateCol;
+
+    @FXML
+    private TableColumn<?, ?> statusCol;
 
     @FXML
     private Button viewDescriptionButton;
@@ -52,14 +67,19 @@ public class ViewStatusMTicketController {
     @FXML
     private Button viewNotesButton;
 
-    @FXML
-    void createTicket(ActionEvent event) {
-
+    @Override
+    public void initialize(URL url, ResourceBundle resources) {
+        // initialize ticket number search box
+        ticketNumberSearchComboBox.setItems(FXCollections.observableArrayList(Utils.getTicketNumbers()));
+        //
+        assetCol.setCellValueFactory(data -> Bindings.createStringBinding(
+            () -> data.getValue().getAsset().getAssetType().getName()));
+        
     }
 
     @FXML
-    void getAsset(ActionEvent event) {
-
+    void getTicketWithNumber(ActionEvent event) {
+        int ticketNumber = ticketNumberSearchComboBox.getValue();
     }
 
     @FXML
@@ -69,11 +89,6 @@ public class ViewStatusMTicketController {
 
     @FXML
     void getDescription(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getEndDate(ActionEvent event) {
 
     }
 
@@ -88,32 +103,17 @@ public class ViewStatusMTicketController {
     }
 
     @FXML
-    void getPriorityLevel(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getStartDate(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getStatus(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getTicketOnDate(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getTicketWithNumber(ActionEvent event) {
-
-    }
-
-    @FXML
     void ifManagerApproval(ActionEvent event) {
+
+    }
+
+    @FXML
+    void selectDate(ActionEvent event) {
+
+    }
+
+    @FXML
+    void createTicket(ActionEvent event) {
 
     }
 

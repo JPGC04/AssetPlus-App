@@ -1,9 +1,12 @@
 package ca.mcgill.ecse.assetplus.controller;
 
+import java.util.ArrayList;
+import com.thoughtworks.xstream.mapper.Mapper.Null;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.controller.*;
 
 public class Utils {
     private static AssetPlus assetplus= AssetPlusApplication.getAssetPlus();
@@ -27,5 +30,12 @@ public class Utils {
             }
         }
         return null;
+    }
+    public static ArrayList<Integer> getTicketNumbers () {
+        ArrayList<Integer> ticketNumbers = new ArrayList<Integer>();
+        for (MaintenanceTicket ticket : assetplus.getMaintenanceTickets()) {
+           ticketNumbers.add(ticket.getId()); 
+        }
+        return ticketNumbers;
     }
 }

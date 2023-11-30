@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -13,22 +14,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="screen" alignment="CENTER" prefHeight="531.0" prefWidth="561.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.AUDAssetController">
+<VBox fx:id="screen" alignment="CENTER" prefHeight="599.0" prefWidth="585.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.AUDAssetController">
     <children>
-      <GridPane prefHeight="77.0" prefWidth="561.0">
+      <GridPane prefHeight="138.0" prefWidth="561.0" style="-fx-background-color: #caf0f8;">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="558.0" minWidth="10.0" prefWidth="558.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="3.0" prefWidth="3.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="585.0" minWidth="10.0" prefWidth="206.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="0.0" prefWidth="379.0" />
             <ColumnConstraints />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Asset Menu">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="177.0" text="Asset Menu" textAlignment="CENTER" GridPane.columnIndex="1">
                <font>
                   <Font size="30.0" />
                </font>
+               <opaqueInsets>
+                  <Insets top="10.0" />
+               </opaqueInsets>
             </Label>
          </children>
       </GridPane>
@@ -43,7 +47,7 @@
             <TableColumn fx:id="deleteBtn" prefWidth="89.0" />
         </columns>
       </TableView>
-      <Pane prefHeight="200.0" prefWidth="200.0">
+      <Pane prefHeight="223.0" prefWidth="585.0">
          <children>
             <Button layoutX="506.0" layoutY="85.0" mnemonicParsing="false" onAction="#onUpdateBtnClick" text="update" />
             <TextField fx:id="roomNumber" layoutX="312.0" layoutY="55.0" prefHeight="26.0" prefWidth="104.0" promptText="Room number" />
