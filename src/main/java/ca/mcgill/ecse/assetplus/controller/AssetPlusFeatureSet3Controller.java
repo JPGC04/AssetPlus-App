@@ -111,11 +111,8 @@ public class AssetPlusFeatureSet3Controller {
       try {
         SpecificAsset specificAsset = assetPlus.addSpecificAsset(assetNumber, floorNumber,
             roomNumber, purchaseDate, assetType);
-        boolean added = assetPlus.addSpecificAsset(specificAsset);
+        assetPlus.addSpecificAsset(specificAsset);
         AssetPlusPersistence.save();
-        if (!added) {
-          error = "The specific asset cannot be added.";
-        }
       } catch (Exception e) {
         return "ERROR: " + e;
       }
