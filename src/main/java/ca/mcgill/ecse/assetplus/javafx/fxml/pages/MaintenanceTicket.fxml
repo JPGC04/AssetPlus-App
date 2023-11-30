@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.maintenanceTicketController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="853.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.maintenanceTicketController">
    <children>
-      <BorderPane prefHeight="700.0" prefWidth="900.0">
+      <BorderPane prefHeight="620.0" prefWidth="853.0">
          <top>
             <HBox prefHeight="64.0" prefWidth="829.0" style="-fx-background-color: #caf0f8;" BorderPane.alignment="CENTER">
                <children>
@@ -37,7 +37,7 @@
          <center>
             <BorderPane prefHeight="605.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                <right>
-                  <VBox prefHeight="553.0" prefWidth="256.0" BorderPane.alignment="CENTER">
+                  <VBox prefHeight="476.0" prefWidth="256.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label text="Ticket">
                            <font>
@@ -104,7 +104,7 @@
                               <Insets left="20.0" right="20.0" top="15.0" />
                            </VBox.margin>
                         </TextField>
-                        <HBox prefHeight="70.0" prefWidth="256.0">
+                        <HBox prefHeight="33.0" prefWidth="256.0">
                            <VBox.margin>
                               <Insets top="20.0" />
                            </VBox.margin>
@@ -130,7 +130,7 @@
                   </VBox>
                </right>
                <center>
-                  <TableView fx:id="tickets" onMouseClicked="#rowClicked" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <TableView fx:id="tickets" onMouseClicked="#rowClicked" prefHeight="476.0" prefWidth="644.0" BorderPane.alignment="CENTER">
                     <columns>
                       <TableColumn fx:id="ticketTable" prefWidth="61.0" text="Ticket" />
                       <TableColumn fx:id="dateTable" prefWidth="89.0" text="Date" />
@@ -246,6 +246,12 @@
                </bottom>
             </BorderPane>
          </center>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
       </BorderPane>
    </children>
+   <padding>
+      <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+   </padding>
 </AnchorPane>
