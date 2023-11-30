@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="450.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.DisaproveController">
+   <children>
+      <BorderPane prefHeight="461.0" prefWidth="450.0">
+         <top>
+            <Pane prefHeight="68.0" prefWidth="450.0" style="-fx-background-color: #caf0f8;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="120.0" layoutY="7.0" prefHeight="54.0" prefWidth="210.0" text="Disapprove Ticket" textFill="#03045e">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </top>
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane prefHeight="42.0" prefWidth="450.0" style="-fx-background-color: #03045e;">
+                     <children>
+                        <Label layoutX="24.0" layoutY="8.0" text="Reason" textFill="#caf0f8">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="460.0">
+                     <children>
+                        <TextArea fx:id="reasonInput" layoutX="25.0" layoutY="11.0" prefHeight="178.0" prefWidth="399.0" wrapText="true" />
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </center>
+         <bottom>
+            <Pane prefHeight="81.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="submitButton" layoutX="357.0" layoutY="28.0" mnemonicParsing="false" onAction="#submitClick" style="-fx-background-color: db3a34;" text="Submit" />
+                  <Button fx:id="cancelButton" cancelButton="true" layoutX="35.0" layoutY="29.0" mnemonicParsing="false" onAction="#cancelClick" style="-fx-background-color: #f5f1ed;" text="Cancel" />
+               </children>
+            </Pane>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

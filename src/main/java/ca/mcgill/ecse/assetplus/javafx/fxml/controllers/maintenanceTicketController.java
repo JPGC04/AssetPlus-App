@@ -212,6 +212,17 @@ public class maintenanceTicketController implements Initializable{
     @FXML
     void disaproveClick(ActionEvent event) {
         //TODO create a pop that prompts for a disaproval note
+        try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Disaprove.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));  
+        stage.show();
+        } catch (Exception e) {
+            System.out.println("Cant open new window");
+        }
+
+
 
     }
 
