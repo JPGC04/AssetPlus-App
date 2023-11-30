@@ -46,7 +46,7 @@ public class MainPageController {
 
     @FXML
     void TicketsButtonClicked(ActionEvent event) {
-      loadPage("pages/createTicket.fxml");
+      loadPage("pages/MaintenanceTicket.fxml");
     }
 
     @FXML
