@@ -25,7 +25,7 @@ import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 
 public class maintenanceTicketController implements Initializable{
 
-    @FXML TableView<MaintenanceTicket> tickets;
+    @FXML TableView<MaintenanceTicketString> tickets;
 
     @FXML
     private Button approveButton;
@@ -34,7 +34,7 @@ public class maintenanceTicketController implements Initializable{
     private TextField assetInput;
 
     @FXML
-    private TableColumn<MaintenanceTicket, String> assetTable;
+    private TableColumn<MaintenanceTicketString, String> assetTable;
 
     @FXML
     private Button assignButton;
@@ -46,7 +46,7 @@ public class maintenanceTicketController implements Initializable{
     private TextField dateInput;
 
     @FXML
-    private TableColumn<MaintenanceTicket, String> dateTable;
+    private TableColumn<MaintenanceTicketString, String> dateTable;
 
     @FXML
     private Button deleteButton;
@@ -55,7 +55,7 @@ public class maintenanceTicketController implements Initializable{
     private TextArea descriptionInput;
 
     @FXML
-    private TableColumn<MaintenanceTicket, String> descriptionTable;
+    private TableColumn<MaintenanceTicketString, String> descriptionTable;
 
     @FXML
     private Button disaproveButton;
@@ -67,7 +67,7 @@ public class maintenanceTicketController implements Initializable{
     private TextField fixerInput;
 
     @FXML
-    private TableColumn<MaintenanceTicket, String> fixerTable;
+    private TableColumn<MaintenanceTicketString, String> fixerTable;
 
     @FXML
     private Button imageButton;
@@ -82,16 +82,16 @@ public class maintenanceTicketController implements Initializable{
     private TextField raisedByInput;
 
     @FXML
-    private TableColumn<MaintenanceTicket, String> raisedByTable;
+    private TableColumn<MaintenanceTicketString, String> raisedByTable;
 
     @FXML
-    private TableColumn<MaintenanceTicket, String> statusTable;
+    private TableColumn<MaintenanceTicketString, String> statusTable;
 
     @FXML
     private TextField ticketInput;
 
     @FXML
-    private TableColumn<MaintenanceTicket, String> ticketTable;
+    private TableColumn<MaintenanceTicketString, String> ticketTable;
 
     @FXML
     private ChoiceBox<String> timeToResolveInput;
@@ -101,7 +101,7 @@ public class maintenanceTicketController implements Initializable{
 
     private int current_id;
 
-    private ObservableList<MaintenanceTicket> list = FXCollections.observableArrayList();
+    private ObservableList<MaintenanceTicketString> list = FXCollections.observableArrayList();
 
     private String[] priorityLevels = {"Low", "Medium", "Urgent"};
 
@@ -112,13 +112,13 @@ public class maintenanceTicketController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
-        ticketTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicket, String>("id"));
-        dateTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicket, String>("date"));
-        raisedByTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicket, String>("ticketRaiser"));
-        descriptionTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicket, String>("description"));
-        statusTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicket, String>("status"));
-        assetTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicket, String>("asset"));
-        fixerTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicket, String>("fixer"));
+        ticketTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("id"));
+        dateTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("date"));
+        raisedByTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("ticketRaiser"));
+        descriptionTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("description"));
+        statusTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("status"));
+        assetTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("asset"));
+        fixerTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("fixer"));
         tickets.setItems(list);
 
         timeToResolveInput.getItems().addAll(timeToResolve);
@@ -130,10 +130,10 @@ public class maintenanceTicketController implements Initializable{
 
     @FXML
     void approveClick(ActionEvent event) {
-        ObservableList<MaintenanceTicket> currentTableData = tickets.getItems();
+        ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
         int currentTicketId = Integer.parseInt(ticketInput.getText());
 
-        for (MaintenanceTicket ticket : currentTableData) {
+        for (MaintenanceTicketString ticket : currentTableData) {
             if (Integer.parseInt(ticket.getId()) == currentTicketId) {
                 ticket.setStatus("Closed");
 
@@ -150,10 +150,10 @@ public class maintenanceTicketController implements Initializable{
 
     @FXML
     void assignClick(ActionEvent event) {
-        ObservableList<MaintenanceTicket> currentTableData = tickets.getItems();
+        ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
         int currentTicketId = Integer.parseInt(ticketInput.getText());
 
-        for (MaintenanceTicket ticket : currentTableData) {
+        for (MaintenanceTicketString ticket : currentTableData) {
             if (Integer.parseInt(ticket.getId()) == currentTicketId) {
                 ticket.setFixer(fixerInput.getText());
                 ticket.setStatus("Assigned");
@@ -170,7 +170,7 @@ public class maintenanceTicketController implements Initializable{
 
     @FXML
     void rowClicked(MouseEvent event){
-        MaintenanceTicket clickedTicket = tickets.getSelectionModel().getSelectedItem();
+        MaintenanceTicketString clickedTicket = tickets.getSelectionModel().getSelectedItem();
         ticketInput.setText(String.valueOf(clickedTicket.getId()));
         dateInput.setText(String.valueOf(clickedTicket.getDate()));
         raisedByInput.setText(String.valueOf(clickedTicket.getTicketRaiser()));
@@ -188,7 +188,7 @@ public class maintenanceTicketController implements Initializable{
     @FXML
     void createClick(ActionEvent event) {
 
-        MaintenanceTicket createdTicket = new MaintenanceTicket(String.valueOf(current_id), "2023-11-30",raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText(), "");
+        MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), "2023-11-30",raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText(), "");
 
         list.add(createdTicket);
         current_id++;
@@ -228,10 +228,10 @@ public class maintenanceTicketController implements Initializable{
 
     @FXML
     void editClick(ActionEvent event) {
-        ObservableList<MaintenanceTicket> currentTableData = tickets.getItems();
+        ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
         int currentTicketId = Integer.parseInt(ticketInput.getText());
 
-        for (MaintenanceTicket ticket : currentTableData) {
+        for (MaintenanceTicketString ticket : currentTableData) {
             if (Integer.parseInt(ticket.getId()) == currentTicketId) {
                 ticket.setDate(dateInput.getText());
                 ticket.setTicketRaiser(raisedByInput.getText());
@@ -283,10 +283,10 @@ public class maintenanceTicketController implements Initializable{
 
     @FXML
     void updateClick(ActionEvent event) {
-        ObservableList<MaintenanceTicket> currentTableData = tickets.getItems();
+        ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
         int currentTicketId = Integer.parseInt(ticketInput.getText());
 
-        for (MaintenanceTicket ticket : currentTableData) {
+        for (MaintenanceTicketString ticket : currentTableData) {
             if (Integer.parseInt(ticket.getId()) == currentTicketId) {
 
                 if (ticket.getStatus().equals("Assigned")) {

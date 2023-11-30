@@ -1,6 +1,6 @@
 package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
 
-public class MaintenanceTicket {
+public class MaintenanceTicketString {
     private String id;
     private String date;
     private String ticketRaiser;
@@ -11,7 +11,7 @@ public class MaintenanceTicket {
     private String priorityLevel;
     private String timeToResolve;
 
-    public MaintenanceTicket(String id, String date, String ticketRaiser, String description, String status, String asset, String fixer) {
+    public MaintenanceTicketString(String id, String date, String ticketRaiser, String description, String status, String asset, String fixer) {
         this.id = id;
         this.date = date;
         this.ticketRaiser = ticketRaiser;
