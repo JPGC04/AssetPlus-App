@@ -11,14 +11,13 @@ public class MaintenanceTicketString {
     private String priorityLevel;
     private String timeToResolve;
 
-    public MaintenanceTicketString(String id, String date, String ticketRaiser, String description, String status, String asset, String fixer) {
+    public MaintenanceTicketString(String id, String date, String ticketRaiser, String description, String status, String asset) {
         this.id = id;
         this.date = date;
         this.ticketRaiser = ticketRaiser;
         this.description = description;
         this.status = status;
         this.asset = asset;
-        this.fixer = fixer;
 
     }
 

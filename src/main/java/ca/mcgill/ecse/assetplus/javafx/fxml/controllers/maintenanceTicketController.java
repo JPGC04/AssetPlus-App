@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 
@@ -119,10 +120,19 @@ public class maintenanceTicketController implements Initializable{
         statusTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("status"));
         assetTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("asset"));
         fixerTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("fixer"));
-        tickets.setItems(list);
-
         timeToResolveInput.getItems().addAll(timeToResolve);
         priorityInput.getItems().addAll(priorityLevels);
+
+        List<MaintenanceTicketString> myList = AssetPlusFeatureSet4Controller.getSpecificTickets();
+
+        for (MaintenanceTicketString ticket : myList){
+         list.add(ticket);
+
+        }
+
+        
+
+        tickets.setItems(list);
         
         
     }
@@ -188,7 +198,7 @@ public class maintenanceTicketController implements Initializable{
     @FXML
     void createClick(ActionEvent event) {
 
-        MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), "2023-11-30",raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText(), "");
+        MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), "2023-11-30",raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText());
 
         list.add(createdTicket);
         current_id++;

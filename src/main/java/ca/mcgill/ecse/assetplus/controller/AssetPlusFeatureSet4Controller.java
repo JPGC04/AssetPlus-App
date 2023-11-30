@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
-import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.Asset;
 import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.MaintenanceTicketString;
 import ca.mcgill.ecse.assetplus.model.*;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
@@ -326,8 +325,8 @@ public class AssetPlusFeatureSet4Controller {
     List<MaintenanceTicketString> result = new ArrayList<>(); //javafx
 
     for (MaintenanceTicket ticket: tickets) {
-      result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()), String.valueOf(ticket.getRaisedOnDate()), String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(), ticket.getStatusFullName(), String.valueOf(ticket.getAsset().getAssetNumber()), ticket.getTicketFixer().getName());
-    
+
+      result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()), String.valueOf(ticket.getRaisedOnDate()), String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(), ticket.getStatusFullName(), String.valueOf(ticket.getAsset().getAssetNumber())));
     }
 
     return result;

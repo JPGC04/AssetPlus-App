@@ -15,6 +15,7 @@
                     "id": 1,
                     "raisedOnDate": "2023-11-05",
                     "description": "desk is scratched",
+                    "requiresApproval": false,
                     "status": "Open",
                     "ticketNotes": [
                       {
@@ -89,6 +90,7 @@
                                       "id": 4,
                                       "raisedOnDate": "2023-11-08",
                                       "description": "desk is wobbly",
+                                      "requiresApproval": false,
                                       "status": "Open",
                                       "ticketNotes": [
                                         ""
@@ -150,6 +152,7 @@
                   "id": 2,
                   "raisedOnDate": "2023-11-06",
                   "description": "chair wheel jammed",
+                  "requiresApproval": false,
                   "status": "Open",
                   "ticketNotes": [
                     {
@@ -217,6 +220,21 @@
                               "assetType": {
                                 "@reference": "../../.."
                               }
+                            },
+                            {
+                              "assetNumber": 12,
+                              "floorNumber": 1,
+                              "roomNumber": 1,
+                              "purchaseDate": "2023-10-29",
+                              "assetPlus": {
+                                "@reference": "../../../../../../../../.."
+                              },
+                              "maintenanceTickets": [
+                                ""
+                              ],
+                              "assetType": {
+                                "@reference": "../../.."
+                              }
                             }
                           ]
                         }
@@ -256,6 +274,7 @@
                 "id": 3,
                 "raisedOnDate": "2023-11-07",
                 "description": "very noisy after 10pm",
+                "requiresApproval": false,
                 "status": "Open",
                 "ticketNotes": [
                   {
@@ -277,6 +296,7 @@
                               "id": 5,
                               "raisedOnDate": "2023-11-09",
                               "description": "carpet is stained",
+                              "requiresApproval": false,
                               "status": "Open",
                               "ticketNotes": [
                                 ""
@@ -426,6 +446,9 @@
           },
           {
             "@reference": "../../employees/Employee/raisedTickets/MaintenanceTicket/asset/assetType/specificAssets/SpecificAsset[2]"
+          },
+          {
+            "@reference": "../../employees/Employee[2]/raisedTickets/MaintenanceTicket/asset/assetType/specificAssets/SpecificAsset[3]"
           }
         ]
       }

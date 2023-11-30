@@ -91,7 +91,7 @@ public class AUDAssetController implements Initializable{
             String aType = assetType.getText(); 
             String err = AssetPlusFeatureSet3Controller.addSpecificAsset(id, floorNo, roomNo, date, aType);
             System.out.println(err);
-            if (!err.isEmpty()) {
+            if (err.isEmpty()) {
                 data.add(new Asset(assetID.getText(), String.valueOf(date), floorNumber.getText(), roomNumber.getText(), aType));
                 showError("Success!");
                 assetID.clear();
