@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -39,6 +40,9 @@ public class MaintenanceImageController implements Initializable {
 
     @FXML
     private TableColumn<Image, String> urlTable;
+
+    @FXML
+    private RadioButton managerApprovalButton;
 
     private ObservableList<Image> list = FXCollections.observableArrayList();
 
