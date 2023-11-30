@@ -1,6 +1,7 @@
 package ca.mcgill.ecse.assetplus.controller;
 
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.Asset;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
@@ -8,6 +9,7 @@ import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * AssetPlusFeatureSet3Controller is the main class we will use to Add, update, and delete Asset
@@ -175,5 +177,16 @@ public class AssetPlusFeatureSet3Controller {
     } catch (Exception e) {
       System.out.println(e);
     }
+  }
+
+  public static List<Asset> getSpecificAssets() {
+    List<SpecificAsset> assets = assetPlus.getSpecificAssets();
+    List<Asset> res = new ArrayList<>();
+    for (SpecificAsset asset: assets) {
+      res.add(new Asset(String.valueOf(asset.getAssetNumber()), String.valueOf(asset.getPurchaseDate()), String.valueOf(asset.getFloorNumber()),
+      String.valueOf(asset.getRoomNumber()), asset.getAssetType().getName()));
+    }
+
+    return res;
   }
 }

@@ -4,6 +4,7 @@ import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showErr
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -72,6 +73,10 @@ public class AUDAssetController implements Initializable{
 
 
         data = FXCollections.observableArrayList();
+        List<Asset> test = AssetPlusFeatureSet3Controller.getSpecificAssets();
+        for (Asset a: test) {
+            data.add(a);
+        }
         table.setItems(data);
     }
 
