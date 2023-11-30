@@ -237,12 +237,14 @@ public class maintenanceTicketController implements Initializable{
         int selectedID = tickets.getSelectionModel().getSelectedIndex();
         tickets.getItems().remove(selectedID);
 
+        int currentTicketId = Integer.parseInt(ticketInput.getText());
+
         for (MaintenanceTicketString ticket : list){
-            if (Integer.parseInt(ticket.getId()) == selectedID) {
+            if (Integer.parseInt(ticket.getId()) == currentTicketId) {
                 list.remove(ticket);
             }
         }
-        AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(selectedID);
+        AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(currentTicketId);
         tickets.refresh();
 
 
