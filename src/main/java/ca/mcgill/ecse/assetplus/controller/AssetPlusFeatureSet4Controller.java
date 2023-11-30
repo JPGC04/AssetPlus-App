@@ -325,8 +325,11 @@ public class AssetPlusFeatureSet4Controller {
     List<MaintenanceTicketString> result = new ArrayList<>(); //javafx
 
     for (MaintenanceTicket ticket: tickets) {
-
-      result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()), String.valueOf(ticket.getRaisedOnDate()), String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(), ticket.getStatusFullName(), String.valueOf(ticket.getAsset().getAssetNumber())));
+      try {
+        result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()), String.valueOf(ticket.getRaisedOnDate()), String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(), ticket.getStatusFullName(), String.valueOf(ticket.getAsset().getAssetNumber())));
+      } catch (Exception e) {
+        System.out.println("Didnt work");
+      }
     }
 
     return result;
