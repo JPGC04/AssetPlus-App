@@ -18,10 +18,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.net.URL;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
+import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showError;
 
 
 public class maintenanceTicketController implements Initializable{
@@ -127,7 +128,8 @@ public class maintenanceTicketController implements Initializable{
 
         for (MaintenanceTicketString ticket : myList){
          list.add(ticket);
-
+         current_id = Integer.parseInt(ticket.getId()) + 1;
+        
         }
 
         
@@ -197,11 +199,30 @@ public class maintenanceTicketController implements Initializable{
 
     @FXML
     void createClick(ActionEvent event) {
+        try {
+            String raiseOnDate = "2023-11-20";
+            Date date = Date.valueOf(raiseOnDate);
+            String description = descriptionInput.getText();
+            int assetNumber = Integer.parseInt(assetInput.getText());
+            String email = raisedByInput.getText();
+            String error = AssetPlusFeatureSet4Controller.addMaintenanceTicket(current_id, date, description, email, assetNumber);
 
-        MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), "2023-11-30",raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText());
+            if (error.isEmpty()) {
+                MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), "2023-11-30",raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText());
+    
+                list.add(createdTicket); 
+                current_id++;
+                raisedByInput.clear();
+                descriptionInput.clear();
+                assetInput.clear();
+            } else {
+                showError(error);
+            }
+        
+        } catch (Exception e) {
+            showError("Invalid Parameters");
+        }
 
-        list.add(createdTicket);
-        current_id++;
 
         tickets.refresh();
 
