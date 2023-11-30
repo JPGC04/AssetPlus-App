@@ -1,8 +1,10 @@
 package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
 
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet2Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
 import ca.mcgill.ecse.assetplus.javafx.fxml.AssetPlusFxmlView;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -65,5 +67,9 @@ public class ViewUtils {
 
   public static ObservableList<String> getAssetTypes() {
     return FXCollections.observableList(AssetPlusFeatureSet2Controller.getAssetTypes());
+  }
+
+  public static ObservableList<Asset> getSpecificTypes() {
+    return FXCollections.observableList(AssetPlusFeatureSet3Controller.getSpecificAssets());
   }
 }
