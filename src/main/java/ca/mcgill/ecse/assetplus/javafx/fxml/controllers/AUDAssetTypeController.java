@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import ca.mcgill.ecse.assetplus.javafx.fxml.AssetPlusFxmlView;
-import ca.mcgill.ecse.assetplus.model.AssetType;
+import java.util.List;
 
 public class AUDAssetTypeController {
 
@@ -51,6 +51,12 @@ public class AUDAssetTypeController {
         DeleteAssetTypeName.setValue(null);
         });
 
+        List<String> inSystemAssetTypes = ViewUtils.getAssetTypes();
+        for (String a: inSystemAssetTypes) {
+            UpdateAssetTypeOldName.getItems().addAll(a);
+            DeleteAssetTypeName.getItems().addAll(a);
+        }
+
         AssetPlusFxmlView.getInstance().registerRefreshEvent(UpdateAssetTypeOldName, DeleteAssetTypeName);
     }
 
@@ -75,9 +81,11 @@ public class AUDAssetTypeController {
         if (DeleteAssetTypeName.getValue() == null || DeleteAssetTypeName.getValue().trim().isEmpty() || DeleteAssetTypeName.getValue().length() == 0) {
             ViewUtils.showError("The name must not be empty");
         } else {
+            String toRemove = DeleteAssetTypeName.getValue();
             AssetPlusFeatureSet2Controller.deleteAssetType(DeleteAssetTypeName.getValue());
             DeleteAssetTypeName.valueProperty().set(null);
-            initialize();
+            DeleteAssetTypeName.getItems().remove(toRemove);
+            UpdateAssetTypeOldName.getItems().remove(toRemove);
         }
     }
 
@@ -89,14 +97,11 @@ public class AUDAssetTypeController {
             ViewUtils.showError("The name must not be empty");
         } else if (UpdateAssetTypeNewLife.getText().trim().isEmpty() || Integer.parseInt(UpdateAssetTypeNewLife.getText()) <= 0) {
             ViewUtils.showError("The expected life span must be greater than 0 days");
-        } else if (AssetType.getWithName(UpdateAssetTypeNewName.getText()) != null && (AssetType.getWithName(UpdateAssetTypeNewName.getText()).getExpectedLifeSpan() == Integer.parseInt(UpdateAssetTypeNewLife.getText()) || !UpdateAssetTypeOldName.getValue().equals(UpdateAssetTypeNewName.getText()))) {
-            ViewUtils.showError("The asset type already exists");
-        } else {
+        }  else {
             if (successful(AssetPlusFeatureSet2Controller.updateAssetType(UpdateAssetTypeOldName.getValue(), UpdateAssetTypeNewName.getText(), Integer.parseInt(UpdateAssetTypeNewLife.getText())))) {
                 UpdateAssetTypeNewName.setText("");
                 UpdateAssetTypeNewLife.setText("");
                 UpdateAssetTypeOldName.valueProperty().set(null);
-                initialize();
             }
         }
     }
