@@ -135,7 +135,7 @@ public class maintenanceTicketController implements Initializable{
         
 
         tickets.setItems(list);
-        
+        System.out.println("Initialze ticket called");
         
     }
 
@@ -236,6 +236,16 @@ public class maintenanceTicketController implements Initializable{
     void deleteClick(ActionEvent event) {
         int selectedID = tickets.getSelectionModel().getSelectedIndex();
         tickets.getItems().remove(selectedID);
+
+        for (MaintenanceTicketString ticket : list){
+            if (Integer.parseInt(ticket.getId()) == selectedID) {
+                list.remove(ticket);
+            }
+        }
+        AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(selectedID);
+        tickets.refresh();
+
+
 
     }
 
