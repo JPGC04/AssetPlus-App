@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="screen" alignment="CENTER" prefHeight="531.0" prefWidth="561.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.AUDAssetController">
+<VBox fx:id="screen" alignment="CENTER" prefHeight="531.0" prefWidth="561.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.AUDAssetController">
     <children>
       <GridPane prefHeight="77.0" prefWidth="561.0">
         <columnConstraints>
