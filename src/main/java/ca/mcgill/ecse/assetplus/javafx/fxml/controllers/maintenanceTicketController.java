@@ -257,31 +257,41 @@ public class maintenanceTicketController implements Initializable{
 
     }
 
+
     @FXML
     void editClick(ActionEvent event) {
 
         try {
-            
+            ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
+            int currentTicketId = Integer.parseInt(ticketInput.getText());
+
+            for (MaintenanceTicketString ticket : currentTableData) {
+                if (Integer.parseInt(ticket.getId()) == currentTicketId) {
+                    String tDate = "2022-01-01";
+                    Date date = Date.valueOf(tDate);
+                    String newDesc = descriptionInput.getText();
+                    String newEmail = raisedByInput.getText();
+                    int assetNumber = Integer.parseInt(assetInput.getText());
+
+                    String error = AssetPlusFeatureSet4Controller.updateMaintenanceTicket(currentTicketId, date, newDesc, newEmail, assetNumber);
+                    if (error.isEmpty()) {
+                        ticket.setDate(dateInput.getText());
+                        ticket.setTicketRaiser(raisedByInput.getText());
+                        ticket.setDescription(descriptionInput.getText());
+                        ticket.setStatus("Open");
+                        ticket.setAsset(assetInput.getText());
+
+                        tickets.setItems(currentTableData);
+                        tickets.refresh();
+                    } else {
+                        showError(error);
+                    }
+                    break;
+                }
+            }
         } catch (Exception e) {
             showError("Invalid parameters!");
         }
-        ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
-        int currentTicketId = Integer.parseInt(ticketInput.getText());
-
-        for (MaintenanceTicketString ticket : currentTableData) {
-            if (Integer.parseInt(ticket.getId()) == currentTicketId) {
-                ticket.setDate(dateInput.getText());
-                ticket.setTicketRaiser(raisedByInput.getText());
-                ticket.setDescription(descriptionInput.getText());
-                ticket.setStatus("Open");
-                ticket.setAsset(assetInput.getText());
-
-                tickets.setItems(currentTableData);
-                tickets.refresh();
-                break;
-            }
-        }
-
     }
 
     @FXML
