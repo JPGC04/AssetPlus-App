@@ -266,6 +266,15 @@ public class maintenanceTicketController implements Initializable{
     @FXML
     void notesClick(ActionEvent event) {
         //TODO open view notes image window
+        try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MaintenanceNote.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));  
+        stage.show();
+        } catch (Exception e) {
+            System.out.println("Cant open new window");
+        }
 
     }
 
