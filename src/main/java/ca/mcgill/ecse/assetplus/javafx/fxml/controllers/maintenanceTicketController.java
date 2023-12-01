@@ -264,11 +264,17 @@ public class maintenanceTicketController implements Initializable{
     void disaproveClick(ActionEvent event) {
         //TODO create a pop that prompts for a disaproval note
         try {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Disaprove.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root1));  
-        stage.show();
+            String status = statusTable.getText();
+            if (status == "Resolved") {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Disaprove.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root1));  
+                stage.show();
+            } else {
+                showError("Ticket is not resolved yet");
+            }
+        
         } catch (Exception e) {
             System.out.println("Cant open new window");
         }
@@ -287,8 +293,8 @@ public class maintenanceTicketController implements Initializable{
 
             for (MaintenanceTicketString ticket : currentTableData) {
                 if (Integer.parseInt(ticket.getId()) == currentTicketId) {
-                    String tDate = "2022-01-01";
-                    Date date = Date.valueOf(tDate);
+
+                    Date date = Date.valueOf(dateInput.getValue());
                     String newDesc = descriptionInput.getText();
                     String newEmail = raisedByInput.getText();
                     int assetNumber = Integer.parseInt(assetInput.getText());
