@@ -176,7 +176,8 @@ public class maintenanceTicketController implements Initializable{
                     ticket.setRequiresApproval(requiresApproval);
                     
                     tickets.setItems(currentTableData);
-                    tickets.refresh();        
+                    tickets.refresh();  
+                    showError("Successfully Assigned Ticket");      
                 } else {
                     showError(error);
                 }
@@ -394,6 +395,7 @@ public class maintenanceTicketController implements Initializable{
                         error = AssetPlusFeatureSet4Controller.startTicketProgress(currentTicketId);
                         if (error.isEmpty()){
                             ticket.setStatus("InProgress");
+                            showError("Successfully Started maintenance Work");
                             
                         } else {
                             showError(error);
@@ -414,8 +416,10 @@ public class maintenanceTicketController implements Initializable{
                         if (error.isEmpty()){
                             if (requiresApproval){
                                 ticket.setStatus("Resolved");
+                                showError("Waiting for approval");
                             } else {
                                 ticket.setStatus("Closed");
+                                showError("Ticket has been closed");
                             }
                             
                         } else {
@@ -441,7 +445,6 @@ public class maintenanceTicketController implements Initializable{
         int currentTicketId = Integer.parseInt(ticketInput.getText());
 
         for (MaintenanceTicketString ticket : currentTableData) {
-            System.out.println(ticket.getId());
             if (Integer.parseInt(ticket.getId()) == currentTicketId) {
                 String current_status = AssetPlusFeatureSet4Controller.getTicketStatus(currentTicketId);
                 String error;
@@ -451,6 +454,7 @@ public class maintenanceTicketController implements Initializable{
                         error = AssetPlusFeatureSet4Controller.approveTicket(currentTicketId);
                         if (error.isEmpty()){
                             ticket.setStatus("Closed");
+                            showError("Ticket has been approved");
                         } else {
                             showError(error);
                         }
