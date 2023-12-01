@@ -197,7 +197,7 @@ public class AssetPlusFeatureSet1Controller {
 	 * @return the employee who owns the email, otherwise return null
 	 */
 
-	private static Employee getEmployeeByEmail(String email) {
+	public static Employee getEmployeeByEmail(String email) {
 		AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 		List<Employee> employees = assetPlus.getEmployees();
 		for (Employee e : employees) {
@@ -215,7 +215,7 @@ public class AssetPlusFeatureSet1Controller {
 	 * @return the guest who owns the email, otherwise return null
 	 */
 
-	private static Guest getGuestByEmail(String email) {
+	public static Guest getGuestByEmail(String email) {
 		AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 		List<Guest> guests = assetPlus.getGuests();
 		for (Guest g : guests) {
