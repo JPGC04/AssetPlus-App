@@ -1,8 +1,13 @@
 package ca.mcgill.ecse.assetplus.controller;
 
+import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.AMaintenanceNote;
+import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.Image;
+import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +20,8 @@ import java.util.List;
  */
 
 public class AssetPlusFeatureSet5Controller {
+
+  private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
   /**
    * Adds an image to a maintenance ticket given an imageURL and a ticketID
@@ -84,5 +91,25 @@ public class AssetPlusFeatureSet5Controller {
     } catch (Exception e) {
       return;
     }
+  }
+
+  public static List<Image> getSpecificImages(int i) {
+    try {
+      MaintenanceTicket ticket = assetPlus.getMaintenanceTicket(i-1);
+      System.out.println("ticket id inside controller 6: " + i);
+      System.out.println(ticket.getDescription());
+
+      List<TicketImage> images = ticket.getTicketImages();
+      List<Image> res = new ArrayList<>();
+      int ind = 0;
+      for (TicketImage img: images) {
+        res.add(new Image(img.getImageURL(), ind));
+        ind++;
+      }
+      return res;
+    } catch (Exception e) {
+      System.out.println("hi");
+    }
+    return null;
   }
 }
