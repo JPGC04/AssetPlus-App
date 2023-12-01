@@ -317,6 +317,10 @@ public class maintenanceTicketController implements Initializable{
     void imageClick(ActionEvent event) {
         try {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MaintenanceImage.fxml"));
+        MaintenanceImageController controller = new MaintenanceImageController();
+        controller.setYourVariable(Integer.parseInt(ticketInput.getText()));
+        fxmlLoader.setControllerFactory(c -> controller);
+        
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root1));  
