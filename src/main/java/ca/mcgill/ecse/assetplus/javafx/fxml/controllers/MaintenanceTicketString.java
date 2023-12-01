@@ -11,19 +11,34 @@ public class MaintenanceTicketString {
     private String priorityLevel;
     private String timeToResolve;
     private boolean requiresApproval;
+    private String room;
+    private String floor;
+    private String purchaseDate;
+    private String lifespan;
+    private String assetType;
 
-    public MaintenanceTicketString(String id, String date, String ticketRaiser, String description, String status, String asset) {
+    public MaintenanceTicketString(String id, String date, String ticketRaiser, String description, String status, String asset,String room, String floor, String purchaseDate, String lifespan, String assetType) {
         this.id = id;
         this.date = date;
         this.ticketRaiser = ticketRaiser;
         this.description = description;
         this.status = status;
         this.asset = asset;
+        this.room=room;
+        this.floor=floor;
+        this.purchaseDate=purchaseDate;
+        this.lifespan=lifespan;
+        this.assetType=assetType;
 
     }
 
     // Setters
-
+    public String getAssetType(){
+        return assetType;
+    };
+    public void setAssetType(String assetType){
+        this.assetType=assetType;
+    };
 
     public void setRequiresApproval(boolean requiresApproval){
         this.requiresApproval = requiresApproval;
@@ -103,4 +118,39 @@ public class MaintenanceTicketString {
     public String getFixer() {
         return fixer;
     }
+    // Setters for new fields
+
+public void setRoom(String room) {
+    this.room = room;
+}
+
+public void setFloor(String floor) {
+    this.floor = floor;
+}
+
+public void setPurchaseDate(String purchaseDate) {
+    this.purchaseDate = purchaseDate;
+}
+
+public void setLifespan(String lifespan) {
+    this.lifespan = lifespan;
+}
+
+// Getters for new fields
+
+public String getRoom() {
+    return room;
+}
+
+public String getFloor() {
+    return floor;
+}
+
+public String getPurchaseDate() {
+    return purchaseDate;
+}
+
+public String getLifespan() {
+    return lifespan;
+}
 }

@@ -1,6 +1,7 @@
 package ca.mcgill.ecse.assetplus.controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
@@ -332,7 +333,14 @@ public class AssetPlusFeatureSet4Controller {
         } else {
           assetNumber = String.valueOf(ticket.getAsset().getAssetNumber());
         }
-        result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()), String.valueOf(ticket.getRaisedOnDate()), String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(), ticket.getStatusFullName(), assetNumber));
+        String room=String.valueOf(ticket.getAsset().getRoomNumber());
+        String floor=String.valueOf(ticket.getAsset().getFloorNumber());
+        
+        String assetType=ticket.getAsset().getAssetType().getName();
+        String lifespan= String.valueOf(ticket.getAsset().getAssetType().getExpectedLifeSpan());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String purchaseDate=sdf.format(ticket.getAsset().getPurchaseDate());
+        result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()), String.valueOf(ticket.getRaisedOnDate()), String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(), ticket.getStatusFullName(), assetNumber,room,floor,purchaseDate,lifespan,assetType));
       } catch (Exception e) {
         System.out.println("Didnt work");
       }

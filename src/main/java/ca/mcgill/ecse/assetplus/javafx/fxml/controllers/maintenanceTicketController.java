@@ -31,6 +31,16 @@ import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showErr
 
 
 public class maintenanceTicketController implements Initializable{
+    @FXML
+    private TableColumn<MaintenanceTicketString, String> floorTable;
+    @FXML
+    private TableColumn<MaintenanceTicketString, String> lifespanTable;
+
+    @FXML
+    private TableColumn<MaintenanceTicketString, String> purchaseDateTable;
+
+    @FXML
+    private TableColumn<MaintenanceTicketString, String> roomTable;
 
     @FXML TableView<MaintenanceTicketString> tickets;
 
@@ -75,6 +85,9 @@ public class maintenanceTicketController implements Initializable{
 
     @FXML
     private TableColumn<MaintenanceTicketString, String> fixerTable;
+
+    @FXML
+    private TableColumn<MaintenanceTicketString, String> assetTypeTable;
 
     @FXML
     private Button imageButton;
@@ -131,6 +144,11 @@ public class maintenanceTicketController implements Initializable{
         statusTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("status"));
         assetTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("asset"));
         fixerTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("fixer"));
+        floorTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("floor"));
+        roomTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("room"));
+        assetTypeTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("assetType"));
+        lifespanTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("lifespan"));
+        purchaseDateTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("purchaseDate"));
         timeToResolveInput.getItems().addAll(timeToResolve);
         priorityInput.getItems().addAll(priorityLevels);
 
@@ -222,7 +240,7 @@ public class maintenanceTicketController implements Initializable{
             String error = AssetPlusFeatureSet4Controller.addMaintenanceTicket(current_id, date, description, email, assetNumber);
 
             if (error.isEmpty()) {
-                MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), String.valueOf(date),raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText());
+                MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), String.valueOf(date),raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText(),"","","","","");
     
                 list.add(createdTicket); 
                 current_id++;
@@ -241,6 +259,7 @@ public class maintenanceTicketController implements Initializable{
 
 
         tickets.refresh();
+        
 
         
 
@@ -277,15 +296,17 @@ public class maintenanceTicketController implements Initializable{
         //TODO create a pop that prompts for a disaproval note
         try {
             String status = statusTable.getText();
-            if (status == "Resolved") {
+            if (true) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Disaprove.fxml"));
+                DisaproveController controller = new DisaproveController();
+                controller.setYourVariable(Date.valueOf(dateInput.getValue()), Integer.parseInt(ticketInput.getText()));
+                fxmlLoader.setControllerFactory(c -> controller);
                 Parent root1 = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));  
                 stage.show();
-            } else {
-                showError("Ticket is not resolved yet");
             }
+        tickets.refresh();
         
         } catch (Exception e) {
             System.out.println("Cant open new window");
