@@ -14,6 +14,15 @@ public class DisaproveController {
 
     @FXML
     private Button submitButton;
+    
+    private Date date;
+    
+    private Integer ticketID;
+
+    public void setYourVariable(Date value, Integer value1) {
+        this.date = value;
+        this.ticketID = value1;
+    }
 
     @FXML
     void cancelClick(ActionEvent event) {
