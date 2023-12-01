@@ -15,7 +15,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <GridPane prefHeight="487.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.AUDEmployeeGuestController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="209.66665649414062" minWidth="10.0" prefWidth="176.99996948242188" />
@@ -24,7 +23,7 @@
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1194.6666564941406" minWidth="10.0" prefWidth="122.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints maxHeight="70.66666285196939" minHeight="4.666671812534332" prefHeight="63.33333841959635" />
+      <RowConstraints maxHeight="76.66667175292969" minHeight="10.0" prefHeight="76.66667175292969" />
       <RowConstraints maxHeight="95.33332633972168" minHeight="0.0" prefHeight="64.00001780192059" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="256.3333231608073" minHeight="0.0" prefHeight="256.3333231608073" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="789.3333282470703" minHeight="0.0" prefHeight="41.66667683919269" vgrow="SOMETIMES" />
