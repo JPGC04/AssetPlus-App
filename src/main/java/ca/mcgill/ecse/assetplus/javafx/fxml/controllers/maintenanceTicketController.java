@@ -146,25 +146,6 @@ public class maintenanceTicketController implements Initializable{
     }
 
 
-    @FXML
-    void approveClick(ActionEvent event) {
-        ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
-        int currentTicketId = Integer.parseInt(ticketInput.getText());
-
-        for (MaintenanceTicketString ticket : currentTableData) {
-            if (Integer.parseInt(ticket.getId()) == currentTicketId) {
-                ticket.setStatus("Closed");
-
-                tickets.setItems(currentTableData);
-                tickets.refresh();
-                break;
-            }
-        }
-
-
-
-
-    }
 
     @FXML
     void assignClick(ActionEvent event) {
@@ -343,13 +324,11 @@ public class maintenanceTicketController implements Initializable{
         } catch (Exception e) {
             System.out.println("Cant open new window");
         }
-        //TODO open view image window
         
 
     }
     @FXML
     void notesClick(ActionEvent event) {
-        //TODO open view notes image windo
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MaintenanceNote.fxml"));
             MaintenanceNoteController controller = new MaintenanceNoteController();
@@ -373,16 +352,44 @@ public class maintenanceTicketController implements Initializable{
 
         for (MaintenanceTicketString ticket : currentTableData) {
             if (Integer.parseInt(ticket.getId()) == currentTicketId) {
+                String current_status = AssetPlusFeatureSet4Controller.getTicketStatus(currentTicketId);
+                String error;
 
-                if (ticket.getStatus().equals("Assigned")) {
-                    ticket.setStatus("In Progress");
-
+                if (current_status.equals("Assigned")) {
+                    try {
+                        error = AssetPlusFeatureSet4Controller.startTicketProgress(currentTicketId);
+                        if (error.isEmpty()){
+                            ticket.setStatus("InProgress");
+                            
+                        } else {
+                            showError(error);
+                        }
+                        
+                    } catch (Exception e) {
+                        System.out.println("Something went wrong");
+                    }
                 }
 
-                if (ticket.getStatus().equals("In Progress")) {
-                    ticket.setStatus("Resolved");
 
+                if (current_status.equals("InProgress")) {
+                    try {
+                        error = AssetPlusFeatureSet4Controller.completeTicket(currentTicketId);
+                        if (error.isEmpty()){
+                            ticket.setStatus("Resolved");
+                        } else {
+                            showError(error);
+                        }
+                        
+                    } catch (Exception e) {
+                        System.out.println("Something went wrong 2");
+                    }
                 }
+
+                else {
+                    showError("Ticket is in : " + current_status);
+                }
+                
+
                 
 
                 tickets.setItems(currentTableData);
@@ -393,6 +400,40 @@ public class maintenanceTicketController implements Initializable{
 
     }
 
+    @FXML
+    void approveClick(ActionEvent event) {
+        ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
+        int currentTicketId = Integer.parseInt(ticketInput.getText());
+
+        for (MaintenanceTicketString ticket : currentTableData) {
+            if (Integer.parseInt(ticket.getId()) == currentTicketId) {
+                String current_status = AssetPlusFeatureSet4Controller.getTicketStatus(currentTicketId);
+                String error;
 
 
-}
+                if (current_status.equals("Resolved")) {
+                    try {
+                        error = AssetPlusFeatureSet4Controller.completeTicket(currentTicketId);
+                        if (error.isEmpty()){
+                            ticket.setStatus("Closed");
+                        } else {
+                            showError(error);
+                        }
+                        
+                    } catch (Exception e) {
+                        System.out.println("Something went wrong");
+                    }
+
+                }
+                
+
+                }
+                tickets.setItems(currentTableData);
+                tickets.refresh();
+                break;
+            }
+
+
+
+        }
+} 
