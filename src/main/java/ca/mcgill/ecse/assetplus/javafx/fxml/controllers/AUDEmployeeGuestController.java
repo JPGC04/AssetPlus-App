@@ -109,9 +109,10 @@ public class AUDEmployeeGuestController {
       passwordTextField.setText("");
       numberTextField.setText("");
       guestCheckBox.setSelected(false);
+      table.getItems().clear();
+    initialize();
       }
     }
-  table.refresh();
     }
 
     @FXML
@@ -123,8 +124,8 @@ public class AUDEmployeeGuestController {
       AssetPlusFeatureSet6Controller.deleteEmployeeOrGuest(email);
       emailTextField.setText("");
     }
-    table.setItems(list);
-    table.refresh();
+    table.getItems().clear();
+    initialize();
     }
 
     @FXML
@@ -156,8 +157,8 @@ public class AUDEmployeeGuestController {
         guestCheckBox.setSelected(false);
       }
     }
-    table.setItems(list);
-    table.refresh();
+    table.getItems().clear();
+    initialize();
     }
 
     @FXML
