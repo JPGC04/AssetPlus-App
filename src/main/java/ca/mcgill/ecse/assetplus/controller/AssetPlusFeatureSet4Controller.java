@@ -22,8 +22,8 @@ public class AssetPlusFeatureSet4Controller {
   private static AssetPlus assetplus = AssetPlusApplication.getAssetPlus();
 
   /**
-   * Adds an MainteanceTicket type with the given id, date, description, email, assetnumber.
-   * Written by: Yazid Asselah
+   * Adds an MainteanceTicket type with the given id, date, description, email, assetnumber. Written
+   * by: Yazid Asselah
    * 
    * @param id an int corresponding to the id of the ticket
    * @param raisedOnDate a Date object corresponding to the date of when the ticket was created
@@ -117,8 +117,7 @@ public class AssetPlusFeatureSet4Controller {
   }
 
   /**
-   * Deletes a MainteanceTicket type with the given id
-   * Written by: Yazid Asselah
+   * Deletes a MainteanceTicket type with the given id Written by: Yazid Asselah
    * 
    * @param id an int corresponding to the id of the ticket
    */
@@ -326,11 +325,11 @@ public class AssetPlusFeatureSet4Controller {
 
 
 
-    public static List<MaintenanceTicketString> getSpecificTickets() {
+  public static List<MaintenanceTicketString> getSpecificTickets() {
     List<MaintenanceTicket> tickets = assetplus.getMaintenanceTickets();
-    List<MaintenanceTicketString> result = new ArrayList<>(); //javafx
+    List<MaintenanceTicketString> result = new ArrayList<>(); // javafx
 
-    for (MaintenanceTicket ticket: tickets) {
+    for (MaintenanceTicket ticket : tickets) {
       try {
         String assetNumber = "";
         if (ticket.getAsset() == null) {
@@ -338,14 +337,33 @@ public class AssetPlusFeatureSet4Controller {
         } else {
           assetNumber = String.valueOf(ticket.getAsset().getAssetNumber());
         }
-        String room=String.valueOf(ticket.getAsset().getRoomNumber());
-        String floor=String.valueOf(ticket.getAsset().getFloorNumber());
-        
-        String assetType=ticket.getAsset().getAssetType().getName();
-        String lifespan= String.valueOf(ticket.getAsset().getAssetType().getExpectedLifeSpan());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String purchaseDate=sdf.format(ticket.getAsset().getPurchaseDate());
-        result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()), String.valueOf(ticket.getRaisedOnDate()), String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(), ticket.getStatusFullName(), assetNumber,room,floor,purchaseDate,lifespan,assetType));
+        if (ticket.getAsset() == null) {
+          String assetType = "None";
+          String room = "";
+          String floor = "";
+          String lifespan = "";
+          String purchaseDate = "";
+          result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()),
+              String.valueOf(ticket.getRaisedOnDate()),
+              String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(),
+              ticket.getStatusFullName(), assetNumber, room, floor, purchaseDate, lifespan,
+              assetType));
+
+        } else {
+          String room = String.valueOf(ticket.getAsset().getRoomNumber());
+          String floor = String.valueOf(ticket.getAsset().getFloorNumber());
+
+          String assetType = ticket.getAsset().getAssetType().getName();
+          String lifespan = String.valueOf(ticket.getAsset().getAssetType().getExpectedLifeSpan());
+          SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+          String purchaseDate = sdf.format(ticket.getAsset().getPurchaseDate());
+          result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()),
+              String.valueOf(ticket.getRaisedOnDate()),
+              String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(),
+              ticket.getStatusFullName(), assetNumber, room, floor, purchaseDate, lifespan,
+              assetType));
+
+        }
       } catch (Exception e) {
         System.out.println("Didnt work");
       }
@@ -355,16 +373,16 @@ public class AssetPlusFeatureSet4Controller {
   }
 
 
-  public static String getTicketStatus(int id){
+  public static String getTicketStatus(int id) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
     return ticket.getStatus().toString();
-    
 
-    
+
+
   }
 
 
-  public static boolean getRequiresApproval(int id){
+  public static boolean getRequiresApproval(int id) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
     return ticket.getRequiresApproval();
   }
