@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -46,7 +47,7 @@ public class maintenanceTicketController implements Initializable{
     private Button createButton;
 
     @FXML
-    private TextField dateInput;
+    private DatePicker dateInput;
 
     @FXML
     private TableColumn<MaintenanceTicketString, String> dateTable;
@@ -192,7 +193,7 @@ public class maintenanceTicketController implements Initializable{
     void rowClicked(MouseEvent event){
         MaintenanceTicketString clickedTicket = tickets.getSelectionModel().getSelectedItem();
         ticketInput.setText(String.valueOf(clickedTicket.getId()));
-        dateInput.setText(String.valueOf(clickedTicket.getDate()));
+        // dateInput.setValue(clickedTicket.getDate());
         raisedByInput.setText(String.valueOf(clickedTicket.getTicketRaiser()));
         descriptionInput.setText(String.valueOf(clickedTicket.getDescription()));
         assetInput.setText(String.valueOf(clickedTicket.getAsset()));
@@ -207,15 +208,15 @@ public class maintenanceTicketController implements Initializable{
     @FXML
     void createClick(ActionEvent event) {
         try {
-            String raiseOnDate = "2023-11-20";
-            Date date = Date.valueOf(raiseOnDate);
+            ;
+            Date date = Date.valueOf(dateInput.getValue());
             String description = descriptionInput.getText();
             int assetNumber = Integer.parseInt(assetInput.getText());
             String email = raisedByInput.getText();
             String error = AssetPlusFeatureSet4Controller.addMaintenanceTicket(current_id, date, description, email, assetNumber);
 
             if (error.isEmpty()) {
-                MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), "2023-11-30",raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText());
+                MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), String.valueOf(date),raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText());
     
                 list.add(createdTicket); 
                 current_id++;
@@ -294,7 +295,7 @@ public class maintenanceTicketController implements Initializable{
 
                     String error = AssetPlusFeatureSet4Controller.updateMaintenanceTicket(currentTicketId, date, newDesc, newEmail, assetNumber);
                     if (error.isEmpty()) {
-                        ticket.setDate(dateInput.getText());
+                        ticket.setDate(String.valueOf(dateInput.getValue()));
                         ticket.setTicketRaiser(raisedByInput.getText());
                         ticket.setDescription(descriptionInput.getText());
                         ticket.setStatus("Open");
