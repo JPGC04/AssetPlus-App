@@ -163,9 +163,9 @@ public class AssetPlusFeatureSet4Controller {
     }
     Manager fixApprover = (Manager) User.getWithEmail("manager@ap.com");
 
-    if (fixApprover == null) {
-      return "manager not found";
-    }
+    // if (fixApprover == null) {
+    //   return "manager not found";
+    // }
     if (ticket.getStatus() == MaintenanceTicket.Status.Closed) {
       return "Cannot assign a maintenance ticket which is closed.";
     }

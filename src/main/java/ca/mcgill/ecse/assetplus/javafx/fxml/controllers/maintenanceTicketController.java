@@ -188,6 +188,7 @@ public class maintenanceTicketController implements Initializable{
                     ticket.setStatus("Assigned");
                     ticket.setPriorityLevel(priority);
                     ticket.setTimeToResolve(timeToResolve);
+                    ticket.setRequiresApproval(requiresApproval);
                     
                     tickets.setItems(currentTableData);
                     tickets.refresh();        
@@ -215,11 +216,10 @@ public class maintenanceTicketController implements Initializable{
         descriptionInput.setText(String.valueOf(clickedTicket.getDescription()));
         assetInput.setText(String.valueOf(clickedTicket.getAsset()));
 
-        if (clickedTicket.getFixer() != null){
-            fixerInput.setText(clickedTicket.getFixer());
-            timeToResolveInput.setValue(clickedTicket.getTimeToResolve());
-            priorityInput.setValue(clickedTicket.getPriorityLevel());
-        }
+        fixerInput.setText(clickedTicket.getFixer());
+        timeToResolveInput.setValue(clickedTicket.getTimeToResolve());
+        priorityInput.setValue(clickedTicket.getPriorityLevel());
+        managerApprovalButton.setSelected(clickedTicket.getRequiresApproval());
         
     }
 

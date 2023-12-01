@@ -10,6 +10,7 @@ public class MaintenanceTicketString {
     private String fixer;
     private String priorityLevel;
     private String timeToResolve;
+    private boolean requiresApproval;
 
     public MaintenanceTicketString(String id, String date, String ticketRaiser, String description, String status, String asset) {
         this.id = id;
@@ -22,6 +23,15 @@ public class MaintenanceTicketString {
     }
 
     // Setters
+
+
+    public void setRequiresApproval(boolean requiresApproval){
+        this.requiresApproval = requiresApproval;
+    };
+
+    public boolean getRequiresApproval(){
+        return this.requiresApproval;
+    }
     public void setId(String id) {
         this.id = id;
     }
