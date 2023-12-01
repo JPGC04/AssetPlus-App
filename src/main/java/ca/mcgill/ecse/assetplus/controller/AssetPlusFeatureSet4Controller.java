@@ -179,6 +179,7 @@ public class AssetPlusFeatureSet4Controller {
 
     if (error.isEmpty()) {
       ticket.assignTicket(id, employeeEmail, aTimeToResolve, aPriority, requiresApproval);
+      AssetPlusPersistence.save();
     } else {
       return error;
     }
@@ -212,6 +213,7 @@ public class AssetPlusFeatureSet4Controller {
       return "Cannot start a maintenance ticket which is open.";
     }
     ticket.startProgress();
+    AssetPlusPersistence.save();
 
     return "";
   }
@@ -242,6 +244,7 @@ public class AssetPlusFeatureSet4Controller {
       return "Cannot complete a maintenance ticket which is assigned.";
     }
     ticket.Resolve();
+    AssetPlusPersistence.save();
     return "";
   }
 
@@ -278,6 +281,7 @@ public class AssetPlusFeatureSet4Controller {
     }
 
     ticket.approve();
+    AssetPlusPersistence.save();
     return "";
   }
 
@@ -316,6 +320,7 @@ public class AssetPlusFeatureSet4Controller {
     }
 
     ticket.disaprove(id, aDate, aDescription);
+    AssetPlusPersistence.save();
     return "";
   }
 
@@ -356,5 +361,11 @@ public class AssetPlusFeatureSet4Controller {
     
 
     
+  }
+
+
+  public static boolean getRequiresApproval(int id){
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+    return ticket.getRequiresApproval();
   }
 }

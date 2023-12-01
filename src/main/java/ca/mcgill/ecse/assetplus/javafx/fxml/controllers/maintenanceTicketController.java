@@ -194,7 +194,8 @@ public class maintenanceTicketController implements Initializable{
                     ticket.setRequiresApproval(requiresApproval);
                     
                     tickets.setItems(currentTableData);
-                    tickets.refresh();        
+                    tickets.refresh();  
+                    showError("Successfully Assigned Ticket");      
                 } else {
                     showError(error);
                 }
@@ -291,7 +292,7 @@ public class maintenanceTicketController implements Initializable{
     }
 
 
-    @FXML
+   @FXML
     void disaproveClick(ActionEvent event) {
         //TODO create a pop that prompts for a disaproval note
         try {
@@ -410,6 +411,7 @@ public class maintenanceTicketController implements Initializable{
                         error = AssetPlusFeatureSet4Controller.startTicketProgress(currentTicketId);
                         if (error.isEmpty()){
                             ticket.setStatus("InProgress");
+                            showError("Successfully Started maintenance Work");
                             
                         } else {
                             showError(error);
@@ -423,9 +425,19 @@ public class maintenanceTicketController implements Initializable{
 
                 if (current_status.equals("InProgress")) {
                     try {
+
+                        boolean requiresApproval = AssetPlusFeatureSet4Controller.getRequiresApproval(currentTicketId);
                         error = AssetPlusFeatureSet4Controller.completeTicket(currentTicketId);
+                    
                         if (error.isEmpty()){
-                            ticket.setStatus("Resolved");
+                            if (requiresApproval){
+                                ticket.setStatus("Resolved");
+                                showError("Waiting for approval");
+                            } else {
+                                ticket.setStatus("Closed");
+                                showError("Ticket has been closed");
+                            }
+                            
                         } else {
                             showError(error);
                         }
@@ -453,12 +465,12 @@ public class maintenanceTicketController implements Initializable{
                 String current_status = AssetPlusFeatureSet4Controller.getTicketStatus(currentTicketId);
                 String error;
 
-
                 if (current_status.equals("Resolved")) {
                     try {
-                        error = AssetPlusFeatureSet4Controller.completeTicket(currentTicketId);
+                        error = AssetPlusFeatureSet4Controller.approveTicket(currentTicketId);
                         if (error.isEmpty()){
                             ticket.setStatus("Closed");
+                            showError("Ticket has been approved");
                         } else {
                             showError(error);
                         }
@@ -468,12 +480,11 @@ public class maintenanceTicketController implements Initializable{
                     }
 
                 }
-                
-
-                }
                 tickets.setItems(currentTableData);
                 tickets.refresh();
                 break;
+                }
+               
             }
 
 
