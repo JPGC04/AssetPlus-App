@@ -340,4 +340,13 @@ public class AssetPlusFeatureSet4Controller {
 
     return result;
   }
+
+
+  public static String getTicketStatus(int id){
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+    return ticket.getStatus().toString();
+    
+
+    
+  }
 }
