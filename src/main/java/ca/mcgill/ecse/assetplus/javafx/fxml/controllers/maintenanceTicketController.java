@@ -385,13 +385,6 @@ public class maintenanceTicketController implements Initializable{
                     }
                 }
 
-                else {
-                    showError("Ticket is in : " + current_status);
-                }
-                
-
-                
-
                 tickets.setItems(currentTableData);
                 tickets.refresh();
                 break;
