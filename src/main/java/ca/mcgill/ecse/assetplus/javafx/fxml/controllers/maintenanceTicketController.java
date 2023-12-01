@@ -161,7 +161,9 @@ public class maintenanceTicketController {
         assetTypeTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("assetType"));
         lifespanTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("lifespan"));
         purchaseDateTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("purchaseDate"));
+        timeToResolveInput.getItems().clear();
         timeToResolveInput.getItems().addAll(timeToResolve);
+        priorityInput.getItems().clear();
         priorityInput.getItems().addAll(priorityLevels);
 
         List<MaintenanceTicketString> myList = AssetPlusFeatureSet4Controller.getSpecificTickets();
