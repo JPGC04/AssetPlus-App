@@ -229,6 +229,8 @@ public class maintenanceTicketController implements Initializable{
                 raisedByInput.clear();
                 descriptionInput.clear();
                 assetInput.clear();
+                dateInput.setValue(null);
+                ticketInput.clear();
             } else {
                 showError(error);
             }
@@ -261,7 +263,11 @@ public class maintenanceTicketController implements Initializable{
         AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(currentTicketId);
         tickets.refresh();
 
-
+        raisedByInput.clear();
+        descriptionInput.clear();
+        assetInput.clear();
+        dateInput.setValue(null);
+        ticketInput.clear();
 
     }
 
@@ -315,6 +321,12 @@ public class maintenanceTicketController implements Initializable{
 
                         tickets.setItems(currentTableData);
                         tickets.refresh();
+
+                        raisedByInput.clear();
+                        descriptionInput.clear();
+                        assetInput.clear();
+                        dateInput.setValue(null);
+                        ticketInput.clear();
                     } else {
                         showError(error);
                     }
