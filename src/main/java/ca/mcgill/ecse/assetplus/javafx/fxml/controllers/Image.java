@@ -11,23 +11,24 @@ public class Image {
     this.index = index;
   }
 
-  public int getImageIndex(){
+  public int getIndex(){
     return this.index;
   }
 
-  public void setImageIndex(int newIndex) {
+  public void setIndex(int newIndex) {
     this.index = newIndex;
 
   }
 
-  public String getImageUrl(){
+  public String getUrl(){
     return this.url;
 
   }
 
-  public void setImageUrl(String newUrl){
+  public void setUrl(String newUrl){
 
     this.url = newUrl;
   }
   
 }
+
