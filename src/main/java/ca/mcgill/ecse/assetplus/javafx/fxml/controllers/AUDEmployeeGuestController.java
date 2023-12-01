@@ -123,6 +123,10 @@ public class AUDEmployeeGuestController {
     } else {
       AssetPlusFeatureSet6Controller.deleteEmployeeOrGuest(email);
       emailTextField.setText("");
+      nameTextField.setText("");
+      passwordTextField.setText("");
+      numberTextField.setText("");
+      guestCheckBox.setSelected(false);
     }
     table.getItems().clear();
     initialize();
