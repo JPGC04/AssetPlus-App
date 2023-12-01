@@ -82,7 +82,10 @@ public class AUDAssetController {
     void AddAssetClicked(ActionEvent event) {
         int AssetID = Integer.parseInt(AddAssetID.getText());
         int AssetFloor = Integer.parseInt(AddAssetFloorNumber.getText());
-        int AssetRoom = Integer.parseInt(AddAssetRoomNumber.getText());
+        int AssetRoom = 0;
+        if (!AddAssetRoomNumber.getText().equals("")) {
+            AssetRoom = Integer.parseInt(AddAssetRoomNumber.getText());
+        }
         String AssetName = AddAssetName.getValue();
         Date AssetDate = Date.valueOf(AddAssetDate.getValue());
         if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(AssetID, AssetFloor, AssetRoom, AssetDate, AssetName))) {
@@ -105,7 +108,10 @@ public class AUDAssetController {
     void UpdateAssetClicked(ActionEvent event) {
         int AssetID = Integer.parseInt(UpdateAssetID.getText());
         int AssetFloor = Integer.parseInt(UpdateAssetFloorNumber.getText());
-        int AssetRoom = Integer.parseInt(UpdateAssetRoomNumber.getText());
+        int AssetRoom = 0;
+        if (!AddAssetRoomNumber.getText().equals("")) {
+            AssetRoom = Integer.parseInt(UpdateAssetRoomNumber.getText());
+        }
         String AssetName = UpdateAssetName.getValue();
         Date AssetDate = Date.valueOf(UpdateAssetDate.getValue());
         if (successful(AssetPlusFeatureSet3Controller.updateSpecificAsset(AssetID, AssetFloor, AssetRoom, AssetDate, AssetName))) {
