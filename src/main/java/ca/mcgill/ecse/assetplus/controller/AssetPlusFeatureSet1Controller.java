@@ -2,8 +2,10 @@ package ca.mcgill.ecse.assetplus.controller;
 
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.UserString;
 import ca.mcgill.ecse.assetplus.model.*;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
+import java.util.ArrayList;
 
 /**
  * AssetPlusFeatureSet1Controller is used to to update manager password and add/update employee and
@@ -224,6 +226,26 @@ public class AssetPlusFeatureSet1Controller {
 			}
 		}
 		return null;
+	}
+	public static List<UserString> getUserString(){
+		List<UserString> listReturned = new ArrayList<>();
+		List<Employee> listEmp=AssetPlusApplication.getAssetPlus().getEmployees();
+        for(Employee emp: listEmp ){
+            String email =emp.getEmail();
+            String password =emp.getPassword();
+            String number =emp.getPhoneNumber();
+            String name =emp.getName();
+            listReturned.add(new UserString(name, email, password, number, "Employee"));
+          }
+          List<Guest> listGuests=AssetPlusApplication.getAssetPlus().getGuests();
+          for(Guest emp: listGuests ){
+            String email =emp.getEmail();
+            String password =emp.getPassword();
+            String number =emp.getPhoneNumber();
+            String name =emp.getName();
+            listReturned.add(new UserString(name, email, password, number, "Guest"));
+          }
+			return listReturned;
 	}
 }
 
