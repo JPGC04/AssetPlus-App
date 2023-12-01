@@ -100,7 +100,7 @@
                                     <Insets left="25.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="editButton" mnemonicParsing="false" onAction="#editClick" style="-fx-background-color: #ffd166;" text="Edit">
+                              <Button fx:id="editButton" mnemonicParsing="false" onAction="#editClick" style="-fx-background-color: #ffd166;" text="Update">
                                  <HBox.margin>
                                     <Insets left="25.0" />
                                  </HBox.margin>
