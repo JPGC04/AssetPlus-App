@@ -635,14 +635,10 @@ public class AssetPlus
 
   // line 3 "../../../../../AssetPlusPersistence.ump"
    public void reinitialize(){
-    List<Employee> employees = getEmployees();
-    List<Guest> guests = getGuests();
-    List<User> users = new ArrayList<>(employees);
-    users.addAll(guests);
-    User.reinitializeUsers(users);
-    MaintenanceTicket.reinitializeMaintenanceTickets(getMaintenanceTickets());
-    AssetType.reinitializeAssetType(getAssetTypes());
-    SpecificAsset.reinitializeSpecificAsset(getSpecificAssets());
+    User.reinitializeUniqueEmail(this.getManager(), this.getEmployees(), this.getGuests());
+    MaintenanceTicket.reinitializeUniqueId(this.getMaintenanceTickets());
+    SpecificAsset.reinitializeUniqueAssetNumber(this.getSpecificAssets());
+    AssetType.reinitializeUniqueName(this.getAssetTypes());
   }
 
 }

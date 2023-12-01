@@ -6,7 +6,7 @@ import java.util.*;
 import java.sql.Date;
 
 // line 13 "../../../../../AssetPlus.ump"
-// line 14 "../../../../../AssetPlusPersistence.ump"
+// line 10 "../../../../../AssetPlusPersistence.ump"
 public abstract class User
 {
 
@@ -234,11 +234,17 @@ public abstract class User
     }
   }
 
-  // line 16 "../../../../../AssetPlusPersistence.ump"
-   public static  void reinitializeUsers(List<User> users){
-    usersByEmail.clear();
-    for (var u : users) {
-      usersByEmail.put(u.getEmail(), u);
+  // line 12 "../../../../../AssetPlusPersistence.ump"
+   public static  void reinitializeUniqueEmail(Manager manager, List<Employee> employees, List<Guest> guests){
+    usersByEmail = new HashMap<String, User>();
+    if (manager != null) {
+      usersByEmail.put(manager.getEmail(), manager);
+    }
+    for (Employee e : employees) {
+      usersByEmail.put(e.getEmail(), e);
+    }
+    for (Guest g : guests) {
+      usersByEmail.put(g.getEmail(), g);
     }
   }
 

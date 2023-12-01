@@ -6,7 +6,7 @@ import java.util.*;
 import java.sql.Date;
 
 // line 82 "../../../../../AssetPlus.ump"
-// line 32 "../../../../../AssetPlusPersistence.ump"
+// line 43 "../../../../../AssetPlusPersistence.ump"
 public class AssetType
 {
 
@@ -240,11 +240,11 @@ public class AssetType
     }
   }
 
-  // line 34 "../../../../../AssetPlusPersistence.ump"
-   public static  void reinitializeAssetType(List<AssetType> assetTypes){
-    assettypesByName.clear();
-    for (var a: assetTypes) {
-      assettypesByName.put(a.getName(), a);
+  // line 45 "../../../../../AssetPlusPersistence.ump"
+   public static  void reinitializeUniqueName(List<AssetType> types){
+    assettypesByName = new HashMap<String, AssetType>();
+    for (AssetType t : types) {
+      assettypesByName.put(t.getName(), t);
     }
   }
 

@@ -6,7 +6,7 @@ import java.util.*;
 import java.sql.Date;
 
 // line 74 "../../../../../AssetPlus.ump"
-// line 41 "../../../../../AssetPlusPersistence.ump"
+// line 34 "../../../../../AssetPlusPersistence.ump"
 public class SpecificAsset
 {
 
@@ -304,11 +304,11 @@ public class SpecificAsset
     }
   }
 
-  // line 43 "../../../../../AssetPlusPersistence.ump"
-   public static  void reinitializeSpecificAsset(List<SpecificAsset> specificAssets){
-    specificassetsByAssetNumber.clear();
-    for (var s : specificAssets) {
-      specificassetsByAssetNumber.put(s.getAssetNumber(), s);
+  // line 36 "../../../../../AssetPlusPersistence.ump"
+   public static  void reinitializeUniqueAssetNumber(List<SpecificAsset> assets){
+    specificassetsByAssetNumber = new HashMap<Integer, SpecificAsset>();
+    for (SpecificAsset a : assets) {
+      specificassetsByAssetNumber.put(a.getAssetNumber(), a);
     }
   }
 

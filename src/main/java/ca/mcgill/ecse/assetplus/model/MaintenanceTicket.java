@@ -7,7 +7,7 @@ import java.sql.Date;
 
 // line 43 "../../../../../AssetPlus.ump"
 // line 1 "../../../../../MaintenanceTicketStates.ump"
-// line 23 "../../../../../AssetPlusPersistence.ump"
+// line 25 "../../../../../AssetPlusPersistence.ump"
 public class MaintenanceTicket
 {
 
@@ -741,11 +741,11 @@ public class MaintenanceTicket
         return "";
   }
 
-  // line 25 "../../../../../AssetPlusPersistence.ump"
-   public static  void reinitializeMaintenanceTickets(List<MaintenanceTicket> maintenanceTickets){
-    maintenanceticketsById.clear();
-    for (var m : maintenanceTickets) {
-      maintenanceticketsById.put(m.getId(), m);
+  // line 27 "../../../../../AssetPlusPersistence.ump"
+   public static  void reinitializeUniqueId(List<MaintenanceTicket> tickets){
+    maintenanceticketsById = new HashMap<Integer, MaintenanceTicket>();
+    for (MaintenanceTicket t : tickets) {
+      maintenanceticketsById.put(t.getId(), t);
     }
   }
 
