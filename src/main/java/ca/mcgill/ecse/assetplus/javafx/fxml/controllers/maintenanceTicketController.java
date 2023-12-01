@@ -278,7 +278,7 @@ public class maintenanceTicketController implements Initializable{
         //TODO create a pop that prompts for a disaproval note
         try {
             String status = statusTable.getText();
-            if (status == "Resolved") {
+            if (true) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Disaprove.fxml"));
 
                 DisaproveController controller = new DisaproveController();
