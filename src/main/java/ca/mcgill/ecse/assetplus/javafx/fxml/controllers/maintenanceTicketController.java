@@ -272,13 +272,18 @@ public class maintenanceTicketController implements Initializable{
     }
 
 
-    @FXML
+   @FXML
     void disaproveClick(ActionEvent event) {
         //TODO create a pop that prompts for a disaproval note
         try {
             String status = statusTable.getText();
             if (status == "Resolved") {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Disaprove.fxml"));
+
+                DisaproveController controller = new DisaproveController();
+                controller.setYourVariable(Date.valueOf(dateInput.getValue()), Integer.parseInt(ticketInput.getText()));
+                fxmlLoader.setControllerFactory(c -> controller);
+
                 Parent root1 = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));  
