@@ -1,9 +1,16 @@
 package ca.mcgill.ecse.assetplus.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.AMaintenanceNote;
+import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.Asset;
+import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
@@ -17,6 +24,8 @@ import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
  */
 public class AssetPlusFeatureSet7Controller {
   private AssetPlusFeatureSet7Controller() {}
+
+  private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
   /**
    * <p>Adds a maintenance note to a ticket using the ticket ID.</p>
@@ -68,6 +77,9 @@ public class AssetPlusFeatureSet7Controller {
     }
     HotelStaff staff = (HotelStaff) User.getWithEmail(newEmail);
     int number_of_notes = ticket.getTicketNotes().size();
+    System.out.println(ticket.getTicketNotes().size() + " is the size of ticket");
+    System.out.println(index);
+    System.out.println(ticketID);
     if (index >= number_of_notes) {
       return "Note does not exist";
     }
@@ -118,6 +130,26 @@ public class AssetPlusFeatureSet7Controller {
     } catch (Exception e) {
       return;
     }
+  }
+
+  public static List<AMaintenanceNote> getSpecificNotes(int i) {
+    try {
+      MaintenanceTicket ticket = assetPlus.getMaintenanceTicket(i-1);
+      System.out.println("ticket id inside controller 7: " + i);
+      System.out.println(ticket.getDescription());
+
+      List<MaintenanceNote> notes = ticket.getTicketNotes();
+      List<AMaintenanceNote> res = new ArrayList<>();
+      int ind = 0;
+      for (MaintenanceNote note: notes) {
+        res.add(new AMaintenanceNote(note.getDescription(), String.valueOf(note.getDate()), note.getNoteTaker().getEmail(), ind));
+        ind++;
+      }
+      return res;
+    } catch (Exception e) {
+      System.out.println("hi");
+    }
+    return null;
   }
 
 }
