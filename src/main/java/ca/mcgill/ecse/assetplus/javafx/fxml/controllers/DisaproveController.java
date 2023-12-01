@@ -40,6 +40,7 @@ public class DisaproveController {
         Stage stage = (Stage) submitButton.getScene().getWindow();
         stage.close();
         
+        
         }
     }
 

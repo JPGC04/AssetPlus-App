@@ -194,7 +194,7 @@ public class maintenanceTicketController {
                         error = AssetPlusFeatureSet4Controller.approveTicket(currentTicketId);
                         if (error.isEmpty()){
                             ticket.setStatus("Closed");
-                            showError("Ticket has been approved");
+                            //showError("Ticket has been approved");
                         } else {
                             showError(error);
                         }
@@ -239,7 +239,7 @@ ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
                     
                     tickets.setItems(currentTableData);
                     tickets.refresh();  
-                    showError("Successfully Assigned Ticket");      
+                    //showError("Successfully Assigned Ticket");      
                 } else {
                     showError(error);
                 }
@@ -293,7 +293,20 @@ ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
                 stage.setScene(new Scene(root1));  
                 stage.show();
             }
-        tickets.refresh();
+
+            int selectedID = Integer.parseInt(ticketInput.getText());
+            for (MaintenanceTicketString ticket : list){
+            if (Integer.parseInt(ticket.getId()) == selectedID) {
+                ticket.setStatus("InProgress");
+                tickets.refresh();
+                break;
+            }
+        }
+            
+
+       
+
+
         
         } catch (Exception e) {
             System.out.println("Cant open new window");
@@ -449,7 +462,7 @@ initialize();
                         error = AssetPlusFeatureSet4Controller.startTicketProgress(currentTicketId);
                         if (error.isEmpty()){
                             ticket.setStatus("InProgress");
-                            showError("Successfully Started maintenance Work");
+                            //showError("Successfully Started maintenance Work");
                             
                         } else {
                             showError(error);
@@ -470,10 +483,10 @@ initialize();
                         if (error.isEmpty()){
                             if (requiresApproval){
                                 ticket.setStatus("Resolved");
-                                showError("Waiting for approval");
+                                //showError("Waiting for approval");
                             } else {
                                 ticket.setStatus("Closed");
-                                showError("Ticket has been closed");
+                                //showError("Ticket has been closed");
                             }
                             
                         } else {
