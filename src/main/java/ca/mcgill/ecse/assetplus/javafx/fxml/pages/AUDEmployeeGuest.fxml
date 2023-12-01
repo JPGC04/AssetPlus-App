@@ -41,7 +41,7 @@
       </BorderPane>
       <TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="257.0" prefWidth="598.0" text="Employee and Guests" GridPane.columnSpan="4" GridPane.rowIndex="2">
         <content>
-            <TableView fx:id="table" prefHeight="229.0" prefWidth="600.0" style="-fx-background-color: #A9A9A9;">
+            <TableView fx:id="table" onMouseClicked="#rowClicked" prefHeight="229.0" prefWidth="600.0" style="-fx-background-color: #A9A9A9;">
               <columns>
                 <TableColumn fx:id="name" prefWidth="102.6988525390625" text="Full Name" />
                 <TableColumn fx:id="phoneNumber" minWidth="0.0" prefWidth="124.66665649414062" text="Phone Number" />
