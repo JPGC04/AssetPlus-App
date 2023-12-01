@@ -28,9 +28,10 @@ import com.thoughtworks.xstream.mapper.LocalConversionMapper;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import java.time.LocalDate;
 import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showError;
+import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils;
 
 
-public class maintenanceTicketController implements Initializable{
+public class maintenanceTicketController {
     @FXML
     private TableColumn<MaintenanceTicketString, String> floorTable;
     @FXML
@@ -131,11 +132,22 @@ public class maintenanceTicketController implements Initializable{
     private String[] priorityLevels = {"Low", "Normal", "Urgent"};
 
     private String[] timeToResolve = {"LessThanADay", "OneToThreeDays", "ThreeToSevenDays", "OneToThreeWeeks", "ThreeOrMoreWeeks"};
+  
 
 
-    //Load the database
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+
+
+
+
+
+
+
+
+
+
+    @FXML
+    public void initialize() {
+        list.clear();
         // TODO Auto-generated method stub
         ticketTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("id"));
         dateTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("date"));
@@ -164,14 +176,46 @@ public class maintenanceTicketController implements Initializable{
 
         tickets.setItems(list);
         System.out.println("Initialze ticket called");
-        
+
     }
 
+    @FXML
+    void approveClick(ActionEvent event) {
+        ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
+        int currentTicketId = Integer.parseInt(ticketInput.getText());
 
+        for (MaintenanceTicketString ticket : currentTableData) {
+            if (Integer.parseInt(ticket.getId()) == currentTicketId) {
+                String current_status = AssetPlusFeatureSet4Controller.getTicketStatus(currentTicketId);
+                String error;
+
+                if (current_status.equals("Resolved")) {
+                    try {
+                        error = AssetPlusFeatureSet4Controller.approveTicket(currentTicketId);
+                        if (error.isEmpty()){
+                            ticket.setStatus("Closed");
+                            showError("Ticket has been approved");
+                        } else {
+                            showError(error);
+                        }
+                        
+                    } catch (Exception e) {
+                        System.out.println("Something went wrong");
+                    }
+
+                }
+                tickets.setItems(currentTableData);
+                tickets.refresh();
+                break;
+                }
+               
+            }
+
+    }
 
     @FXML
     void assignClick(ActionEvent event) {
-        ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
+ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
         int currentTicketId = Integer.parseInt(ticketInput.getText());
 
         try {
@@ -208,64 +252,6 @@ public class maintenanceTicketController implements Initializable{
         } catch (Exception e) {
             showError("Invalid parameters!");
         }
-
-    }
-
-    @FXML
-    void rowClicked(MouseEvent event){
-        MaintenanceTicketString clickedTicket = tickets.getSelectionModel().getSelectedItem();
-        ticketInput.setText(String.valueOf(clickedTicket.getId()));
-        // dateInput.setValue(clickedTicket.getDate());
-        raisedByInput.setText(String.valueOf(clickedTicket.getTicketRaiser()));
-        descriptionInput.setText(String.valueOf(clickedTicket.getDescription()));
-        assetInput.setText(String.valueOf(clickedTicket.getAsset()));
-
-        LocalDate date = LocalDate.parse(clickedTicket.getDate());
-        dateInput.setValue(date);
-
-        fixerInput.setText(clickedTicket.getFixer());
-        timeToResolveInput.setValue(clickedTicket.getTimeToResolve());
-        priorityInput.setValue(clickedTicket.getPriorityLevel());
-        managerApprovalButton.setSelected(clickedTicket.getRequiresApproval());
-        
-    }
-
-    @FXML
-    void createClick(ActionEvent event) {
-        try {
-            ;
-            Date date = Date.valueOf(dateInput.getValue());
-            String description = descriptionInput.getText();
-            int assetNumber = Integer.parseInt(assetInput.getText());
-            String email = raisedByInput.getText();
-            String error = AssetPlusFeatureSet4Controller.addMaintenanceTicket(current_id, date, description, email, assetNumber);
-
-            if (error.isEmpty()) {
-                MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), String.valueOf(date),raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText(),"","","","","");
-    
-                list.add(createdTicket); 
-                current_id++;
-                raisedByInput.clear();
-                descriptionInput.clear();
-                assetInput.clear();
-                dateInput.setValue(null);
-                ticketInput.clear();
-            } else {
-                showError(error);
-            }
-        
-        } catch (Exception e) {
-            showError("Invalid Parameters");
-        }
-
-
-        tickets.refresh();
-        
-
-        
-
-
-
     }
 
     @FXML
@@ -289,12 +275,12 @@ public class maintenanceTicketController implements Initializable{
         dateInput.setValue(null);
         ticketInput.clear();
 
+        initialize();
+
     }
 
-
-   @FXML
+    @FXML
     void disaproveClick(ActionEvent event) {
-        //TODO create a pop that prompts for a disaproval note
         try {
             String status = statusTable.getText();
             if (true) {
@@ -313,14 +299,10 @@ public class maintenanceTicketController implements Initializable{
             System.out.println("Cant open new window");
         }
 
-
-
     }
-
 
     @FXML
     void editClick(ActionEvent event) {
-
         try {
             ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
             int currentTicketId = Integer.parseInt(ticketInput.getText());
@@ -358,6 +340,7 @@ public class maintenanceTicketController implements Initializable{
         } catch (Exception e) {
             showError("Invalid parameters!");
         }
+initialize();
     }
 
     @FXML
@@ -375,9 +358,9 @@ public class maintenanceTicketController implements Initializable{
         } catch (Exception e) {
             System.out.println("Cant open new window");
         }
-        
 
     }
+
     @FXML
     void notesClick(ActionEvent event) {
         try {
@@ -393,6 +376,59 @@ public class maintenanceTicketController implements Initializable{
             } catch (Exception e) {
                 System.out.println("Cant open new window");
             }
+
+    }
+
+    @FXML
+    void rowClicked(MouseEvent event) {
+        MaintenanceTicketString clickedTicket = tickets.getSelectionModel().getSelectedItem();
+        ticketInput.setText(String.valueOf(clickedTicket.getId()));
+        // dateInput.setValue(clickedTicket.getDate());
+        raisedByInput.setText(String.valueOf(clickedTicket.getTicketRaiser()));
+        descriptionInput.setText(String.valueOf(clickedTicket.getDescription()));
+        assetInput.setText(String.valueOf(clickedTicket.getAsset()));
+
+        LocalDate date = LocalDate.parse(clickedTicket.getDate());
+        dateInput.setValue(date);
+
+        fixerInput.setText(clickedTicket.getFixer());
+        timeToResolveInput.setValue(clickedTicket.getTimeToResolve());
+        priorityInput.setValue(clickedTicket.getPriorityLevel());
+        managerApprovalButton.setSelected(clickedTicket.getRequiresApproval());
+        
+    }
+
+    @FXML
+    void createClick(ActionEvent event) {
+        try {
+            ;
+            Date date = Date.valueOf(dateInput.getValue());
+            String description = descriptionInput.getText();
+            int assetNumber = Integer.parseInt(assetInput.getText());
+            String email = raisedByInput.getText();
+            String error = AssetPlusFeatureSet4Controller.addMaintenanceTicket(current_id, date, description, email, assetNumber);
+
+            if (error.isEmpty()) {
+                MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), String.valueOf(date),raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText(),"","","","","");
+    
+                //list.add(createdTicket); 
+                current_id++;
+                raisedByInput.clear();
+                descriptionInput.clear();
+                assetInput.clear();
+                dateInput.setValue(null);
+                ticketInput.clear();
+            } else {
+                showError(error);
+            }
+        
+        } catch (Exception e) {
+            showError("Invalid Parameters");
+        }
+
+
+        //tickets.refresh();
+        initialize();
 
     }
 
@@ -455,39 +491,4 @@ public class maintenanceTicketController implements Initializable{
 
     }
 
-    @FXML
-    void approveClick(ActionEvent event) {
-        ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
-        int currentTicketId = Integer.parseInt(ticketInput.getText());
-
-        for (MaintenanceTicketString ticket : currentTableData) {
-            if (Integer.parseInt(ticket.getId()) == currentTicketId) {
-                String current_status = AssetPlusFeatureSet4Controller.getTicketStatus(currentTicketId);
-                String error;
-
-                if (current_status.equals("Resolved")) {
-                    try {
-                        error = AssetPlusFeatureSet4Controller.approveTicket(currentTicketId);
-                        if (error.isEmpty()){
-                            ticket.setStatus("Closed");
-                            showError("Ticket has been approved");
-                        } else {
-                            showError(error);
-                        }
-                        
-                    } catch (Exception e) {
-                        System.out.println("Something went wrong");
-                    }
-
-                }
-                tickets.setItems(currentTableData);
-                tickets.refresh();
-                break;
-                }
-               
-            }
-
-
-
-        }
-} 
+}
