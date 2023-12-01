@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -101,13 +102,18 @@ public class maintenanceTicketController implements Initializable{
     @FXML
     private Button updateButton;
 
+    @FXML 
+    private RadioButton managerApprovalButton;
+
+ 
+
     private int current_id;
 
     private ObservableList<MaintenanceTicketString> list = FXCollections.observableArrayList();
 
-    private String[] priorityLevels = {"Low", "Medium", "Urgent"};
+    private String[] priorityLevels = {"Low", "Normal", "Urgent"};
 
-    private String[] timeToResolve = {"OneWeek", "TwoWeeks", "ThreeWeeks"};
+    private String[] timeToResolve = {"LessThanADay", "OneToThreeDays", "ThreeToSevenDays", "OneToThreeWeeks", "ThreeOrMoreWeeks"};
 
 
     //Load the database
@@ -165,17 +171,37 @@ public class maintenanceTicketController implements Initializable{
         ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
         int currentTicketId = Integer.parseInt(ticketInput.getText());
 
-        for (MaintenanceTicketString ticket : currentTableData) {
+        try {
+            for (MaintenanceTicketString ticket : currentTableData) {
             if (Integer.parseInt(ticket.getId()) == currentTicketId) {
-                ticket.setFixer(fixerInput.getText());
-                ticket.setStatus("Assigned");
-                ticket.setTimeToResolve(timeToResolveInput.getValue());
-                ticket.setPriorityLevel(priorityInput.getValue());
 
-                tickets.setItems(currentTableData);
-                tickets.refresh();
+                String fixer = fixerInput.getText();
+                String timeToResolve = timeToResolveInput.getValue();
+                String priority = priorityInput.getValue(); 
+                boolean requiresApproval = managerApprovalButton.isSelected();
+
+
+                String error = AssetPlusFeatureSet4Controller.assignMaintenanceTicket(currentTicketId, fixer, timeToResolve, priority, requiresApproval);
+
+                if (error.isEmpty()) {
+                    ticket.setFixer(fixer);
+                    ticket.setStatus("Assigned");
+                    ticket.setPriorityLevel(priority);
+                    ticket.setTimeToResolve(timeToResolve);
+                    
+                    tickets.setItems(currentTableData);
+                    tickets.refresh();        
+                } else {
+                    showError(error);
+                }
                 break;
+            
             }
+            
+        } 
+
+        } catch (Exception e) {
+            showError("Invalid parameters!");
         }
 
     }
