@@ -1,13 +1,19 @@
 
 package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
+import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showError;
 import java.net.URL;
+import java.sql.Date;
+import java.util.List;
 import java.util.ResourceBundle;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet5Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet7Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -20,13 +26,10 @@ public class MaintenanceImageController implements Initializable {
     private Button addButton;
 
     @FXML
-    private TextField dateInput;
+    private DatePicker dateInput;
 
     @FXML
     private Button deleteButton;
-
-    @FXML
-    private Button editButton;
 
     @FXML
     private TextField imageURLinput;
@@ -45,21 +48,44 @@ public class MaintenanceImageController implements Initializable {
 
     private int current_index;
 
+    private Integer ticketID;
+
+    public void setYourVariable(Integer value) {
+        this.ticketID = value;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         urlTable.setCellValueFactory(new PropertyValueFactory<Image, String>("url"));
+        List<Image> t = AssetPlusFeatureSet5Controller.getSpecificImages(ticketID);
+        for (Image img: t) {
+            list.add(img);
+            current_index = img.getIndex() + 1;
+        }
+
         images.setItems(list);
+        images.refresh();
 
     }
 
 
     @FXML
     void createClick(ActionEvent event) {
+        try {
+            String url = imageURLinput.getText();
+            
+            String error = AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(url, ticketID);
+            if (error.isEmpty()) {
+                list.add(new Image(url, current_index));
+                imageURLinput.clear();
+                current_index++;
+            } else {
+                showError(error);
+            }
 
-        Image createdImage = new Image(imageURLinput.getText(), current_index);
-
-        list.add(createdImage);
-        current_index++;
+        } catch (Exception e) {
+            showError("Invalid Parameters!");
+        }
 
         images.refresh();
     }
@@ -68,20 +94,25 @@ public class MaintenanceImageController implements Initializable {
     void deleteClick(ActionEvent event) {
         int selectedID = images.getSelectionModel().getSelectedIndex();
         images.getItems().remove(selectedID);
-        current_index--;
+        
+        for (Image img: list) {
+            if (img.getIndex() == selectedID) {
+                list.remove(img);
+                break;
+            }
+        }
 
+        AssetPlusFeatureSet5Controller.deleteImageFromMaintenanceTicket(imageURLinput.getText(), ticketID);
+        imageURLinput.clear();
+        images.refresh();
     }
 
-    @FXML
-    void editClick(ActionEvent event) {
-        //TODO
-
-    }
 
     @FXML
     void rowClicked(MouseEvent event) {
         Image clickedImage = images.getSelectionModel().getSelectedItem();
-        imageURLinput.setText(clickedImage.getImageUrl());
+        imageURLinput.setText(clickedImage.getUrl());
+        
 
     }
 
