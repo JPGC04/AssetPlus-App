@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import java.time.format.DateTimeFormatter;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -23,7 +24,9 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import com.thoughtworks.xstream.mapper.LocalConversionMapper;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
+import java.time.LocalDate;
 import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showError;
 
 
@@ -198,6 +201,9 @@ public class maintenanceTicketController implements Initializable{
         descriptionInput.setText(String.valueOf(clickedTicket.getDescription()));
         assetInput.setText(String.valueOf(clickedTicket.getAsset()));
 
+        LocalDate date = LocalDate.parse(clickedTicket.getDate());
+        dateInput.setValue(date);
+
         fixerInput.setText(clickedTicket.getFixer());
         timeToResolveInput.setValue(clickedTicket.getTimeToResolve());
         priorityInput.setValue(clickedTicket.getPriorityLevel());
@@ -223,6 +229,8 @@ public class maintenanceTicketController implements Initializable{
                 raisedByInput.clear();
                 descriptionInput.clear();
                 assetInput.clear();
+                dateInput.setValue(null);
+                ticketInput.clear();
             } else {
                 showError(error);
             }
@@ -255,18 +263,27 @@ public class maintenanceTicketController implements Initializable{
         AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(currentTicketId);
         tickets.refresh();
 
-
+        raisedByInput.clear();
+        descriptionInput.clear();
+        assetInput.clear();
+        dateInput.setValue(null);
+        ticketInput.clear();
 
     }
 
 
-    @FXML
+   @FXML
     void disaproveClick(ActionEvent event) {
         //TODO create a pop that prompts for a disaproval note
         try {
             String status = statusTable.getText();
             if (status == "Resolved") {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Disaprove.fxml"));
+
+                DisaproveController controller = new DisaproveController();
+                controller.setYourVariable(Date.valueOf(dateInput.getValue()), Integer.parseInt(ticketInput.getText()));
+                fxmlLoader.setControllerFactory(c -> controller);
+
                 Parent root1 = (Parent) fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));  
@@ -309,6 +326,12 @@ public class maintenanceTicketController implements Initializable{
 
                         tickets.setItems(currentTableData);
                         tickets.refresh();
+
+                        raisedByInput.clear();
+                        descriptionInput.clear();
+                        assetInput.clear();
+                        dateInput.setValue(null);
+                        ticketInput.clear();
                     } else {
                         showError(error);
                     }
