@@ -349,4 +349,10 @@ public class AssetPlusFeatureSet4Controller {
 
     
   }
+
+
+  public static boolean getRequiresApproval(int id){
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(id);
+    return ticket.getRequiresApproval();
+  }
 }

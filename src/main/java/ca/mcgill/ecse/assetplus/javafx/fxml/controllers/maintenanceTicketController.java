@@ -384,9 +384,17 @@ public class maintenanceTicketController implements Initializable{
 
                 if (current_status.equals("InProgress")) {
                     try {
+
+                        boolean requiresApproval = AssetPlusFeatureSet4Controller.getRequiresApproval(currentTicketId);
                         error = AssetPlusFeatureSet4Controller.completeTicket(currentTicketId);
+                    
                         if (error.isEmpty()){
-                            ticket.setStatus("Resolved");
+                            if (requiresApproval){
+                                ticket.setStatus("Resolved");
+                            } else {
+                                ticket.setStatus("Closed");
+                            }
+                            
                         } else {
                             showError(error);
                         }
@@ -410,14 +418,14 @@ public class maintenanceTicketController implements Initializable{
         int currentTicketId = Integer.parseInt(ticketInput.getText());
 
         for (MaintenanceTicketString ticket : currentTableData) {
+            System.out.println(ticket.getId());
             if (Integer.parseInt(ticket.getId()) == currentTicketId) {
                 String current_status = AssetPlusFeatureSet4Controller.getTicketStatus(currentTicketId);
                 String error;
 
-
                 if (current_status.equals("Resolved")) {
                     try {
-                        error = AssetPlusFeatureSet4Controller.completeTicket(currentTicketId);
+                        error = AssetPlusFeatureSet4Controller.approveTicket(currentTicketId);
                         if (error.isEmpty()){
                             ticket.setStatus("Closed");
                         } else {
@@ -429,12 +437,11 @@ public class maintenanceTicketController implements Initializable{
                     }
 
                 }
-                
-
-                }
                 tickets.setItems(currentTableData);
                 tickets.refresh();
                 break;
+                }
+               
             }
 
 
