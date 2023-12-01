@@ -134,8 +134,7 @@ public class AssetPlusFeatureSet7Controller {
 
   public static List<AMaintenanceNote> getSpecificNotes(int i) {
     try {
-      MaintenanceTicket ticket = assetPlus.getMaintenanceTicket(i-1);
-      System.out.println("ticket id inside controller 7: " + i);
+      MaintenanceTicket ticket = MaintenanceTicket.getWithId(i);
       System.out.println(ticket.getDescription());
 
       List<MaintenanceNote> notes = ticket.getTicketNotes();
@@ -147,7 +146,7 @@ public class AssetPlusFeatureSet7Controller {
       }
       return res;
     } catch (Exception e) {
-      System.out.println("hi");
+
     }
     return null;
   }

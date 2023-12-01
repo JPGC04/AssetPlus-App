@@ -95,8 +95,8 @@ public class AssetPlusFeatureSet5Controller {
 
   public static List<Image> getSpecificImages(int i) {
     try {
-      MaintenanceTicket ticket = assetPlus.getMaintenanceTicket(i-1);
-      System.out.println("ticket id inside controller 6: " + i);
+      MaintenanceTicket ticket = MaintenanceTicket.getWithId(i);
+
       System.out.println(ticket.getDescription());
 
       List<TicketImage> images = ticket.getTicketImages();
@@ -108,7 +108,7 @@ public class AssetPlusFeatureSet5Controller {
       }
       return res;
     } catch (Exception e) {
-      System.out.println("hi");
+
     }
     return null;
   }

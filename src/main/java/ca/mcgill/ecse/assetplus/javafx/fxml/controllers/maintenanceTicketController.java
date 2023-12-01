@@ -345,16 +345,18 @@ initialize();
 
     @FXML
     void imageClick(ActionEvent event) {
+        System.out.println("WHY NOT WORKING");
         try {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MaintenanceImage.fxml"));
-        MaintenanceImageController controller = new MaintenanceImageController();
-        controller.setYourVariable(Integer.parseInt(ticketInput.getText()));
-        fxmlLoader.setControllerFactory(c -> controller);
-        
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root1));  
-        stage.show();
+            System.out.println(ticketInput.getText());
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MaintenanceImage.fxml"));
+            MaintenanceImageController controller = new MaintenanceImageController();
+            controller.setYourVariable(Integer.parseInt(ticketInput.getText()));
+            fxmlLoader.setControllerFactory(c -> controller);
+            
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));  
+            stage.show();
         } catch (Exception e) {
             System.out.println("Cant open new window");
         }

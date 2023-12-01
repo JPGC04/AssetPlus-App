@@ -71,16 +71,18 @@ public class MaintenanceNoteController implements Initializable{
 
     @FXML
     void createClick(ActionEvent event) {
+      System.out.println("entering");
       try {
         String author = noteAuthor.getText();
         String description = noteDesc.getText();
-        // Date date = Date.valueOf(dateInput.getValue());
+        
         Date date = Date.valueOf(dateInput.getValue());
         String ticketString = ticketInput.getText();
-        System.out.println(ticketID);
+        System.out.println("This is ticketID: " + ticketID);
         String error = AssetPlusFeatureSet7Controller.addMaintenanceNote(date, description, ticketID, author);
-        
+        System.out.println("cleared");
         if (error.isEmpty()) {
+          System.out.println(current_id);
           data.add(new AMaintenanceNote(description, String.valueOf(date), author, current_id));
           current_id++;
           noteAuthor.clear();
@@ -161,13 +163,14 @@ public class MaintenanceNoteController implements Initializable{
 
       data = FXCollections.observableArrayList();
       List<AMaintenanceNote> myList = AssetPlusFeatureSet7Controller.getSpecificNotes(ticketID);
-      System.out.println("TICket id is: " + ticketID);
-      for (AMaintenanceNote note : myList){
-        data.add(note);
-        current_id = note.getNoteIndex() + 1;
-        System.out.println("done");
+      if (myList != null && !myList.isEmpty()) {
+        for (AMaintenanceNote note : myList){
+          data.add(note);
+          current_id = note.getNoteIndex() + 1;
+        }
+      } else {
+        current_id = 0;
       }
-      
       notes.setItems(data);
       notes.refresh();
       System.out.println(ticketID);
