@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import java.time.format.DateTimeFormatter;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -23,7 +24,9 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import com.thoughtworks.xstream.mapper.LocalConversionMapper;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
+import java.time.LocalDate;
 import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showError;
 
 
@@ -197,6 +200,9 @@ public class maintenanceTicketController implements Initializable{
         raisedByInput.setText(String.valueOf(clickedTicket.getTicketRaiser()));
         descriptionInput.setText(String.valueOf(clickedTicket.getDescription()));
         assetInput.setText(String.valueOf(clickedTicket.getAsset()));
+
+        LocalDate date = LocalDate.parse(clickedTicket.getDate());
+        dateInput.setValue(date);
 
         fixerInput.setText(clickedTicket.getFixer());
         timeToResolveInput.setValue(clickedTicket.getTimeToResolve());
