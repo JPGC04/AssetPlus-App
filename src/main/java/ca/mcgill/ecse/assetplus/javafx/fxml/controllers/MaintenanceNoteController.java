@@ -19,161 +19,179 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import java.sql.Date;
+import java.time.LocalDate;
 
-public class MaintenanceNoteController implements Initializable{
+public class MaintenanceNoteController implements Initializable {
 
-    @FXML
-    private Button addButton;
+  @FXML
+  private Button addButton;
 
-    @FXML
-    private DatePicker dateInput;
+  @FXML
+  private DatePicker dateInput;
 
-    @FXML
-    private Button deleteButton;
+  @FXML
+  private Button deleteButton;
 
-    @FXML
-    private Button editButton;
+  @FXML
+  private Button editButton;
 
-    @FXML
-    private TableView<AMaintenanceNote> notes;
+  @FXML
+  private TableView<AMaintenanceNote> notes;
 
-    @FXML
-    private TextField noteAuthor;
+  @FXML
+  private TextField noteAuthor;
 
-    @FXML
-    private TextField noteDesc;
+  @FXML
+  private TextField noteDesc;
 
-    @FXML
-    private TextField ticketInput;
+  @FXML
+  private TextField ticketInput;
 
-    @FXML
-    private TableColumn<AMaintenanceNote, Integer> ticketIDCol;
+  @FXML
+  private TableColumn<AMaintenanceNote, Integer> ticketIDCol;
 
-    @FXML
-    private TableColumn<AMaintenanceNote, String> dateCol;
+  @FXML
+  private TableColumn<AMaintenanceNote, String> dateCol;
 
-    @FXML
-    private TableColumn<AMaintenanceNote, String> descCol;
+  @FXML
+  private TableColumn<AMaintenanceNote, String> descCol;
 
-    @FXML
-    private TableColumn<AMaintenanceNote, String> authorCol;
+  @FXML
+  private TableColumn<AMaintenanceNote, String> authorCol;
 
-    private ObservableList<AMaintenanceNote> data;
+  private ObservableList<AMaintenanceNote> data;
 
-    private Integer ticketID;
+  private Integer ticketID;
 
-    private Integer current_id;
+  private Integer current_id;
 
-    public void setYourVariable(Integer value) {
-        this.ticketID = value;
+  public void setYourVariable(Integer value) {
+    this.ticketID = value;
+  }
+
+
+  @FXML
+  void createClick(ActionEvent event) {
+    System.out.println("entering");
+    try {
+      String author = noteAuthor.getText();
+      String description = noteDesc.getText();
+
+      Date date = Date.valueOf(dateInput.getValue());
+      String ticketString = ticketInput.getText();
+      System.out.println("This is ticketID: " + ticketID);
+      String error =
+          AssetPlusFeatureSet7Controller.addMaintenanceNote(date, description, ticketID, author);
+      System.out.println("cleared");
+      if (error.isEmpty()) {
+        System.out.println(current_id);
+        data.add(new AMaintenanceNote(description, String.valueOf(date), author, current_id));
+        current_id++;
+        noteAuthor.clear();
+        noteDesc.clear();
+        dateInput.setValue(null);
+        ticketInput.setText("");
+      } else {
+        showError(error);
+      }
+
+    } catch (Exception e) {
+      showError("Invalid parameters!");
+    }
+    notes.refresh();
+  }
+
+  @FXML
+  void deleteClick(ActionEvent event) {
+    int selectedID = notes.getSelectionModel().getSelectedIndex();
+    notes.getItems().remove(selectedID);
+
+    for (AMaintenanceNote ticket : data) {
+      if (ticket.getNoteIndex() == selectedID) {
+        data.remove(ticket);
+      }
     }
 
+    AssetPlusFeatureSet7Controller.deleteMaintenanceNote(ticketID, selectedID);
+    noteAuthor.clear();
+    noteDesc.clear();
+    dateInput.setValue(null);
+    ticketInput.setText("");
+    notes.refresh();
+  }
 
-    @FXML
-    void createClick(ActionEvent event) {
-      System.out.println("entering");
-      try {
-        String author = noteAuthor.getText();
-        String description = noteDesc.getText();
-        
-        Date date = Date.valueOf(dateInput.getValue());
-        String ticketString = ticketInput.getText();
-        System.out.println("This is ticketID: " + ticketID);
-        String error = AssetPlusFeatureSet7Controller.addMaintenanceNote(date, description, ticketID, author);
-        System.out.println("cleared");
-        if (error.isEmpty()) {
-          System.out.println(current_id);
-          data.add(new AMaintenanceNote(description, String.valueOf(date), author, current_id));
-          current_id++;
+  @FXML
+  void editClick(ActionEvent event) {
+    try {
+      ObservableList<AMaintenanceNote> currentTableData = notes.getItems();
+      int currentTicketId = Integer.parseInt(ticketInput.getText());
+
+      for (AMaintenanceNote note : currentTableData) {
+        if (note.getNoteIndex() == currentTicketId) {
+
+          Date date = Date.valueOf(dateInput.getValue());
+          String newDesc = noteDesc.getText();
+          String newEmail = noteAuthor.getText();
+          int noteIndex = Integer.parseInt(ticketInput.getText());
+
+          String error = AssetPlusFeatureSet7Controller.updateMaintenanceNote(ticketID, noteIndex,
+              date, newDesc, newEmail);
+          if (error.isEmpty()) {
+            note.setDate(String.valueOf(dateInput.getValue()));
+            note.setNoteTaker(newEmail);
+            note.setDescription(newDesc);
+            notes.setItems(currentTableData);
+            notes.refresh();
+          } else {
+            showError(error);
+          }
           noteAuthor.clear();
           noteDesc.clear();
-        } else {
-          showError(error);
+          dateInput.setValue(null);
+          ticketInput.setText("");
+          break;
         }
-
-      } catch (Exception e) {
-        showError("Invalid parameters!");
       }
-      notes.refresh();
-    }
-
-    @FXML
-    void deleteClick(ActionEvent event) {
-      int selectedID = notes.getSelectionModel().getSelectedIndex();
-      notes.getItems().remove(selectedID);
-
-      for (AMaintenanceNote ticket : data){
-          if (ticket.getNoteIndex() == selectedID) {
-              data.remove(ticket);
-          }
-      }
-
-      AssetPlusFeatureSet7Controller.deleteMaintenanceNote(ticketID, selectedID);
-      notes.refresh();
-    }
-
-    @FXML
-    void editClick(ActionEvent event) {
-      try {
-        ObservableList<AMaintenanceNote> currentTableData = notes.getItems();
-        int currentTicketId = Integer.parseInt(ticketInput.getText());
-
-        for (AMaintenanceNote note : currentTableData) {
-            if (note.getNoteIndex() == currentTicketId) {
-                
-                Date date = Date.valueOf(dateInput.getValue());
-                String newDesc = noteDesc.getText();
-                String newEmail = noteAuthor.getText();
-                int noteIndex = Integer.parseInt(ticketInput.getText());
-
-                String error = AssetPlusFeatureSet7Controller.updateMaintenanceNote(ticketID, noteIndex, date, newDesc, newEmail);
-                if (error.isEmpty()) {
-                    note.setDate(String.valueOf(dateInput.getValue()));
-                    note.setNoteTaker(newEmail);
-                    note.setDescription(newDesc);
-                    notes.setItems(currentTableData);
-                    notes.refresh();
-                } else {
-                    showError(error);
-                }
-                break;
-            }
-        }
     } catch (Exception e) {
-        showError("Invalid parameters!");
+      showError("Invalid parameters!");
     }
-    }
+  }
 
-    @FXML
-    void rowClicked(MouseEvent event) {
-      AMaintenanceNote clickedTicket = notes.getSelectionModel().getSelectedItem();
+  @FXML
+  void rowClicked(MouseEvent event) {
+    AMaintenanceNote clickedTicket = notes.getSelectionModel().getSelectedItem();
+    if (clickedTicket != null) {
       ticketInput.setText(String.valueOf(clickedTicket.getNoteIndex()));
-      // dateInput.setText(String.valueOf(clickedTicket.getDate()));
+      LocalDate date = LocalDate.parse(clickedTicket.getDate());
+      dateInput.setValue(date);
       noteAuthor.setText(String.valueOf(clickedTicket.getNoteTaker()));
       noteDesc.setText(String.valueOf(clickedTicket.getDescription()));
-      
     }
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-      // TODO Auto-generated method stub
-      ticketIDCol.setCellValueFactory(new PropertyValueFactory<AMaintenanceNote, Integer>("noteIndex"));
-      dateCol.setCellValueFactory(new PropertyValueFactory<AMaintenanceNote, String>("date"));
-      authorCol.setCellValueFactory(new PropertyValueFactory<AMaintenanceNote, String>("noteTaker"));
-      descCol.setCellValueFactory(new PropertyValueFactory<AMaintenanceNote, String>("description"));
 
-      data = FXCollections.observableArrayList();
-      List<AMaintenanceNote> myList = AssetPlusFeatureSet7Controller.getSpecificNotes(ticketID);
-      if (myList != null && !myList.isEmpty()) {
-        for (AMaintenanceNote note : myList){
-          data.add(note);
-          current_id = note.getNoteIndex() + 1;
-        }
-      } else {
-        current_id = 0;
+  }
+
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    // TODO Auto-generated method stub
+    ticketIDCol
+        .setCellValueFactory(new PropertyValueFactory<AMaintenanceNote, Integer>("noteIndex"));
+    dateCol.setCellValueFactory(new PropertyValueFactory<AMaintenanceNote, String>("date"));
+    authorCol.setCellValueFactory(new PropertyValueFactory<AMaintenanceNote, String>("noteTaker"));
+    descCol.setCellValueFactory(new PropertyValueFactory<AMaintenanceNote, String>("description"));
+
+    data = FXCollections.observableArrayList();
+    List<AMaintenanceNote> myList = AssetPlusFeatureSet7Controller.getSpecificNotes(ticketID);
+    if (myList != null && !myList.isEmpty()) {
+      for (AMaintenanceNote note : myList) {
+        data.add(note);
+        current_id = note.getNoteIndex() + 1;
       }
-      notes.setItems(data);
-      notes.refresh();
-      System.out.println(ticketID);
+    } else {
+      current_id = 0;
     }
+    notes.setItems(data);
+    notes.refresh();
+    System.out.println(ticketID);
+  }
 
 }
