@@ -399,19 +399,21 @@ initialize();
     @FXML
     void rowClicked(MouseEvent event) {
         MaintenanceTicketString clickedTicket = tickets.getSelectionModel().getSelectedItem();
-        ticketInput.setText(String.valueOf(clickedTicket.getId()));
-        // dateInput.setValue(clickedTicket.getDate());
-        raisedByInput.setText(String.valueOf(clickedTicket.getTicketRaiser()));
-        descriptionInput.setText(String.valueOf(clickedTicket.getDescription()));
-        assetInput.setText(String.valueOf(clickedTicket.getAsset()));
+        if (clickedTicket != null) {
+            ticketInput.setText(String.valueOf(clickedTicket.getId()));
+            // dateInput.setValue(clickedTicket.getDate());
+            raisedByInput.setText(String.valueOf(clickedTicket.getTicketRaiser()));
+            descriptionInput.setText(String.valueOf(clickedTicket.getDescription()));
+            assetInput.setText(String.valueOf(clickedTicket.getAsset()));
 
-        LocalDate date = LocalDate.parse(clickedTicket.getDate());
-        dateInput.setValue(date);
+            LocalDate date = LocalDate.parse(clickedTicket.getDate());
+            dateInput.setValue(date);
 
-        fixerInput.setText(clickedTicket.getFixer());
-        timeToResolveInput.setValue(clickedTicket.getTimeToResolve());
-        priorityInput.setValue(clickedTicket.getPriorityLevel());
-        managerApprovalButton.setSelected(clickedTicket.getRequiresApproval());
+            fixerInput.setText(clickedTicket.getFixer());
+            timeToResolveInput.setValue(clickedTicket.getTimeToResolve());
+            priorityInput.setValue(clickedTicket.getPriorityLevel());
+            managerApprovalButton.setSelected(clickedTicket.getRequiresApproval());
+        }
         
     }
 
