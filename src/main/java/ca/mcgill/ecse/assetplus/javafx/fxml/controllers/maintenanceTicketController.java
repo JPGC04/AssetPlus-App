@@ -31,7 +31,7 @@ import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showErr
 import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils;
 
 
-public class maintenanceTicketController {
+public class MaintenanceTicketController {
     @FXML
     private TableColumn<MaintenanceTicketString, String> floorTable;
     @FXML
@@ -286,7 +286,7 @@ ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
         try {
             String status = statusTable.getText();
             if (true) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Disaprove.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../pages/Disaprove.fxml"));
                 DisaproveController controller = new DisaproveController();
                 controller.setYourVariable(Date.valueOf(dateInput.getValue()), Integer.parseInt(ticketInput.getText()));
                 fxmlLoader.setControllerFactory(c -> controller);
@@ -363,7 +363,7 @@ initialize();
         System.out.println("WHY NOT WORKING");
         try {
             System.out.println(ticketInput.getText());
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MaintenanceImage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../pages/MaintenanceImage.fxml"));
             MaintenanceImageController controller = new MaintenanceImageController();
             controller.setYourVariable(Integer.parseInt(ticketInput.getText()));
             fxmlLoader.setControllerFactory(c -> controller);
@@ -381,7 +381,7 @@ initialize();
     @FXML
     void notesClick(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MaintenanceNote.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../pages/MaintenanceNote.fxml"));
             MaintenanceNoteController controller = new MaintenanceNoteController();
             controller.setYourVariable(Integer.parseInt(ticketInput.getText()));
             fxmlLoader.setControllerFactory(c -> controller);

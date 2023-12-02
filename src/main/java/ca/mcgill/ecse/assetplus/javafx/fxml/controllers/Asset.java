@@ -1,7 +1,5 @@
 package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
 
-import javafx.scene.control.Button;
-
 public class Asset {
 
   private String ID;

@@ -2,11 +2,9 @@
 package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
 import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showError;
 import java.net.URL;
-import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet5Controller;
-import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet7Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

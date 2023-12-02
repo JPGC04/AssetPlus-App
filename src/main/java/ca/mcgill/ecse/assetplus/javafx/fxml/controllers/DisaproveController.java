@@ -5,9 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.maintenanceTicketController;
 import java.sql.Date;
-import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils;
 public class DisaproveController {
 
     @FXML
