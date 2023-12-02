@@ -5,12 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import java.time.format.DateTimeFormatter;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -20,20 +18,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import java.net.URL;
 import java.sql.Date;
 import java.util.List;
-import java.util.ResourceBundle;
-import com.thoughtworks.xstream.mapper.LocalConversionMapper;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
+import ca.mcgill.ecse.assetplus.controller.MaintenanceTicketString;
 import java.time.LocalDate;
 import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showError;
-import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils;
 
 
 public class MaintenanceTicketController {
     @FXML
     private TableColumn<MaintenanceTicketString, String> floorTable;
+
     @FXML
     private TableColumn<MaintenanceTicketString, String> lifespanTable;
 

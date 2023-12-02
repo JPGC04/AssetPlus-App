@@ -4,13 +4,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
-import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.AMaintenanceNote;
-import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.Asset;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
-import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 

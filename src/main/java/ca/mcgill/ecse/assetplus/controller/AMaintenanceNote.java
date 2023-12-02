@@ -1,4 +1,4 @@
-package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
+package ca.mcgill.ecse.assetplus.controller;
 
 public class AMaintenanceNote {
     private String description;

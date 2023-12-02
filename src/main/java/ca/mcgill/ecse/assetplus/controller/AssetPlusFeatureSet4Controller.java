@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
-import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.MaintenanceTicketString;
 import ca.mcgill.ecse.assetplus.model.*;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 

@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
 
+import ca.mcgill.ecse.assetplus.controller.Asset;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet2Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
 import ca.mcgill.ecse.assetplus.javafx.fxml.AssetPlusFxmlView;

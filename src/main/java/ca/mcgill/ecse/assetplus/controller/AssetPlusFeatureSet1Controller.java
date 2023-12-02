@@ -2,7 +2,6 @@ package ca.mcgill.ecse.assetplus.controller;
 
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
-import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.UserString;
 import ca.mcgill.ecse.assetplus.model.*;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import java.util.ArrayList;

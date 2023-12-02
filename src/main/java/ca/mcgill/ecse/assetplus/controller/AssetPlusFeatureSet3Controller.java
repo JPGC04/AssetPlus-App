@@ -1,7 +1,6 @@
 package ca.mcgill.ecse.assetplus.controller;
 
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
-import ca.mcgill.ecse.assetplus.javafx.fxml.controllers.Asset;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
