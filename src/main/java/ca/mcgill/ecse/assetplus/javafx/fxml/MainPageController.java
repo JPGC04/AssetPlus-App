@@ -1,11 +1,11 @@
 package ca.mcgill.ecse.assetplus.javafx.fxml;
 
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import java.io.IOException;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 
@@ -24,17 +24,20 @@ public class MainPageController {
     private Button User;
 
     @FXML
-    private AnchorPane ap;
+    private BorderPane bp;
 
     @FXML
-    private BorderPane bp;
+    private BorderPane bpout;
+
+    @FXML
+    private VBox sidebar;
 
     @FXML
     public void initialize() {
       loadPage("pages/AUDEmployeeGuest.fxml");
       
       String cssFilePath = getClass().getResource("MainPageStyle.css").toExternalForm();
-      bp.getStylesheets().add(cssFilePath);
+      sidebar.getStylesheets().add(cssFilePath);
     }
 
     @FXML
