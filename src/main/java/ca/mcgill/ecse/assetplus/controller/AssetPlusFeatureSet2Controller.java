@@ -3,16 +3,19 @@ package ca.mcgill.ecse.assetplus.controller;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
- * AssetPlusFeatureSet2Controller is the main entity that is used to add, update, and delete
- * asset types
+ * AssetPlusFeatureSet2Controller is the main entity that is used to add, update, and delete asset
+ * types
  * 
  * @author John-Paul Chouery -- JPGC04
- * @version ECSE 223 - Group Project Iteration 3
+ * @version ECSE 223 - Group Project Iteration 4
  * @since ECSE 223 - Group Project Iteration 2a
  */
 public class AssetPlusFeatureSet2Controller {
@@ -104,14 +107,36 @@ public class AssetPlusFeatureSet2Controller {
       if (name != null && name.length() > 0) {
         AssetType assetType = AssetType.getWithName(name);
         if (assetType != null) {
+          int number = assetPlus.getMaintenanceTickets().size();
+          if (number > 0) {
+            List<Integer> IDtoDelete = new ArrayList<>();
+            for (MaintenanceTicket m : assetPlus.getMaintenanceTickets()) {
+              SpecificAsset thisAsset = m.getAsset();
+              if (thisAsset != null) {
+                AssetType thisType = thisAsset.getAssetType();
+                if (thisType != null) {
+                  if (thisType.getName().equals(name)) {
+                    IDtoDelete.add(m.getId());
+                  }
+                }
+              }
+            }
+
+            Collections.reverse(IDtoDelete);
+
+            for (int id : IDtoDelete) {
+              AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(id);
+            }
+          }
+
           assetType.delete();
           AssetPlusPersistence.save();
         }
       }
     } catch (Exception e) {
+      System.out.println(e);
       return;
     }
-
   }
 
   /**
@@ -121,7 +146,7 @@ public class AssetPlusFeatureSet2Controller {
   public static List<String> getAssetTypes() {
     List<AssetType> assetTypes = assetPlus.getAssetTypes();
     List<String> asStrings = new ArrayList<>();
-    for (AssetType a: assetTypes) {
+    for (AssetType a : assetTypes) {
       asStrings.add(a.getName());
     }
     return asStrings;
