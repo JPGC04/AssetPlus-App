@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -25,19 +26,13 @@ public class MaintenanceImageController implements Initializable {
     private Button addButton;
 
     @FXML
-    private DatePicker dateInput;
-
-    @FXML
     private Button deleteButton;
 
     @FXML
-    private TextField imageURLinput;
+    private TextArea imageURLinput;
 
     @FXML
     private TableView<Image> images;
-
-    @FXML
-    private TextField ticketInput;
 
     @FXML
     private TableColumn<Image, String> urlTable;
@@ -64,6 +59,7 @@ public class MaintenanceImageController implements Initializable {
 
         images.setItems(list);
         images.refresh();
+        imageURLinput.setWrapText(true);
 
     }
 
