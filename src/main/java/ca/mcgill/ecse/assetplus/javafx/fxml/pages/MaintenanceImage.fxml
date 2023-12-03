@@ -24,7 +24,8 @@
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="244.00001907348633" minHeight="10.0" prefHeight="60.0" />
-            <RowConstraints maxHeight="306.6666615804036" minHeight="0.0" prefHeight="146.00002543131507" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="306.6666615804036" minHeight="0.0" prefHeight="53.99998728434244" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="306.6666615804036" minHeight="10.0" prefHeight="167.33334604899088" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="256.3333231608073" minHeight="0.0" prefHeight="193.33330790201825" vgrow="SOMETIMES" />
             <RowConstraints />
          </rowConstraints>
@@ -51,10 +52,10 @@
                   <Font size="20.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="120.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </Label>
-            <HBox prefHeight="70.0" prefWidth="256.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <HBox prefHeight="70.0" prefWidth="256.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <Button fx:id="addButton1" mnemonicParsing="false" onAction="#createClick" style="-fx-background-color: #06d6a0;" text="Add">
                      <HBox.margin>
@@ -71,9 +72,9 @@
                   <Insets />
                </GridPane.margin>
             </HBox>
-            <TextArea fx:id="imageURLinput" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextArea fx:id="imageURLinput" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
-                  <Insets left="10.0" right="10.0" top="35.0" />
+                  <Insets left="10.0" right="10.0" />
                </GridPane.margin>
             </TextArea>
          </children>
