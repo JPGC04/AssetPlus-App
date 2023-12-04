@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.MaintenanceTicketController">
+<GridPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.fxml.controllers.MaintenanceTicketController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="200.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="194.66668701171875" />
@@ -45,7 +45,7 @@
             </Label>
          </center>
       </BorderPane>
-      <TableView fx:id="tickets" onMouseClicked="#rowClicked" prefHeight="476.0" prefWidth="644.0" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="6">
+      <TableView fx:id="tickets" onMouseClicked="#rowClicked" prefHeight="476.0" prefWidth="644.0" GridPane.columnSpan="3" GridPane.rowIndex="2" GridPane.rowSpan="5">
          <columns>
             <TableColumn fx:id="ticketTable" prefWidth="40.66665518283844" text="Ticket" />
             <TableColumn fx:id="dateTable" prefWidth="41.333316802978516" text="Date" />
@@ -259,5 +259,25 @@
             </VBox>
          </children>
       </HBox>
+      <Label text="Ticket Date Filter" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="40.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </Label>
+      <Label text="Assigned Hotel Staff Filter" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="40.0" left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+      </Label>
+      <TextField fx:id="ticketDateFilter" onInputMethodTextChanged="#ticketFilterChanged" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="30.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="hotelStaffFilter" onInputMethodTextChanged="#staffFilterChanged" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="30.0" />
+         </GridPane.margin>
+      </TextField>
    </children>
 </GridPane>

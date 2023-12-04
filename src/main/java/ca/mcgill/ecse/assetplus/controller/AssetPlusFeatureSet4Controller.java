@@ -330,6 +330,7 @@ public class AssetPlusFeatureSet4Controller {
 
     for (MaintenanceTicket ticket : tickets) {
       try {
+        //String fixer = ticket.getTicketFixer().getEmail();
         String assetNumber = "";
         if (ticket.getAsset() == null) {
           assetNumber = "-1";
@@ -342,11 +343,17 @@ public class AssetPlusFeatureSet4Controller {
           String floor = "";
           String lifespan = "";
           String purchaseDate = "";
+
+          String thefixer = "";
+          HotelStaff theemail = ticket.getTicketFixer();
+          if (theemail != null) {
+            thefixer = theemail.getEmail();
+          }
           result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()),
               String.valueOf(ticket.getRaisedOnDate()),
               String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(),
               ticket.getStatusFullName(), assetNumber, room, floor, purchaseDate, lifespan,
-              assetType));
+              assetType, thefixer));
 
         } else {
           String room = String.valueOf(ticket.getAsset().getRoomNumber());
@@ -356,15 +363,21 @@ public class AssetPlusFeatureSet4Controller {
           String lifespan = String.valueOf(ticket.getAsset().getAssetType().getExpectedLifeSpan());
           SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
           String purchaseDate = sdf.format(ticket.getAsset().getPurchaseDate());
+
+          String thefixer = "";
+          HotelStaff theemail = ticket.getTicketFixer();
+          if (theemail != null) {
+            thefixer = theemail.getEmail();
+          }
           result.add(new MaintenanceTicketString(String.valueOf(ticket.getId()),
               String.valueOf(ticket.getRaisedOnDate()),
               String.valueOf(ticket.getTicketRaiser().getEmail()), ticket.getDescription(),
               ticket.getStatusFullName(), assetNumber, room, floor, purchaseDate, lifespan,
-              assetType));
+              assetType, thefixer));
 
         }
       } catch (Exception e) {
-        System.out.println("Didnt work");
+        System.out.println(e);
       }
     }
 
@@ -393,7 +406,7 @@ public class AssetPlusFeatureSet4Controller {
     private String description;
     private String status;
     private String asset;
-    private String fixer;
+    private String fixer = "";
     private String priorityLevel;
     private String timeToResolve;
     private boolean requiresApproval;
@@ -405,7 +418,7 @@ public class AssetPlusFeatureSet4Controller {
 
     public MaintenanceTicketString(String id, String date, String ticketRaiser, String description,
             String status, String asset, String room, String floor, String purchaseDate,
-            String lifespan, String assetType) {
+            String lifespan, String assetType, String fixer) {
         this.id = id;
         this.date = date;
         this.ticketRaiser = ticketRaiser;
@@ -417,6 +430,7 @@ public class AssetPlusFeatureSet4Controller {
         this.purchaseDate = purchaseDate;
         this.lifespan = lifespan;
         this.assetType = assetType;
+        this.fixer = fixer;
 
     }
 

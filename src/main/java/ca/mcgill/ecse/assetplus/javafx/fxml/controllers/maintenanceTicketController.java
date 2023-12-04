@@ -17,6 +17,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 import java.sql.Date;
 import java.util.List;
@@ -119,6 +120,12 @@ public class MaintenanceTicketController {
     @FXML 
     private RadioButton managerApprovalButton;
 
+    @FXML
+    private TextField hotelStaffFilter;
+
+    @FXML
+    private TextField ticketDateFilter;
+
  
 
     private int current_id;
@@ -164,18 +171,107 @@ public class MaintenanceTicketController {
 
         List<MaintenanceTicketString> myList = AssetPlusFeatureSet4Controller.getSpecificTickets();
 
-        for (MaintenanceTicketString ticket : myList){
-         list.add(ticket);
-         current_id = Integer.parseInt(ticket.getId()) + 1;
+        ticketDateFilter.textProperty().addListener((obs, oldText, newText) -> {
+            filtered();
+        });
         
-        }
+        hotelStaffFilter.textProperty().addListener((obs, oldText, newText) -> {
+            filtered();
+        });
 
         
+        
+        for (MaintenanceTicketString ticket : myList) {
+            if (ticketDateFilter.getText().equals("") && hotelStaffFilter.getText().equals("")) {
+                System.out.println("A");
+                list.add(ticket);
+            } else if (!ticketDateFilter.getText().equals("") && hotelStaffFilter.getText().equals("")) {
+                String theDate = ticket.getDate();
+                if (theDate.equals(ticketDateFilter.getText())) {
+                    list.add(ticket);
+                                    System.out.println("B");
+
+                }
+            } else if (ticketDateFilter.getText().equals("") && !hotelStaffFilter.getText().equals("")) {
+                String theStaff = ticket.getFixer();
+                if (theStaff.equals(hotelStaffFilter.getText())) {
+                    list.add(ticket);
+                                    System.out.println("C");
+
+                }
+            } else {
+                String theDate = ticket.getDate();
+                String theStaff = ticket.getFixer();
+                if (theDate.equals(ticketDateFilter.getText()) && theStaff.equals(hotelStaffFilter.getText())) {
+                    list.add(ticket);
+                                    System.out.println("D");
+
+                }
+            }
+         current_id = Integer.parseInt(ticket.getId()) + 1;
+        }
 
         tickets.setItems(list);
         System.out.println("Initialze ticket called");
-
     }
+
+
+    public void filtered() {
+        list.clear();
+        // TODO Auto-generated method stub
+        ticketTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("id"));
+        dateTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("date"));
+        raisedByTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("ticketRaiser"));
+        descriptionTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("description"));
+        statusTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("status"));
+        assetTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("asset"));
+        fixerTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("fixer"));
+        floorTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("floor"));
+        roomTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("room"));
+        assetTypeTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("assetType"));
+        lifespanTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("lifespan"));
+        purchaseDateTable.setCellValueFactory(new PropertyValueFactory<MaintenanceTicketString, String>("purchaseDate"));
+        timeToResolveInput.getItems().clear();
+        timeToResolveInput.getItems().addAll(timeToResolve);
+        priorityInput.getItems().clear();
+        priorityInput.getItems().addAll(priorityLevels);
+
+        List<MaintenanceTicketString> myList = AssetPlusFeatureSet4Controller.getSpecificTickets();
+
+        
+        
+        for (MaintenanceTicketString ticket : myList) {
+            System.out.println(hotelStaffFilter.getText());
+            if (ticketDateFilter.getText().equals("") && hotelStaffFilter.getText().equals("")) {
+                list.add(ticket);
+            } else if (!ticketDateFilter.getText().equals("") && hotelStaffFilter.getText().equals("")) {
+                String theDate = ticket.getDate();
+                if (theDate != null && theDate.equals(ticketDateFilter.getText())) {
+                    list.add(ticket);
+
+                }
+            } else if (ticketDateFilter.getText().equals("") && !hotelStaffFilter.getText().equals("")) {
+                String theStaff = ticket.getFixer();
+                if (theStaff != null && theStaff.equals(hotelStaffFilter.getText())) {
+                    list.add(ticket);
+
+                }
+            } else {
+                String theDate = ticket.getDate();
+                String theStaff = ticket.getFixer();
+                if (theStaff != null && theDate != null && theDate.equals(ticketDateFilter.getText()) && theStaff.equals(hotelStaffFilter.getText())) {
+                    list.add(ticket);
+                }
+            }
+         current_id = Integer.parseInt(ticket.getId()) + 1;
+        }
+
+        tickets.setItems(list);
+        System.out.println("Initialze ticket called again");
+    }
+
+
+
 
     @FXML
     void approveClick(ActionEvent event) {
@@ -224,6 +320,9 @@ ObservableList<MaintenanceTicketString> currentTableData = tickets.getItems();
                 String timeToResolve = timeToResolveInput.getValue();
                 String priority = priorityInput.getValue(); 
                 boolean requiresApproval = managerApprovalButton.isSelected();
+
+                System.out.println(fixer);
+                ticket.setFixer(fixer);
 
 
                 String error = AssetPlusFeatureSet4Controller.assignMaintenanceTicket(currentTicketId, fixer, timeToResolve, priority, requiresApproval);
@@ -424,7 +523,7 @@ initialize();
             String error = AssetPlusFeatureSet4Controller.addMaintenanceTicket(current_id, date, description, email, assetNumber);
 
             if (error.isEmpty()) {
-                MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), String.valueOf(date),raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText(),"","","","","");
+                MaintenanceTicketString createdTicket = new MaintenanceTicketString(String.valueOf(current_id), String.valueOf(date),raisedByInput.getText(), descriptionInput.getText(), "Open", assetInput.getText(),"","","","","","");
     
                 //list.add(createdTicket); 
                 current_id++;
@@ -504,6 +603,16 @@ initialize();
             }
         }
 
+    }
+
+    @FXML
+    void staffFilterChanged(InputMethodEvent event) {
+        initialize();
+    }
+
+    @FXML
+    void ticketFilterChanged(InputMethodEvent event) {
+        initialize();
     }
 
 }
