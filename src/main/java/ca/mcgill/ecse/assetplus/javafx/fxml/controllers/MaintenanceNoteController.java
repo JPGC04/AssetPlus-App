@@ -4,8 +4,8 @@ import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showErr
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import ca.mcgill.ecse.assetplus.controller.AMaintenanceNote;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet7Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet7Controller.AMaintenanceNote;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

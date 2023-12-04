@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 import java.sql.Date;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
-import ca.mcgill.ecse.assetplus.controller.MaintenanceTicketString;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller.MaintenanceTicketString;
 import java.time.LocalDate;
 import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showError;
 
