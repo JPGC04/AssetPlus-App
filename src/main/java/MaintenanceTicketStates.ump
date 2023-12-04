@@ -1,7 +1,7 @@
 class MaintenanceTicket{
     boolean requiresApproval=false;
 
-    Status {
+    status {
 
         Open {
             //TO IMPLEMENT
