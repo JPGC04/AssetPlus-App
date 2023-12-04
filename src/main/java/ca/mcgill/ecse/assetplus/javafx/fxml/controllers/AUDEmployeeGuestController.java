@@ -17,75 +17,76 @@ import javafx.collections.ObservableList;
 import java.util.List;
 
 public class AUDEmployeeGuestController {
-    private ObservableList<UserString> list = FXCollections.observableArrayList();
+  private ObservableList<UserString> list = FXCollections.observableArrayList();
 
-    @FXML
-    private Button Add;
+  @FXML
+  private Button Add;
 
-    @FXML
-    private Button Delete;
+  @FXML
+  private Button Delete;
 
-    @FXML
-    private TableColumn<UserString, String> EmployeeGuest;
+  @FXML
+  private TableColumn<UserString, String> EmployeeGuest;
 
-    @FXML
-    private Button Update;
+  @FXML
+  private Button Update;
 
-    @FXML
-    private TextField emailTextField;
+  @FXML
+  private TextField emailTextField;
 
-    @FXML
-    private CheckBox guestCheckBox;
+  @FXML
+  private CheckBox guestCheckBox;
 
-    @FXML
-    private TableColumn<UserString, String> name;
+  @FXML
+  private TableColumn<UserString, String> name;
 
-    @FXML
-    private TextField nameTextField;
+  @FXML
+  private TextField nameTextField;
 
-    @FXML
-    private TextField newPassword;
+  @FXML
+  private TextField newPassword;
 
-    @FXML
-    private TextField numberTextField;
+  @FXML
+  private TextField numberTextField;
 
-    @FXML
-    private TableColumn<UserString, String> password;
+  @FXML
+  private TableColumn<UserString, String> password;
 
-    @FXML
-    private TableColumn<UserString, String> email;
+  @FXML
+  private TableColumn<UserString, String> email;
 
-    @FXML
-    private TextField passwordTextField;
+  @FXML
+  private TextField passwordTextField;
 
-    @FXML
-    private TableColumn<UserString, String> phoneNumber;
+  @FXML
+  private TableColumn<UserString, String> phoneNumber;
 
-    
 
-    @FXML
-    private TableView<UserString> table;
 
-    @FXML
-    private Button updatePassword;
+  @FXML
+  private TableView<UserString> table;
 
-    @FXML
-    public void initialize() {
-      name.setCellValueFactory(new PropertyValueFactory<UserString, String>("name"));
-        email.setCellValueFactory(new PropertyValueFactory<UserString, String>("email"));
-        phoneNumber.setCellValueFactory(new PropertyValueFactory<UserString, String>("number"));
-        password.setCellValueFactory(new PropertyValueFactory<UserString, String>("password"));
-        EmployeeGuest.setCellValueFactory(new PropertyValueFactory<UserString, String>("EmployeeGuest"));
-        List<UserString> userStringList=AssetPlusFeatureSet1Controller.getUserString();
-        for(UserString userString: userStringList ){
-          list.add(userString);
-        }
-          table.setItems(list);
+  @FXML
+  private Button updatePassword;
+
+  @FXML
+  public void initialize() {
+    name.setCellValueFactory(new PropertyValueFactory<UserString, String>("name"));
+    email.setCellValueFactory(new PropertyValueFactory<UserString, String>("email"));
+    phoneNumber.setCellValueFactory(new PropertyValueFactory<UserString, String>("number"));
+    password.setCellValueFactory(new PropertyValueFactory<UserString, String>("password"));
+    EmployeeGuest
+        .setCellValueFactory(new PropertyValueFactory<UserString, String>("EmployeeGuest"));
+    List<UserString> userStringList = AssetPlusFeatureSet1Controller.getUserString();
+    for (UserString userString : userStringList) {
+      list.add(userString);
     }
+    table.setItems(list);
+  }
 
-    @FXML
-    void add(ActionEvent event) {
-      String name = nameTextField.getText();
+  @FXML
+  void add(ActionEvent event) {
+    String name = nameTextField.getText();
     String email = emailTextField.getText();
     // emailList.add(email);
     String password = passwordTextField.getText();
@@ -94,31 +95,31 @@ public class AUDEmployeeGuestController {
       ViewUtils.showError("Please input a name");
     } else {
       // reset the driver text field if success
-      if (ViewUtils.successful(AssetPlusFeatureSet1Controller.addEmployeeOrGuest(email, password, name, number, !guestCheckBox.isSelected()))) {
-        UserString newData=new UserString(name, email, password, number,"");
+      if (ViewUtils.successful(AssetPlusFeatureSet1Controller.addEmployeeOrGuest(email, password,
+          name, number, !guestCheckBox.isSelected()))) {
+        UserString newData = new UserString(name, email, password, number, "");
 
-      if(guestCheckBox.isSelected()){
-        newData.setEmployeeGuest("Guest");
-      }
-      else{
-        newData.setEmployeeGuest("Employee");
-      }
-      list.add(newData);
-      table.setItems(list);
-      nameTextField.setText("");
-      emailTextField.setText("");
-      passwordTextField.setText("");
-      numberTextField.setText("");
-      guestCheckBox.setSelected(false);
-      table.getItems().clear();
-    initialize();
+        if (guestCheckBox.isSelected()) {
+          newData.setEmployeeGuest("Guest");
+        } else {
+          newData.setEmployeeGuest("Employee");
+        }
+        list.add(newData);
+        table.setItems(list);
+        nameTextField.setText("");
+        emailTextField.setText("");
+        passwordTextField.setText("");
+        numberTextField.setText("");
+        guestCheckBox.setSelected(false);
+        table.getItems().clear();
+        initialize();
       }
     }
-    }
+  }
 
-    @FXML
-    void delete(ActionEvent event) {
-      String email = emailTextField.getText();
+  @FXML
+  void delete(ActionEvent event) {
+    String email = emailTextField.getText();
     if (email == null || email.trim().isEmpty()) {
       ViewUtils.showError("Please input a valid email to delete.");
     } else {
@@ -131,22 +132,25 @@ public class AUDEmployeeGuestController {
     }
     table.getItems().clear();
     initialize();
-    }
+  }
 
-    @FXML
-    void rowClicked(MouseEvent event) {
-      UserString clickedUser = table.getSelectionModel().getSelectedItem();
-      nameTextField.setText(String.valueOf(clickedUser.getName()));
-      numberTextField.setText(String.valueOf(clickedUser.getNumber()));
-      passwordTextField.setText(String.valueOf(clickedUser.getPassword()));
-      emailTextField.setText(String.valueOf(clickedUser.getEmail()));
-      if(clickedUser.getEmployeeGuest().equals("Guest")){guestCheckBox.setSelected(true);}
-      else{guestCheckBox.setSelected(false);}
+  @FXML
+  void rowClicked(MouseEvent event) {
+    UserString clickedUser = table.getSelectionModel().getSelectedItem();
+    nameTextField.setText(String.valueOf(clickedUser.getName()));
+    numberTextField.setText(String.valueOf(clickedUser.getNumber()));
+    passwordTextField.setText(String.valueOf(clickedUser.getPassword()));
+    emailTextField.setText(String.valueOf(clickedUser.getEmail()));
+    if (clickedUser.getEmployeeGuest().equals("Guest")) {
+      guestCheckBox.setSelected(true);
+    } else {
+      guestCheckBox.setSelected(false);
     }
+  }
 
-    @FXML
-    void update(ActionEvent event) {
-      String name = nameTextField.getText();
+  @FXML
+  void update(ActionEvent event) {
+    String name = nameTextField.getText();
     String email = emailTextField.getText();
     String password = passwordTextField.getText();
     String number = numberTextField.getText();
@@ -154,7 +158,8 @@ public class AUDEmployeeGuestController {
       ViewUtils.showError("Please input a valid driver name");
     } else {
       // reset the driver text field if success
-      if (ViewUtils.successful(AssetPlusFeatureSet1Controller.updateEmployeeOrGuest(email, password, name, number))) {
+      if (ViewUtils.successful(
+          AssetPlusFeatureSet1Controller.updateEmployeeOrGuest(email, password, name, number))) {
         nameTextField.setText("");
         emailTextField.setText("");
         passwordTextField.setText("");
@@ -164,11 +169,11 @@ public class AUDEmployeeGuestController {
     }
     table.getItems().clear();
     initialize();
-    }
+  }
 
-    @FXML
-    void updatePasswordClicked(ActionEvent event) {
-      String name = newPassword.getText();
+  @FXML
+  void updatePasswordClicked(ActionEvent event) {
+    String name = newPassword.getText();
     if (name == null || name.trim().isEmpty()) {
       ViewUtils.showError("Please input a password.");
     } else {
@@ -177,6 +182,6 @@ public class AUDEmployeeGuestController {
         newPassword.setText("");
       }
     }
-    }
+  }
 
 }

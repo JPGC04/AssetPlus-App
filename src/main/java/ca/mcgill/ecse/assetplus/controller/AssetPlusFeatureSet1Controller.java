@@ -18,7 +18,9 @@ import java.util.ArrayList;
 public class AssetPlusFeatureSet1Controller {
 
 	/**
-	 * <p>Update an manager with new password.</p>
+	 * <p>
+	 * Update an manager with new password.
+	 * </p>
 	 * 
 	 * @param password a string containing the password of the manager
 	 * @return a string that indicates the error, if no error returns an empty string
@@ -67,7 +69,9 @@ public class AssetPlusFeatureSet1Controller {
 	}
 
 	/**
-	 * <p>add employee or guest information.</p>
+	 * <p>
+	 * add employee or guest information.
+	 * </p>
 	 * 
 	 * @param email a string containing the email to be added in guest or employee
 	 * @param password a string containing the password to be added in guest or employee
@@ -143,7 +147,9 @@ public class AssetPlusFeatureSet1Controller {
 
 
 	/**
-	 * <p>update employee or guest information.</p>
+	 * <p>
+	 * update employee or guest information.
+	 * </p>
 	 * 
 	 * @param email a string containing the email of an guest or an employee
 	 * @param newPassword a string containing then new password to be added in guest or employee
@@ -192,7 +198,9 @@ public class AssetPlusFeatureSet1Controller {
 	}
 
 	/**
-	 * <p>check the email belong to which employee.</p>
+	 * <p>
+	 * check the email belong to which employee.
+	 * </p>
 	 * 
 	 * @param email a string containing the email of an employee
 	 * @return the employee who owns the email, otherwise return null
@@ -210,7 +218,9 @@ public class AssetPlusFeatureSet1Controller {
 	}
 
 	/**
-	 * <p>check the email belong to which guest.</p>
+	 * <p>
+	 * check the email belong to which guest.
+	 * </p>
 	 * 
 	 * @param email a string containing the email of an guest
 	 * @return the guest who owns the email, otherwise return null
@@ -226,84 +236,86 @@ public class AssetPlusFeatureSet1Controller {
 		}
 		return null;
 	}
-	public static List<UserString> getUserString(){
+
+	public static List<UserString> getUserString() {
 		List<UserString> listReturned = new ArrayList<>();
-		List<Employee> listEmp=AssetPlusApplication.getAssetPlus().getEmployees();
-        for(Employee emp: listEmp ){
-            String email =emp.getEmail();
-            String password =emp.getPassword();
-            String number =emp.getPhoneNumber();
-            String name =emp.getName();
-            listReturned.add(new UserString(name, email, password, number, "Employee"));
-          }
-          List<Guest> listGuests=AssetPlusApplication.getAssetPlus().getGuests();
-          for(Guest emp: listGuests ){
-            String email =emp.getEmail();
-            String password =emp.getPassword();
-            String number =emp.getPhoneNumber();
-            String name =emp.getName();
-            listReturned.add(new UserString(name, email, password, number, "Guest"));
-          }
-			return listReturned;
+		List<Employee> listEmp = AssetPlusApplication.getAssetPlus().getEmployees();
+		for (Employee emp : listEmp) {
+			String email = emp.getEmail();
+			String password = emp.getPassword();
+			String number = emp.getPhoneNumber();
+			String name = emp.getName();
+			listReturned.add(new UserString(name, email, password, number, "Employee"));
+		}
+		List<Guest> listGuests = AssetPlusApplication.getAssetPlus().getGuests();
+		for (Guest emp : listGuests) {
+			String email = emp.getEmail();
+			String password = emp.getPassword();
+			String number = emp.getPhoneNumber();
+			String name = emp.getName();
+			listReturned.add(new UserString(name, email, password, number, "Guest"));
+		}
+		return listReturned;
 	}
 
 
 	public static class UserString {
-    private String name;
-    private String email;
-    private String password;
-    private String number;
-    private String EmployeeGuest;
+		private String name;
+		private String email;
+		private String password;
+		private String number;
+		private String EmployeeGuest;
 
-    public UserString(String name, String email, String password, String number,String EmployeeGuest) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.number = number;
-        this.EmployeeGuest=EmployeeGuest;
-    }
+		public UserString(String name, String email, String password, String number,
+				String EmployeeGuest) {
+			this.name = name;
+			this.email = email;
+			this.password = password;
+			this.number = number;
+			this.EmployeeGuest = EmployeeGuest;
+		}
 
-    // Setters
-    public void setEmployeeGuest(String EmployeeGuest) {
-        this.EmployeeGuest=EmployeeGuest;    
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
+		// Setters
+		public void setEmployeeGuest(String EmployeeGuest) {
+			this.EmployeeGuest = EmployeeGuest;
+		}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+		public void setName(String name) {
+			this.name = name;
+		}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+		public void setEmail(String email) {
+			this.email = email;
+		}
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
+		public void setPassword(String password) {
+			this.password = password;
+		}
 
-    // Getters
-    public String getEmployeeGuest() {
-        return EmployeeGuest;
-    }
+		public void setNumber(String number) {
+			this.number = number;
+		}
 
-    public String getName() {
-        return name;
-    }
+		// Getters
+		public String getEmployeeGuest() {
+			return EmployeeGuest;
+		}
 
-    public String getEmail() {
-        return email;
-    }
+		public String getName() {
+			return name;
+		}
 
-    public String getPassword() {
-        return password;
-    }
+		public String getEmail() {
+			return email;
+		}
 
-    public String getNumber() {
-        return number;
-    }
+		public String getPassword() {
+			return password;
+		}
+
+		public String getNumber() {
+			return number;
+		}
 	}
 
 }

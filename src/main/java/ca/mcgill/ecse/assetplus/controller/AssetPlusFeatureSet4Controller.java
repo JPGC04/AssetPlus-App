@@ -330,7 +330,7 @@ public class AssetPlusFeatureSet4Controller {
 
     for (MaintenanceTicket ticket : tickets) {
       try {
-        //String fixer = ticket.getTicketFixer().getEmail();
+        // String fixer = ticket.getTicketFixer().getEmail();
         String assetNumber = "";
         if (ticket.getAsset() == null) {
           assetNumber = "None";
@@ -417,146 +417,146 @@ public class AssetPlusFeatureSet4Controller {
     private String assetType;
 
     public MaintenanceTicketString(String id, String date, String ticketRaiser, String description,
-            String status, String asset, String room, String floor, String purchaseDate,
-            String lifespan, String assetType, String fixer) {
-        this.id = id;
-        this.date = date;
-        this.ticketRaiser = ticketRaiser;
-        this.description = description;
-        this.status = status;
-        this.asset = asset;
-        this.room = room;
-        this.floor = floor;
-        this.purchaseDate = purchaseDate;
-        this.lifespan = lifespan;
-        this.assetType = assetType;
-        this.fixer = fixer;
+        String status, String asset, String room, String floor, String purchaseDate,
+        String lifespan, String assetType, String fixer) {
+      this.id = id;
+      this.date = date;
+      this.ticketRaiser = ticketRaiser;
+      this.description = description;
+      this.status = status;
+      this.asset = asset;
+      this.room = room;
+      this.floor = floor;
+      this.purchaseDate = purchaseDate;
+      this.lifespan = lifespan;
+      this.assetType = assetType;
+      this.fixer = fixer;
 
     }
 
     // Setters
     public String getAssetType() {
-        return assetType;
+      return assetType;
     };
 
     public void setAssetType(String assetType) {
-        this.assetType = assetType;
+      this.assetType = assetType;
     };
 
     public void setRequiresApproval(boolean requiresApproval) {
-        this.requiresApproval = requiresApproval;
+      this.requiresApproval = requiresApproval;
     };
 
     public boolean getRequiresApproval() {
-        return this.requiresApproval;
+      return this.requiresApproval;
     }
 
     public void setId(String id) {
-        this.id = id;
+      this.id = id;
     }
 
     public void setDate(String date) {
-        this.date = date;
+      this.date = date;
     }
 
     public void setTicketRaiser(String ticketRaiser) {
-        this.ticketRaiser = ticketRaiser;
+      this.ticketRaiser = ticketRaiser;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+      this.description = description;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+      this.status = status;
     }
 
     public void setAsset(String asset) {
-        this.asset = asset;
+      this.asset = asset;
     }
 
     public void setFixer(String fixer) {
-        this.fixer = fixer;
+      this.fixer = fixer;
     }
 
     public void setPriorityLevel(String level) {
-        this.priorityLevel = level;
+      this.priorityLevel = level;
     }
 
     public void setTimeToResolve(String time) {
-        this.timeToResolve = time;
+      this.timeToResolve = time;
     }
 
     public String getPriorityLevel() {
-        return this.priorityLevel;
+      return this.priorityLevel;
     }
 
     public String getTimeToResolve() {
-        return this.timeToResolve;
+      return this.timeToResolve;
     }
 
     // Getters
     public String getId() {
-        return id;
+      return id;
     }
 
     public String getDate() {
-        return date;
+      return date;
     }
 
     public String getTicketRaiser() {
-        return ticketRaiser;
+      return ticketRaiser;
     }
 
     public String getDescription() {
-        return description;
+      return description;
     }
 
     public String getStatus() {
-        return status;
+      return status;
     }
 
     public String getAsset() {
-        return asset;
+      return asset;
     }
 
     public String getFixer() {
-        return fixer;
+      return fixer;
     }
     // Setters for new fields
 
     public void setRoom(String room) {
-        this.room = room;
+      this.room = room;
     }
 
     public void setFloor(String floor) {
-        this.floor = floor;
+      this.floor = floor;
     }
 
     public void setPurchaseDate(String purchaseDate) {
-        this.purchaseDate = purchaseDate;
+      this.purchaseDate = purchaseDate;
     }
 
     public void setLifespan(String lifespan) {
-        this.lifespan = lifespan;
+      this.lifespan = lifespan;
     }
 
     // Getters for new fields
 
     public String getRoom() {
-        return room;
+      return room;
     }
 
     public String getFloor() {
-        return floor;
+      return floor;
     }
 
     public String getPurchaseDate() {
-        return purchaseDate;
+      return purchaseDate;
     }
 
     public String getLifespan() {
-        return lifespan;
+      return lifespan;
     }
-}
+  }
 }

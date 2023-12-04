@@ -1,4 +1,5 @@
 package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
+
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import java.sql.Date;
+
 public class DisaproveController {
 
     @FXML
@@ -36,11 +38,13 @@ public class DisaproveController {
     @FXML
     void submitClick(ActionEvent event) {
         if (!reasonInput.getText().equals("") && reasonInput.getText() != null) {
-        if(ViewUtils.successful(AssetPlusFeatureSet4Controller.disapproveTicket(ticketID, date, reasonInput.getText()))){
-        Stage stage = (Stage) submitButton.getScene().getWindow();
-        stage.close();}
-        
-        
+            if (ViewUtils.successful(AssetPlusFeatureSet4Controller.disapproveTicket(ticketID, date,
+                    reasonInput.getText()))) {
+                Stage stage = (Stage) submitButton.getScene().getWindow();
+                stage.close();
+            }
+
+
         } else {
             ViewUtils.showError("Cannot disapprove with empty note");
         }

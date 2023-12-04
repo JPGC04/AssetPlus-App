@@ -25,8 +25,7 @@ import java.sql.Date;
 public class AssetPlusFeatureSet6Controller {
 
   /**
-   * delete an employee or a guest given their email.
-   * Written by: Cleo Tang
+   * delete an employee or a guest given their email. Written by: Cleo Tang
    * 
    * @param email a string of the email of the user aimed to be deleted
    * @return null, void method
@@ -54,8 +53,7 @@ public class AssetPlusFeatureSet6Controller {
   }
 
   /**
-   * get the particular employee with the specified email.
-   * Written by: Cleo Tang
+   * get the particular employee with the specified email. Written by: Cleo Tang
    * 
    * @param email a string of the employee's email
    * @return an Employee required
@@ -72,8 +70,7 @@ public class AssetPlusFeatureSet6Controller {
   }
 
   /**
-   * get the particular guest with the specified email.
-   * Written by: Cleo Tang
+   * get the particular guest with the specified email. Written by: Cleo Tang
    * 
    * @param email a string of the guest's email
    * @return a Guest matched
@@ -94,8 +91,7 @@ public class AssetPlusFeatureSet6Controller {
   }
 
   /**
-   * Gets all maintenancetickets
-   * Written by: Cleo Tang
+   * Gets all maintenancetickets Written by: Cleo Tang
    * 
    * @return a list of Transfer Obeject of MaintenanceTicket
    */
@@ -115,8 +111,7 @@ public class AssetPlusFeatureSet6Controller {
   }
 
   /**
-   * Initialize a transfer obejct of MaintenanceTicket.
-   * Written by: Cleo Tang
+   * Initialize a transfer obejct of MaintenanceTicket. Written by: Cleo Tang
    * 
    * @param t a MiantenanceTicket
    * @return TOMaintenanceTicket that is a transfer object of MaintenanceTicket t
@@ -157,8 +152,7 @@ public class AssetPlusFeatureSet6Controller {
   }
 
   /**
-   * Initialize a transfer object of MaintenanceNote.
-   * Written by: Cleo Tang
+   * Initialize a transfer object of MaintenanceNote. Written by: Cleo Tang
    * 
    * @param maintenanceNote a MaintenanceNote
    * @return TOMaintenanceNote that is a transfer object of MaintenanceNote

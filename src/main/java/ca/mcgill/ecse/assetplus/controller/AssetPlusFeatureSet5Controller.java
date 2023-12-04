@@ -22,8 +22,8 @@ public class AssetPlusFeatureSet5Controller {
   private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
   /**
-   * Adds an image to a maintenance ticket given an imageURL and a ticketID
-   * Written by: Alan Brotherton
+   * Adds an image to a maintenance ticket given an imageURL and a ticketID Written by: Alan
+   * Brotherton
    * 
    * @param imageURL a string that contains the URL of an image
    * @param ticketID an integer that cointains the ID number of a specific maintenance ticket
@@ -65,8 +65,8 @@ public class AssetPlusFeatureSet5Controller {
   }
 
   /**
-   * Deletes an image from a maintenance ticket given an imageURL and a ticketID
-   * Written by: Alan Brotherton
+   * Deletes an image from a maintenance ticket given an imageURL and a ticketID Written by: Alan
+   * Brotherton
    * 
    * @param imageURL a string that contains the URL of an image
    * @param ticketID an integer that cointains the ID number of a specific maintenance ticket
@@ -100,7 +100,7 @@ public class AssetPlusFeatureSet5Controller {
       List<TicketImage> images = ticket.getTicketImages();
       List<Image> res = new ArrayList<>();
       int ind = 0;
-      for (TicketImage img: images) {
+      for (TicketImage img : images) {
         res.add(new Image(img.getImageURL(), ind));
         ind++;
       }
@@ -115,33 +115,33 @@ public class AssetPlusFeatureSet5Controller {
 
     private String url;
     private int index;
-  
-  
-    public Image(String url, int index){
+
+
+    public Image(String url, int index) {
       this.url = url;
       this.index = index;
     }
-  
-    public int getIndex(){
+
+    public int getIndex() {
       return this.index;
     }
-  
+
     public void setIndex(int newIndex) {
       this.index = newIndex;
-  
+
     }
-  
-    public String getUrl(){
+
+    public String getUrl() {
       return this.url;
-  
+
     }
-  
-    public void setUrl(String newUrl){
-  
+
+    public void setUrl(String newUrl) {
+
       this.url = newUrl;
     }
-    
+
   }
-  
-  
+
+
 }

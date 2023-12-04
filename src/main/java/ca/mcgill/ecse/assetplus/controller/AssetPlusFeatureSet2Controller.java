@@ -23,8 +23,8 @@ public class AssetPlusFeatureSet2Controller {
   public static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
   /**
-   * Adds an asset type with the given input name and expected lifespan in days.
-   * Written by: John-Paul Chouery
+   * Adds an asset type with the given input name and expected lifespan in days. Written by:
+   * John-Paul Chouery
    * 
    * @param name a string containing the name of the asset type
    * @param expectedLifeSpanInDays an integer containing the expected life span of the asset type in
@@ -56,8 +56,8 @@ public class AssetPlusFeatureSet2Controller {
   }
 
   /**
-   * Updates an old asset type with the given input name and expected lifespan in days.
-   * Written by: John-Paul Chouery
+   * Updates an old asset type with the given input name and expected lifespan in days. Written by:
+   * John-Paul Chouery
    * 
    * @param oldName a string containing the name of the asset type to be updated
    * @param newName a string containing the new name of the asset type to be updated
@@ -97,8 +97,7 @@ public class AssetPlusFeatureSet2Controller {
   }
 
   /**
-   * Deletes an asset type with the given input name.
-   * Written by: John-Paul Chouery
+   * Deletes an asset type with the given input name. Written by: John-Paul Chouery
    * 
    * @param name a string containing the name of the asset type to be deleted
    */
@@ -140,8 +139,7 @@ public class AssetPlusFeatureSet2Controller {
   }
 
   /**
-   * Returns a list of strings of the AssetTypes in the system.
-   * Written by: John-Paul Chouery
+   * Returns a list of strings of the AssetTypes in the system. Written by: John-Paul Chouery
    */
   public static List<String> getAssetTypes() {
     List<AssetType> assetTypes = assetPlus.getAssetTypes();

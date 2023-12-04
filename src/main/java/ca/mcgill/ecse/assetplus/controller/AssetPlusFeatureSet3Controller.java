@@ -46,7 +46,9 @@ public class AssetPlusFeatureSet3Controller {
   }
 
   /**
-   * <p>Returns the AssetType, given its name</p>
+   * <p>
+   * Returns the AssetType, given its name
+   * </p>
    * 
    * @param assetTypeName asset type's name as a String
    * @return AssetType object if found; null if not.
@@ -70,7 +72,9 @@ public class AssetPlusFeatureSet3Controller {
   }
 
   /**
-   * <p>Used to get the index of a SpecificAsset</p>
+   * <p>
+   * Used to get the index of a SpecificAsset
+   * </p>
    * 
    * @param assetNumber unique id to identify each asset
    * @return index of specificAsset object if found; -1 if not found
@@ -90,7 +94,9 @@ public class AssetPlusFeatureSet3Controller {
   }
 
   /**
-   * <p>Adds a SpecificAsset to the AssetPlus app.</p>
+   * <p>
+   * Adds a SpecificAsset to the AssetPlus app.
+   * </p>
    * 
    * @param assetNumber asset number of new asset
    * @param floorNumber floor number of new asset
@@ -122,7 +128,9 @@ public class AssetPlusFeatureSet3Controller {
   }
 
   /**
-   * <p>Updates a chosen SpecificAsset with new parameters</p>
+   * <p>
+   * Updates a chosen SpecificAsset with new parameters
+   * </p>
    * 
    * @param assetNumber asset number of SpecificAsset
    * @param newFloorNumber updated floor number of asset
@@ -159,7 +167,9 @@ public class AssetPlusFeatureSet3Controller {
   }
 
   /**
-   * <p>Deletes an asset given its asset number</p>
+   * <p>
+   * Deletes an asset given its asset number
+   * </p>
    * 
    * @param assetNumber asset number of SpecificAsset
    */
@@ -178,9 +188,10 @@ public class AssetPlusFeatureSet3Controller {
   public static List<Asset> getSpecificAssets() {
     List<SpecificAsset> assets = assetPlus.getSpecificAssets();
     List<Asset> res = new ArrayList<>();
-    for (SpecificAsset asset: assets) {
-      res.add(new Asset(String.valueOf(asset.getAssetNumber()), String.valueOf(asset.getPurchaseDate()), String.valueOf(asset.getFloorNumber()),
-      String.valueOf(asset.getRoomNumber()), asset.getAssetType().getName()));
+    for (SpecificAsset asset : assets) {
+      res.add(new Asset(String.valueOf(asset.getAssetNumber()),
+          String.valueOf(asset.getPurchaseDate()), String.valueOf(asset.getFloorNumber()),
+          String.valueOf(asset.getRoomNumber()), asset.getAssetType().getName()));
     }
 
     return res;
@@ -193,58 +204,58 @@ public class AssetPlusFeatureSet3Controller {
     private String floor;
     private String room;
     private String assetType;
-  
-  
+
+
     public Asset(String ID, String date, String floor, String room, String assetType) {
       this.ID = ID;
       this.date = date;
       this.floor = floor;
       this.room = room;
       this.assetType = assetType;
-  
+
     }
-  
+
     public String getID() {
       return ID;
     }
-  
+
     public String getDate() {
       return date;
     }
-  
+
     public String getFloor() {
       return floor;
     }
-  
+
     public String getRoom() {
       return room;
     }
-  
+
     public String getAssetType() {
       return assetType;
     }
-  
-  
+
+
     public void setID(String ID) {
       this.ID = ID;
     }
-  
+
     public void setDate(String date) {
       this.date = date;
     }
-  
+
     public void setFloor(String floor) {
       this.floor = floor;
     }
-  
+
     public void setRoom(String room) {
       this.room = room;
     }
-  
+
     public void setAssetType(String assetType) {
       this.assetType = assetType;
     }
-  
+
   }
-  
+
 }

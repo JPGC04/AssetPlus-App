@@ -12,7 +12,7 @@ import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 /**
- * AssetPlusFeatureSet7Controller is a set of controller methods that allow us to add, update, and 
+ * AssetPlusFeatureSet7Controller is a set of controller methods that allow us to add, update, and
  * delete maintenance notes
  * 
  * @author NizarKheireddine
@@ -25,7 +25,9 @@ public class AssetPlusFeatureSet7Controller {
   private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
   /**
-   * <p>Adds a maintenance note to a ticket using the ticket ID.</p>
+   * <p>
+   * Adds a maintenance note to a ticket using the ticket ID.
+   * </p>
    * 
    * @param date date the note is added.
    * @param description description of the note.
@@ -57,7 +59,9 @@ public class AssetPlusFeatureSet7Controller {
   }
 
   /**
-   * <p>Updates a maintenance note to a ticket using the ticket ID.</p>
+   * <p>
+   * Updates a maintenance note to a ticket using the ticket ID.
+   * </p>
    * 
    * @param newDate date the note is updated.
    * @param newDescription description of the updated note.
@@ -104,7 +108,9 @@ public class AssetPlusFeatureSet7Controller {
   }
 
   /**
-   * <p>Deletes a maintenance note from a ticket using the ticket ID.</p>
+   * <p>
+   * Deletes a maintenance note from a ticket using the ticket ID.
+   * </p>
    * 
    * @param ticketID id of the ticket.
    * @param index index of the note.
@@ -137,8 +143,9 @@ public class AssetPlusFeatureSet7Controller {
       List<MaintenanceNote> notes = ticket.getTicketNotes();
       List<AMaintenanceNote> res = new ArrayList<>();
       int ind = 0;
-      for (MaintenanceNote note: notes) {
-        res.add(new AMaintenanceNote(note.getDescription(), String.valueOf(note.getDate()), note.getNoteTaker().getEmail(), ind));
+      for (MaintenanceNote note : notes) {
+        res.add(new AMaintenanceNote(note.getDescription(), String.valueOf(note.getDate()),
+            note.getNoteTaker().getEmail(), ind));
         ind++;
       }
       return res;
@@ -155,44 +162,44 @@ public class AssetPlusFeatureSet7Controller {
     private int noteIndex;
 
     public AMaintenanceNote(String description, String date, String noteTaker, int noteIndex) {
-        this.description = description;
-        this.date = date;
-        this.noteTaker = noteTaker;
-        this.noteIndex = noteIndex;
+      this.description = description;
+      this.date = date;
+      this.noteTaker = noteTaker;
+      this.noteIndex = noteIndex;
     }
 
     public String getDescription() {
-        return description;
+      return description;
     }
 
     public String getDate() {
-        return date;
+      return date;
     }
 
     public String getNoteTaker() {
-        return noteTaker;
+      return noteTaker;
     }
 
     public int getNoteIndex() {
-        return noteIndex;
+      return noteIndex;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+      this.description = description;
     }
 
     public void setDate(String date) {
-        this.date = date;
+      this.date = date;
     }
 
     public void setNoteTaker(String noteTaker) {
-        this.noteTaker = noteTaker;
+      this.noteTaker = noteTaker;
     }
 
     public void setNoteIndex(int noteIndex) {
-        this.noteIndex = noteIndex;
+      this.noteIndex = noteIndex;
     }
-}
+  }
 
 
 }

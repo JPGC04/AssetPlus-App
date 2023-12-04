@@ -60,17 +60,17 @@ public class AUDAssetController {
     @FXML
     public void initialize() {
         AddAssetName.addEventHandler(AssetPlusFxmlView.REFRESH_EVENT, e -> {
-        AddAssetName.setItems(ViewUtils.getAssetTypes());
-        AddAssetName.setValue(null);
+            AddAssetName.setItems(ViewUtils.getAssetTypes());
+            AddAssetName.setValue(null);
         });
 
         UpdateAssetName.addEventHandler(AssetPlusFxmlView.REFRESH_EVENT, e -> {
-        UpdateAssetName.setItems(ViewUtils.getAssetTypes());
-        UpdateAssetName.setValue(null);
+            UpdateAssetName.setItems(ViewUtils.getAssetTypes());
+            UpdateAssetName.setValue(null);
         });
 
         List<String> inSystemAssetTypes = ViewUtils.getAssetTypes();
-        for (String a: inSystemAssetTypes) {
+        for (String a : inSystemAssetTypes) {
             AddAssetName.getItems().addAll(a);
             UpdateAssetName.getItems().addAll(a);
         }
@@ -88,7 +88,8 @@ public class AUDAssetController {
         }
         String AssetName = AddAssetName.getValue();
         Date AssetDate = Date.valueOf(AddAssetDate.getValue());
-        if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(AssetID, AssetFloor, AssetRoom, AssetDate, AssetName))) {
+        if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(AssetID, AssetFloor,
+                AssetRoom, AssetDate, AssetName))) {
             AddAssetID.setText("");
             AddAssetFloorNumber.setText("");
             AddAssetRoomNumber.setText("");
@@ -114,7 +115,8 @@ public class AUDAssetController {
         }
         String AssetName = UpdateAssetName.getValue();
         Date AssetDate = Date.valueOf(UpdateAssetDate.getValue());
-        if (successful(AssetPlusFeatureSet3Controller.updateSpecificAsset(AssetID, AssetFloor, AssetRoom, AssetDate, AssetName))) {
+        if (successful(AssetPlusFeatureSet3Controller.updateSpecificAsset(AssetID, AssetFloor,
+                AssetRoom, AssetDate, AssetName))) {
             UpdateAssetID.setText("");
             UpdateAssetFloorNumber.setText("");
             UpdateAssetRoomNumber.setText("");

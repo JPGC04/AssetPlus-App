@@ -1,5 +1,6 @@
 
 package ca.mcgill.ecse.assetplus.javafx.fxml.controllers;
+
 import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showError;
 import java.net.URL;
 import java.util.List;
@@ -52,7 +53,7 @@ public class MaintenanceImageController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         urlTable.setCellValueFactory(new PropertyValueFactory<Image, String>("url"));
         List<Image> t = AssetPlusFeatureSet5Controller.getSpecificImages(ticketID);
-        for (Image img: t) {
+        for (Image img : t) {
             list.add(img);
             current_index = img.getIndex() + 1;
         }
@@ -68,8 +69,9 @@ public class MaintenanceImageController implements Initializable {
     void createClick(ActionEvent event) {
         try {
             String url = imageURLinput.getText();
-            
-            String error = AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(url, ticketID);
+
+            String error =
+                    AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(url, ticketID);
             if (error.isEmpty()) {
                 list.add(new Image(url, current_index));
                 imageURLinput.clear();
@@ -89,15 +91,16 @@ public class MaintenanceImageController implements Initializable {
     void deleteClick(ActionEvent event) {
         int selectedID = images.getSelectionModel().getSelectedIndex();
         images.getItems().remove(selectedID);
-        
-        for (Image img: list) {
+
+        for (Image img : list) {
             if (img.getIndex() == selectedID) {
                 list.remove(img);
                 break;
             }
         }
 
-        AssetPlusFeatureSet5Controller.deleteImageFromMaintenanceTicket(imageURLinput.getText(), ticketID);
+        AssetPlusFeatureSet5Controller.deleteImageFromMaintenanceTicket(imageURLinput.getText(),
+                ticketID);
         imageURLinput.clear();
         images.refresh();
     }
@@ -107,7 +110,7 @@ public class MaintenanceImageController implements Initializable {
     void rowClicked(MouseEvent event) {
         Image clickedImage = images.getSelectionModel().getSelectedItem();
         imageURLinput.setText(clickedImage.getUrl());
-        
+
 
     }
 
