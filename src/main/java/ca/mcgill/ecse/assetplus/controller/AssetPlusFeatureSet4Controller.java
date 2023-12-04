@@ -358,6 +358,9 @@ public class AssetPlusFeatureSet4Controller {
         } else {
           String room = String.valueOf(ticket.getAsset().getRoomNumber());
           String floor = String.valueOf(ticket.getAsset().getFloorNumber());
+          if (room.equals("-1")) {
+            room = "None";
+          }
 
           String assetType = ticket.getAsset().getAssetType().getName();
           String lifespan = String.valueOf(ticket.getAsset().getAssetType().getExpectedLifeSpan());
