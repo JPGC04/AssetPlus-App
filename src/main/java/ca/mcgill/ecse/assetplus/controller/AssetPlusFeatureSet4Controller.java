@@ -333,7 +333,7 @@ public class AssetPlusFeatureSet4Controller {
         //String fixer = ticket.getTicketFixer().getEmail();
         String assetNumber = "";
         if (ticket.getAsset() == null) {
-          assetNumber = "-1";
+          assetNumber = "None";
         } else {
           assetNumber = String.valueOf(ticket.getAsset().getAssetNumber());
         }
