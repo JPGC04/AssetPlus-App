@@ -72,19 +72,19 @@ public class MaintenanceNoteController implements Initializable {
 
   @FXML
   void createClick(ActionEvent event) {
-    System.out.println("entering");
+    // system.out.println("entering");
     try {
       String author = noteAuthor.getText();
       String description = noteDesc.getText();
 
       Date date = Date.valueOf(dateInput.getValue());
       String ticketString = ticketInput.getText();
-      System.out.println("This is ticketID: " + ticketID);
+      // system.out.println("This is ticketID: " + ticketID);
       String error =
           AssetPlusFeatureSet7Controller.addMaintenanceNote(date, description, ticketID, author);
-      System.out.println("cleared");
+      // system.out.println("cleared");
       if (error.isEmpty()) {
-        System.out.println(current_id);
+        // system.out.println(current_id);
         data.add(new AMaintenanceNote(description, String.valueOf(date), author, current_id));
         current_id++;
         noteAuthor.clear();
@@ -191,7 +191,7 @@ public class MaintenanceNoteController implements Initializable {
     }
     notes.setItems(data);
     notes.refresh();
-    System.out.println(ticketID);
+    // system.out.println(ticketID);
   }
 
 }

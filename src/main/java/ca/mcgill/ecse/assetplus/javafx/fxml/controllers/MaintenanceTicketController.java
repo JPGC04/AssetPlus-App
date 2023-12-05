@@ -189,14 +189,14 @@ public class MaintenanceTicketController {
 
         for (MaintenanceTicketString ticket : myList) {
             if (ticketDateFilter.getText().equals("") && hotelStaffFilter.getText().equals("")) {
-                System.out.println("A");
+                // system.out.println("A");
                 list.add(ticket);
             } else if (!ticketDateFilter.getText().equals("")
                     && hotelStaffFilter.getText().equals("")) {
                 String theDate = ticket.getDate();
                 if (theDate.equals(ticketDateFilter.getText())) {
                     list.add(ticket);
-                    System.out.println("B");
+                    // system.out.println("B");
 
                 }
             } else if (ticketDateFilter.getText().equals("")
@@ -204,7 +204,7 @@ public class MaintenanceTicketController {
                 String theStaff = ticket.getTicketRaiser();
                 if (theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
-                    System.out.println("C");
+                    // system.out.println("C");
 
                 }
             } else {
@@ -213,7 +213,7 @@ public class MaintenanceTicketController {
                 if (theDate.equals(ticketDateFilter.getText())
                         && theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
-                    System.out.println("D");
+                    // system.out.println("D");
 
                 }
             }
@@ -221,7 +221,7 @@ public class MaintenanceTicketController {
         }
 
         tickets.setItems(list);
-        System.out.println("Initialze ticket called");
+        // system.out.println("Initialze ticket called");
     }
 
 
@@ -263,14 +263,14 @@ public class MaintenanceTicketController {
 
         for (MaintenanceTicketString ticket : myList) {
             if (ticketDateFilter.getText().equals("") && hotelStaffFilter.getText().equals("")) {
-                System.out.println("A");
+                // system.out.println("A");
                 list.add(ticket);
             } else if (!ticketDateFilter.getText().equals("")
                     && hotelStaffFilter.getText().equals("")) {
                 String theDate = ticket.getDate();
                 if (theDate.equals(ticketDateFilter.getText())) {
                     list.add(ticket);
-                    System.out.println("B");
+                    // system.out.println("B");
 
                 }
             } else if (ticketDateFilter.getText().equals("")
@@ -278,7 +278,7 @@ public class MaintenanceTicketController {
                 String theStaff = ticket.getTicketRaiser();
                 if (theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
-                    System.out.println("C");
+                    // system.out.println("C");
 
                 }
             } else {
@@ -287,7 +287,7 @@ public class MaintenanceTicketController {
                 if (theDate.equals(ticketDateFilter.getText())
                         && theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
-                    System.out.println("D");
+                    // system.out.println("D");
 
                 }
             }
@@ -295,7 +295,7 @@ public class MaintenanceTicketController {
         }
 
         tickets.setItems(list);
-        System.out.println("Initialze ticket called again");
+        // system.out.println("Initialze ticket called again");
     }
 
 
@@ -322,7 +322,7 @@ public class MaintenanceTicketController {
                         }
 
                     } catch (Exception e) {
-                        System.out.println("Something went wrong");
+                        // system.out.println("Something went wrong");
                     }
 
                 }
@@ -349,7 +349,7 @@ public class MaintenanceTicketController {
                     String priority = priorityInput.getValue();
                     boolean requiresApproval = managerApprovalButton.isSelected();
 
-                    System.out.println(fixer);
+                    // system.out.println(fixer);
                     ticket.setFixer(fixer);
 
                     if (!successful(AssetPlusFeatureSet4Controller.assignMaintenanceTicket(
@@ -436,7 +436,7 @@ public class MaintenanceTicketController {
 
 
         } catch (Exception e) {
-            System.out.println("Cant open new window");
+            // system.out.println("Cant open new window");
         }
 
     }
@@ -493,9 +493,9 @@ public class MaintenanceTicketController {
 
     @FXML
     void imageClick(ActionEvent event) {
-        System.out.println("WHY NOT WORKING");
+        // system.out.println("WHY NOT WORKING");
         try {
-            System.out.println(ticketInput.getText());
+            // system.out.println(ticketInput.getText());
             FXMLLoader fxmlLoader =
                     new FXMLLoader(getClass().getResource("../pages/MaintenanceImage.fxml"));
             MaintenanceImageController controller = new MaintenanceImageController();
@@ -507,7 +507,7 @@ public class MaintenanceTicketController {
             stage.setScene(new Scene(root1));
             stage.show();
         } catch (Exception e) {
-            System.out.println("Cant open new window");
+            // system.out.println("Cant open new window");
         }
 
     }
@@ -526,7 +526,7 @@ public class MaintenanceTicketController {
             stage.setScene(new Scene(root1));
             stage.show();
         } catch (Exception e) {
-            System.out.println("Cant open new window");
+            // system.out.println("Cant open new window");
         }
 
     }
@@ -624,7 +624,7 @@ public class MaintenanceTicketController {
                         }
 
                     } catch (Exception e) {
-                        System.out.println("Something went wrong");
+                        // system.out.println("Something went wrong");
                     }
                 }
 
@@ -650,7 +650,7 @@ public class MaintenanceTicketController {
                         }
 
                     } catch (Exception e) {
-                        System.out.println("Something went wrong 2");
+                        // system.out.println("Something went wrong 2");
                     }
                 }
 

@@ -95,7 +95,7 @@ public class AssetPlusFeatureSet5Controller {
     try {
       MaintenanceTicket ticket = MaintenanceTicket.getWithId(i);
 
-      System.out.println(ticket.getDescription());
+      // system.out.println(ticket.getDescription());
 
       List<TicketImage> images = ticket.getTicketImages();
       List<Image> res = new ArrayList<>();

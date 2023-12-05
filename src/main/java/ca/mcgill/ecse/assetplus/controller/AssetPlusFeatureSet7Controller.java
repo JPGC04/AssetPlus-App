@@ -78,9 +78,9 @@ public class AssetPlusFeatureSet7Controller {
     }
     HotelStaff staff = (HotelStaff) User.getWithEmail(newEmail);
     int number_of_notes = ticket.getTicketNotes().size();
-    System.out.println(ticket.getTicketNotes().size() + " is the size of ticket");
-    System.out.println(index);
-    System.out.println(ticketID);
+    // system.out.println(ticket.getTicketNotes().size() + " is the size of ticket");
+    // system.out.println(index);
+    // system.out.println(ticketID);
     if (index >= number_of_notes) {
       return "Note does not exist";
     }
@@ -138,7 +138,7 @@ public class AssetPlusFeatureSet7Controller {
   public static List<AMaintenanceNote> getSpecificNotes(int i) {
     try {
       MaintenanceTicket ticket = MaintenanceTicket.getWithId(i);
-      System.out.println(ticket.getDescription());
+      // system.out.println(ticket.getDescription());
 
       List<MaintenanceNote> notes = ticket.getTicketNotes();
       List<AMaintenanceNote> res = new ArrayList<>();
