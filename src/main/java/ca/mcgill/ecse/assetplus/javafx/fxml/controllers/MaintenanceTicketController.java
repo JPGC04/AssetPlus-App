@@ -422,6 +422,10 @@ public class MaintenanceTicketController {
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));
                 stage.show();
+                stage.setOnCloseRequest(e -> {
+                    // Call the function when the window is closed
+                    initialize();
+                });
             }
 
             int selectedID = Integer.parseInt(ticketInput.getText());
@@ -441,6 +445,52 @@ public class MaintenanceTicketController {
         initialize();
 
     }
+
+    public class DisaproveController {
+
+        @FXML
+        private Button cancelButton;
+
+        @FXML
+        private TextArea reasonInput;
+
+        @FXML
+        private Button submitButton;
+
+        private Date date;
+
+        private int ticketID;
+
+        public void setYourVariable(Date date1, Integer id) {
+            this.date = date1;
+            this.ticketID = id;
+        }
+
+        @FXML
+        void cancelClick(ActionEvent event) {
+            // Close the current window
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
+        }
+
+        @FXML
+        void submitClick(ActionEvent event) {
+            if (!reasonInput.getText().equals("") && reasonInput.getText() != null) {
+                if (ViewUtils.successful(AssetPlusFeatureSet4Controller.disapproveTicket(ticketID,
+                        date, reasonInput.getText()))) {
+                    Stage stage = (Stage) submitButton.getScene().getWindow();
+                    initialize();
+                    stage.close();
+                }
+
+
+            } else {
+                ViewUtils.showError("Cannot disapprove with empty note");
+            }
+        }
+
+    }
+
 
     @FXML
     void editClick(ActionEvent event) {
@@ -546,7 +596,7 @@ public class MaintenanceTicketController {
             } else {
                 assetInput.setText(String.valueOf(clickedTicket.getAsset()));
             }
-            
+
 
             LocalDate date = LocalDate.parse(clickedTicket.getDate());
             dateInput.setValue(date);
