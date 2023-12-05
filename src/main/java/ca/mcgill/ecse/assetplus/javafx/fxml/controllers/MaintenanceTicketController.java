@@ -438,6 +438,7 @@ public class MaintenanceTicketController {
         } catch (Exception e) {
             // system.out.println("Cant open new window");
         }
+        initialize();
 
     }
 
