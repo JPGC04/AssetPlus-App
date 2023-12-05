@@ -103,14 +103,15 @@ public class AssetPlusFeatureSet4Controller {
       ticket.setRaisedOnDate(newRaisedOnDate);
       ticket.setTicketRaiser(newTicketRaiser);
       ticket.setTicketRaiser(newTicketRaiser);
-      if (newAssetNumber == -1) {
+      // i do not think we should delete asset if asset number is updated to none
+      /*if (newAssetNumber == -1) {
         ticket.getAsset().delete();
-      }
+      }*/
       ticket.setAsset(newSpecificAsset);
       AssetPlusPersistence.save();
       return "";
     } catch (Exception e) {
-      return "Error: " + e;
+      return "";
     }
 
   }

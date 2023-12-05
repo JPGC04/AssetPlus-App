@@ -201,7 +201,7 @@ public class MaintenanceTicketController {
                 }
             } else if (ticketDateFilter.getText().equals("")
                     && !hotelStaffFilter.getText().equals("")) {
-                String theStaff = ticket.getFixer();
+                String theStaff = ticket.getTicketRaiser();
                 if (theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
                     System.out.println("C");
@@ -209,7 +209,7 @@ public class MaintenanceTicketController {
                 }
             } else {
                 String theDate = ticket.getDate();
-                String theStaff = ticket.getFixer();
+                String theStaff = ticket.getTicketRaiser();
                 if (theDate.equals(ticketDateFilter.getText())
                         && theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
@@ -262,30 +262,33 @@ public class MaintenanceTicketController {
 
 
         for (MaintenanceTicketString ticket : myList) {
-            System.out.println(hotelStaffFilter.getText());
             if (ticketDateFilter.getText().equals("") && hotelStaffFilter.getText().equals("")) {
+                System.out.println("A");
                 list.add(ticket);
             } else if (!ticketDateFilter.getText().equals("")
                     && hotelStaffFilter.getText().equals("")) {
                 String theDate = ticket.getDate();
-                if (theDate != null && theDate.equals(ticketDateFilter.getText())) {
+                if (theDate.equals(ticketDateFilter.getText())) {
                     list.add(ticket);
+                    System.out.println("B");
 
                 }
             } else if (ticketDateFilter.getText().equals("")
                     && !hotelStaffFilter.getText().equals("")) {
-                String theStaff = ticket.getFixer();
-                if (theStaff != null && theStaff.equals(hotelStaffFilter.getText())) {
+                String theStaff = ticket.getTicketRaiser();
+                if (theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
+                    System.out.println("C");
 
                 }
             } else {
                 String theDate = ticket.getDate();
-                String theStaff = ticket.getFixer();
-                if (theStaff != null && theDate != null
-                        && theDate.equals(ticketDateFilter.getText())
+                String theStaff = ticket.getTicketRaiser();
+                if (theDate.equals(ticketDateFilter.getText())
                         && theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
+                    System.out.println("D");
+
                 }
             }
             current_id = Integer.parseInt(ticket.getId()) + 1;
@@ -351,21 +354,21 @@ public class MaintenanceTicketController {
 
                     if (!successful(AssetPlusFeatureSet4Controller.assignMaintenanceTicket(
                             currentTicketId, fixer, timeToResolve, priority, requiresApproval))) {
-                                initialize();
+                        initialize();
                         return;
                     }
 
-                    
-                        ticket.setFixer(fixer);
-                        ticket.setStatus("Assigned");
-                        ticket.setPriorityLevel(priority);
-                        ticket.setTimeToResolve(timeToResolve);
-                        ticket.setRequiresApproval(requiresApproval);
 
-                        tickets.setItems(currentTableData);
-                        tickets.refresh();
-                        initialize();
-                        // showError("Successfully Assigned Ticket");
+                    ticket.setFixer(fixer);
+                    ticket.setStatus("Assigned");
+                    ticket.setPriorityLevel(priority);
+                    ticket.setTimeToResolve(timeToResolve);
+                    ticket.setRequiresApproval(requiresApproval);
+
+                    tickets.setItems(currentTableData);
+                    tickets.refresh();
+                    initialize();
+                    // showError("Successfully Assigned Ticket");
                     break;
 
                 }
@@ -450,7 +453,14 @@ public class MaintenanceTicketController {
                     Date date = Date.valueOf(dateInput.getValue());
                     String newDesc = descriptionInput.getText();
                     String newEmail = raisedByInput.getText();
-                    int assetNumber = Integer.parseInt(assetInput.getText());
+
+
+                    int assetNumber;
+                    if (assetInput.getText().equals("") || assetInput.getText() == null) {
+                        assetNumber = -1;
+                    } else {
+                        assetNumber = Integer.parseInt(assetInput.getText());
+                    }
 
                     String error = AssetPlusFeatureSet4Controller.updateMaintenanceTicket(
                             currentTicketId, date, newDesc, newEmail, assetNumber);
@@ -529,7 +539,13 @@ public class MaintenanceTicketController {
             // dateInput.setValue(clickedTicket.getDate());
             raisedByInput.setText(String.valueOf(clickedTicket.getTicketRaiser()));
             descriptionInput.setText(String.valueOf(clickedTicket.getDescription()));
-            assetInput.setText(String.valueOf(clickedTicket.getAsset()));
+
+            if (clickedTicket.getAsset().equals("None")) {
+                assetInput.setText("");
+            } else {
+                assetInput.setText(String.valueOf(clickedTicket.getAsset()));
+            }
+            
 
             LocalDate date = LocalDate.parse(clickedTicket.getDate());
             dateInput.setValue(date);
@@ -548,7 +564,12 @@ public class MaintenanceTicketController {
             ;
             Date date = Date.valueOf(dateInput.getValue());
             String description = descriptionInput.getText();
-            int assetNumber = Integer.parseInt(assetInput.getText());
+            int assetNumber;
+            if (assetInput.getText().equals("") || assetInput.getText() == null) {
+                assetNumber = -1;
+            } else {
+                assetNumber = Integer.parseInt(assetInput.getText());
+            }
             String email = raisedByInput.getText();
             String error = AssetPlusFeatureSet4Controller.addMaintenanceTicket(current_id, date,
                     description, email, assetNumber);

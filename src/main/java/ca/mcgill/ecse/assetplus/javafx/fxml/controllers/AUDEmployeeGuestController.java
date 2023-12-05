@@ -137,14 +137,16 @@ public class AUDEmployeeGuestController {
   @FXML
   void rowClicked(MouseEvent event) {
     UserString clickedUser = table.getSelectionModel().getSelectedItem();
-    nameTextField.setText(String.valueOf(clickedUser.getName()));
-    numberTextField.setText(String.valueOf(clickedUser.getNumber()));
-    passwordTextField.setText(String.valueOf(clickedUser.getPassword()));
-    emailTextField.setText(String.valueOf(clickedUser.getEmail()));
-    if (clickedUser.getEmployeeGuest().equals("Guest")) {
-      guestCheckBox.setSelected(true);
-    } else {
-      guestCheckBox.setSelected(false);
+    if (clickedUser != null) {
+      nameTextField.setText(String.valueOf(clickedUser.getName()));
+      numberTextField.setText(String.valueOf(clickedUser.getNumber()));
+      passwordTextField.setText(String.valueOf(clickedUser.getPassword()));
+      emailTextField.setText(String.valueOf(clickedUser.getEmail()));
+      if (clickedUser.getEmployeeGuest().equals("Guest")) {
+        guestCheckBox.setSelected(true);
+      } else {
+        guestCheckBox.setSelected(false);
+      }
     }
   }
 
