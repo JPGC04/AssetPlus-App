@@ -21,10 +21,12 @@ import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 import java.sql.Date;
 import java.util.List;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller.MaintenanceTicketString;
 import java.time.LocalDate;
 import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.showError;
+import static ca.mcgill.ecse.assetplus.javafx.fxml.controllers.ViewUtils.successful;
 
 
 public class MaintenanceTicketController {
@@ -347,11 +349,13 @@ public class MaintenanceTicketController {
                     System.out.println(fixer);
                     ticket.setFixer(fixer);
 
+                    if (!successful(AssetPlusFeatureSet4Controller.assignMaintenanceTicket(
+                            currentTicketId, fixer, timeToResolve, priority, requiresApproval))) {
+                                initialize();
+                        return;
+                    }
 
-                    String error = AssetPlusFeatureSet4Controller.assignMaintenanceTicket(
-                            currentTicketId, fixer, timeToResolve, priority, requiresApproval);
-
-                    if (error.isEmpty()) {
+                    
                         ticket.setFixer(fixer);
                         ticket.setStatus("Assigned");
                         ticket.setPriorityLevel(priority);
@@ -360,10 +364,8 @@ public class MaintenanceTicketController {
 
                         tickets.setItems(currentTableData);
                         tickets.refresh();
+                        initialize();
                         // showError("Successfully Assigned Ticket");
-                    } else {
-                        showError(error);
-                    }
                     break;
 
                 }
@@ -371,8 +373,10 @@ public class MaintenanceTicketController {
             }
 
         } catch (Exception e) {
+            initialize();
             showError("Invalid parameters!");
         }
+        initialize();
     }
 
     @FXML

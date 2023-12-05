@@ -155,6 +155,24 @@ public class AssetPlusFeatureSet4Controller {
     if (ticket.getStatus() == MaintenanceTicket.Status.Resolved) {
       return "Cannot assign a maintenance ticket which is resolved.";
     }
+    int i = 0;
+    try {
+      Guest theGuest = (Guest) User.getWithEmail(employeeEmail);
+      if (theGuest != null) {
+        return "Customer cannot be ticket fixer.";
+      }
+    } catch (Exception e) {
+      i = 1;
+    }
+
+    try {
+      HotelStaff theStaff = (HotelStaff) User.getWithEmail(employeeEmail);
+      if (theStaff == null) {
+        return "Staff to assign does not exist.";
+      }
+    } catch (Exception e) {
+      i = 2;
+    }
 
     HotelStaff ticketFixer = (HotelStaff) User.getWithEmail(employeeEmail);
     if (ticketFixer == null) {
