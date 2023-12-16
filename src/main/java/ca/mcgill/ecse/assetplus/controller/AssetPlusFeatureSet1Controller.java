@@ -275,7 +275,6 @@ public class AssetPlusFeatureSet1Controller {
 			this.EmployeeGuest = EmployeeGuest;
 		}
 
-		// Setters
 		public void setEmployeeGuest(String EmployeeGuest) {
 			this.EmployeeGuest = EmployeeGuest;
 		}
@@ -296,7 +295,6 @@ public class AssetPlusFeatureSet1Controller {
 			this.number = number;
 		}
 
-		// Getters
 		public String getEmployeeGuest() {
 			return EmployeeGuest;
 		}

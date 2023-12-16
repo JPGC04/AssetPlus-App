@@ -21,7 +21,6 @@ import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 import java.sql.Date;
 import java.util.List;
-import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller.MaintenanceTicketString;
 import java.time.LocalDate;
@@ -189,14 +188,12 @@ public class MaintenanceTicketController {
 
         for (MaintenanceTicketString ticket : myList) {
             if (ticketDateFilter.getText().equals("") && hotelStaffFilter.getText().equals("")) {
-                // system.out.println("A");
                 list.add(ticket);
             } else if (!ticketDateFilter.getText().equals("")
                     && hotelStaffFilter.getText().equals("")) {
                 String theDate = ticket.getDate();
                 if (theDate.equals(ticketDateFilter.getText())) {
                     list.add(ticket);
-                    // system.out.println("B");
 
                 }
             } else if (ticketDateFilter.getText().equals("")
@@ -204,7 +201,6 @@ public class MaintenanceTicketController {
                 String theStaff = ticket.getTicketRaiser();
                 if (theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
-                    // system.out.println("C");
 
                 }
             } else {
@@ -213,15 +209,12 @@ public class MaintenanceTicketController {
                 if (theDate.equals(ticketDateFilter.getText())
                         && theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
-                    // system.out.println("D");
-
                 }
             }
             current_id = Integer.parseInt(ticket.getId()) + 1;
         }
 
         tickets.setItems(list);
-        // system.out.println("Initialze ticket called");
     }
 
 
@@ -263,22 +256,18 @@ public class MaintenanceTicketController {
 
         for (MaintenanceTicketString ticket : myList) {
             if (ticketDateFilter.getText().equals("") && hotelStaffFilter.getText().equals("")) {
-                // system.out.println("A");
                 list.add(ticket);
             } else if (!ticketDateFilter.getText().equals("")
                     && hotelStaffFilter.getText().equals("")) {
                 String theDate = ticket.getDate();
                 if (theDate.equals(ticketDateFilter.getText())) {
                     list.add(ticket);
-                    // system.out.println("B");
-
                 }
             } else if (ticketDateFilter.getText().equals("")
                     && !hotelStaffFilter.getText().equals("")) {
                 String theStaff = ticket.getTicketRaiser();
                 if (theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
-                    // system.out.println("C");
 
                 }
             } else {
@@ -287,15 +276,12 @@ public class MaintenanceTicketController {
                 if (theDate.equals(ticketDateFilter.getText())
                         && theStaff.equals(hotelStaffFilter.getText())) {
                     list.add(ticket);
-                    // system.out.println("D");
-
                 }
             }
             current_id = Integer.parseInt(ticket.getId()) + 1;
         }
 
         tickets.setItems(list);
-        // system.out.println("Initialze ticket called again");
     }
 
 
@@ -316,13 +302,11 @@ public class MaintenanceTicketController {
                         error = AssetPlusFeatureSet4Controller.approveTicket(currentTicketId);
                         if (error.isEmpty()) {
                             ticket.setStatus("Closed");
-                            // showError("Ticket has been approved");
                         } else {
                             showError(error);
                         }
 
                     } catch (Exception e) {
-                        // system.out.println("Something went wrong");
                     }
 
                 }
@@ -349,7 +333,6 @@ public class MaintenanceTicketController {
                     String priority = priorityInput.getValue();
                     boolean requiresApproval = managerApprovalButton.isSelected();
 
-                    // system.out.println(fixer);
                     ticket.setFixer(fixer);
 
                     if (!successful(AssetPlusFeatureSet4Controller.assignMaintenanceTicket(
@@ -368,7 +351,6 @@ public class MaintenanceTicketController {
                     tickets.setItems(currentTableData);
                     tickets.refresh();
                     initialize();
-                    // showError("Successfully Assigned Ticket");
                     break;
 
                 }
@@ -410,7 +392,6 @@ public class MaintenanceTicketController {
     @FXML
     void disaproveClick(ActionEvent event) {
         try {
-            String status = statusTable.getText();
             if (true) {
                 FXMLLoader fxmlLoader =
                         new FXMLLoader(getClass().getResource("../pages/Disaprove.fxml"));
@@ -423,7 +404,6 @@ public class MaintenanceTicketController {
                 stage.setScene(new Scene(root1));
                 stage.show();
                 stage.setOnCloseRequest(e -> {
-                    // Call the function when the window is closed
                     initialize();
                 });
             }
@@ -440,7 +420,6 @@ public class MaintenanceTicketController {
 
 
         } catch (Exception e) {
-            // system.out.println("Cant open new window");
         }
         initialize();
 
@@ -544,9 +523,7 @@ public class MaintenanceTicketController {
 
     @FXML
     void imageClick(ActionEvent event) {
-        // system.out.println("WHY NOT WORKING");
         try {
-            // system.out.println(ticketInput.getText());
             FXMLLoader fxmlLoader =
                     new FXMLLoader(getClass().getResource("../pages/MaintenanceImage.fxml"));
             MaintenanceImageController controller = new MaintenanceImageController();
@@ -558,7 +535,6 @@ public class MaintenanceTicketController {
             stage.setScene(new Scene(root1));
             stage.show();
         } catch (Exception e) {
-            // system.out.println("Cant open new window");
         }
 
     }
@@ -577,7 +553,6 @@ public class MaintenanceTicketController {
             stage.setScene(new Scene(root1));
             stage.show();
         } catch (Exception e) {
-            // system.out.println("Cant open new window");
         }
 
     }
@@ -587,7 +562,6 @@ public class MaintenanceTicketController {
         MaintenanceTicketString clickedTicket = tickets.getSelectionModel().getSelectedItem();
         if (clickedTicket != null) {
             ticketInput.setText(String.valueOf(clickedTicket.getId()));
-            // dateInput.setValue(clickedTicket.getDate());
             raisedByInput.setText(String.valueOf(clickedTicket.getTicketRaiser()));
             descriptionInput.setText(String.valueOf(clickedTicket.getDescription()));
 
@@ -630,8 +604,6 @@ public class MaintenanceTicketController {
                         String.valueOf(current_id), String.valueOf(date), raisedByInput.getText(),
                         descriptionInput.getText(), "Open", assetInput.getText(), "", "", "", "",
                         "", "");
-
-                // list.add(createdTicket);
                 current_id++;
                 raisedByInput.clear();
                 descriptionInput.clear();
@@ -645,9 +617,6 @@ public class MaintenanceTicketController {
         } catch (Exception e) {
             showError("Invalid Parameters");
         }
-
-
-        // tickets.refresh();
         initialize();
 
     }
@@ -668,14 +637,12 @@ public class MaintenanceTicketController {
                         error = AssetPlusFeatureSet4Controller.startTicketProgress(currentTicketId);
                         if (error.isEmpty()) {
                             ticket.setStatus("InProgress");
-                            // showError("Successfully Started maintenance Work");
 
                         } else {
                             showError(error);
                         }
 
                     } catch (Exception e) {
-                        // system.out.println("Something went wrong");
                     }
                 }
 
@@ -690,10 +657,8 @@ public class MaintenanceTicketController {
                         if (error.isEmpty()) {
                             if (requiresApproval) {
                                 ticket.setStatus("Resolved");
-                                // showError("Waiting for approval");
                             } else {
                                 ticket.setStatus("Closed");
-                                // showError("Ticket has been closed");
                             }
 
                         } else {
@@ -701,7 +666,6 @@ public class MaintenanceTicketController {
                         }
 
                     } catch (Exception e) {
-                        // system.out.println("Something went wrong 2");
                     }
                 }
 

@@ -133,7 +133,6 @@ public class AssetPlusFeatureSet2Controller {
         }
       }
     } catch (Exception e) {
-      // system.out.println(e);
       return;
     }
   }

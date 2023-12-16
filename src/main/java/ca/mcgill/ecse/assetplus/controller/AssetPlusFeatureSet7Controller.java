@@ -3,8 +3,6 @@ package ca.mcgill.ecse.assetplus.controller;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
-import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
@@ -21,8 +19,6 @@ import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
  */
 public class AssetPlusFeatureSet7Controller {
   private AssetPlusFeatureSet7Controller() {}
-
-  private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
   /**
    * <p>
@@ -78,9 +74,6 @@ public class AssetPlusFeatureSet7Controller {
     }
     HotelStaff staff = (HotelStaff) User.getWithEmail(newEmail);
     int number_of_notes = ticket.getTicketNotes().size();
-    // system.out.println(ticket.getTicketNotes().size() + " is the size of ticket");
-    // system.out.println(index);
-    // system.out.println(ticketID);
     if (index >= number_of_notes) {
       return "Note does not exist";
     }
@@ -138,8 +131,6 @@ public class AssetPlusFeatureSet7Controller {
   public static List<AMaintenanceNote> getSpecificNotes(int i) {
     try {
       MaintenanceTicket ticket = MaintenanceTicket.getWithId(i);
-      // system.out.println(ticket.getDescription());
-
       List<MaintenanceNote> notes = ticket.getTicketNotes();
       List<AMaintenanceNote> res = new ArrayList<>();
       int ind = 0;

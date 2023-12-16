@@ -65,7 +65,6 @@ public class AssetPlusFeatureSet3Controller {
         }
       }
     } catch (Exception e) {
-      // system.out.println(e);
       return null;
     }
     return null;
@@ -181,7 +180,6 @@ public class AssetPlusFeatureSet3Controller {
         AssetPlusPersistence.save();
       }
     } catch (Exception e) {
-      // system.out.println(e);
     }
   }
 

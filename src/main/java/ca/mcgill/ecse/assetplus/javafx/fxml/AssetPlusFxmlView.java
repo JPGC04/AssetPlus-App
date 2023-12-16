@@ -43,7 +43,7 @@ public class AssetPlusFxmlView extends Application {
 
   // Register multiple nodes for receiving refresh events
   public void registerRefreshEvent(Node... nodes) {
-    for (var node: nodes) {
+    for (var node : nodes) {
       refreshableNodes.add(node);
     }
   }

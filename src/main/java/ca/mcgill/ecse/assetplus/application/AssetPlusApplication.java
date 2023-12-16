@@ -10,7 +10,7 @@ public class AssetPlusApplication {
   private static AssetPlus assetPlus;
 
   public static void main(String[] args) {
-    assetPlus = getAssetPlus(); // might remove this line
+    assetPlus = getAssetPlus();
     // TODO Start the application user interface here
     Application.launch(AssetPlusFxmlView.class, args);
   }

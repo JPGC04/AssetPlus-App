@@ -88,13 +88,11 @@ public class AUDEmployeeGuestController {
   void add(ActionEvent event) {
     String name = nameTextField.getText();
     String email = emailTextField.getText();
-    // emailList.add(email);
     String password = passwordTextField.getText();
     String number = numberTextField.getText();
     if (name == null || name.trim().isEmpty()) {
       ViewUtils.showError("Please input a name");
     } else {
-      // reset the driver text field if success
       if (ViewUtils.successful(AssetPlusFeatureSet1Controller.addEmployeeOrGuest(email, password,
           name, number, !guestCheckBox.isSelected()))) {
         UserString newData = new UserString(name, email, password, number, "");

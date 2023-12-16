@@ -1,7 +1,5 @@
 package ca.mcgill.ecse.assetplus.controller;
 
-import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
-import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
@@ -18,8 +16,6 @@ import java.util.List;
  */
 
 public class AssetPlusFeatureSet5Controller {
-
-  private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
   /**
    * Adds an image to a maintenance ticket given an imageURL and a ticketID Written by: Alan
@@ -94,8 +90,6 @@ public class AssetPlusFeatureSet5Controller {
   public static List<Image> getSpecificImages(int i) {
     try {
       MaintenanceTicket ticket = MaintenanceTicket.getWithId(i);
-
-      // system.out.println(ticket.getDescription());
 
       List<TicketImage> images = ticket.getTicketImages();
       List<Image> res = new ArrayList<>();

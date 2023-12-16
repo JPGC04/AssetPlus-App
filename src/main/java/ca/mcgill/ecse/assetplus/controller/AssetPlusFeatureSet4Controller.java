@@ -103,10 +103,6 @@ public class AssetPlusFeatureSet4Controller {
       ticket.setRaisedOnDate(newRaisedOnDate);
       ticket.setTicketRaiser(newTicketRaiser);
       ticket.setTicketRaiser(newTicketRaiser);
-      // i do not think we should delete asset if asset number is updated to none
-      /*if (newAssetNumber == -1) {
-        ticket.getAsset().delete();
-      }*/
       ticket.setAsset(newSpecificAsset);
       AssetPlusPersistence.save();
       return "";
@@ -345,11 +341,10 @@ public class AssetPlusFeatureSet4Controller {
 
   public static List<MaintenanceTicketString> getSpecificTickets() {
     List<MaintenanceTicket> tickets = assetplus.getMaintenanceTickets();
-    List<MaintenanceTicketString> result = new ArrayList<>(); // javafx
+    List<MaintenanceTicketString> result = new ArrayList<>();
 
     for (MaintenanceTicket ticket : tickets) {
       try {
-        // String fixer = ticket.getTicketFixer().getEmail();
         String assetNumber = "";
         if (ticket.getAsset() == null) {
           assetNumber = "None";
@@ -399,7 +394,6 @@ public class AssetPlusFeatureSet4Controller {
 
         }
       } catch (Exception e) {
-        // system.out.println(e);
       }
     }
 
@@ -456,7 +450,6 @@ public class AssetPlusFeatureSet4Controller {
 
     }
 
-    // Setters
     public String getAssetType() {
       return assetType;
     };
@@ -517,7 +510,6 @@ public class AssetPlusFeatureSet4Controller {
       return this.timeToResolve;
     }
 
-    // Getters
     public String getId() {
       return id;
     }
@@ -545,7 +537,6 @@ public class AssetPlusFeatureSet4Controller {
     public String getFixer() {
       return fixer;
     }
-    // Setters for new fields
 
     public void setRoom(String room) {
       this.room = room;
@@ -563,7 +554,6 @@ public class AssetPlusFeatureSet4Controller {
       this.lifespan = lifespan;
     }
 
-    // Getters for new fields
 
     public String getRoom() {
       return room;
